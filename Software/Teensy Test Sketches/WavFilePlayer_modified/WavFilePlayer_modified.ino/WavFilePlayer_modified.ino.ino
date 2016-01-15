@@ -41,14 +41,14 @@ AudioConnection          patchCord2(playWav1, 1, audioOutput, 1);
 AudioControlSGTL5000     sgtl5000_1;
 
 // Use these with the audio adaptor board
-//#define SDCARD_CS_PIN    10
-//#define SDCARD_MOSI_PIN  7
-//#define SDCARD_SCK_PIN   14
-
-// Use these for the SD+Wiz820 or other adaptors
 #define SDCARD_CS_PIN    10
 #define SDCARD_MOSI_PIN  11
 #define SDCARD_SCK_PIN   13
+
+// Use these for the SD+Wiz820 or other adaptors
+//#define SDCARD_CS_PIN    4
+//#define SDCARD_MOSI_PIN  11
+//#define SDCARD_SCK_PIN   13
 
 void setup() {
   Serial.begin(9600);
@@ -98,17 +98,15 @@ void playFile(const char *filename)
 
 
 void loop() {
-  //playFile("1.WAV");  // filenames are always uppercase 8.3 format
-
-  //playFile("2.WAV");
-  //playFile("REWARD.WAV");
+  playFile("1.WAV");  // filenames are always uppercase 8.3 format
+  delay(500);
+  playFile("2.WAV");
+  delay(500);
   playFile("STABLE.WAV");
-  //playFile("2.WAV");
-  //playFile("2.WAV");
-  //playFile("2.WAV");
-  //playFile("2.WAV");
-  //playFile("2.WAV");
-  //playFile("2.WAV");
-
+  delay(500);
+  playFile("REWARD.WAV");
+  delay(1500);
+  playFile("GLITTER.WAV");
+  delay(1500);
 }
 
