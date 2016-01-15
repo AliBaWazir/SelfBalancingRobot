@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.2.0">
+<eagle version="7.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -567,9 +567,11 @@ design rules under a new name.
 <contactref element="U$1" pad="GND"/>
 <contactref element="U$1" pad="GND2"/>
 <contactref element="TOBALANCE" pad="4"/>
+<contactref element="U2" pad="6"/>
 <wire x1="55" y1="23.73" x2="47.38" y2="41.51" width="0" layer="19" extent="1-1"/>
 <wire x1="55" y1="8.49" x2="55" y2="23.73" width="0" layer="19" extent="1-1"/>
-<wire x1="-62.38" y1="-5.254" x2="55" y2="8.49" width="0" layer="19" extent="1-1"/>
+<wire x1="-63.44" y1="15.9" x2="47.38" y2="41.51" width="0" layer="19" extent="1-1"/>
+<wire x1="-62.38" y1="-5.254" x2="-63.44" y2="15.9" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VIN">
 <contactref element="U$1" pad="VIN"/>
@@ -582,9 +584,11 @@ design rules under a new name.
 <contactref element="U$1" pad="3.3V1"/>
 <contactref element="U$1" pad="3.3V"/>
 <contactref element="TOBALANCE" pad="5"/>
+<contactref element="U2" pad="4"/>
 <wire x1="57.54" y1="23.73" x2="62.62" y2="36.43" width="0" layer="19" extent="1-1"/>
 <wire x1="52.46" y1="8.49" x2="57.54" y2="23.73" width="0" layer="19" extent="1-1"/>
 <wire x1="-59.84" y1="-5" x2="52.46" y2="8.49" width="0" layer="19" extent="1-1"/>
+<wire x1="-65.64" y1="15.9" x2="-59.84" y2="-5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="VBAT">
 <contactref element="U$1" pad="VBAT"/>
@@ -606,6 +610,26 @@ design rules under a new name.
 </signal>
 <signal name="ENABLE">
 <contactref element="TOBALANCE" pad="1"/>
+</signal>
+<signal name="SCK">
+<contactref element="U2" pad="5"/>
+<contactref element="U$1" pad="13"/>
+<wire x1="-64.54" y1="15.7" x2="62.62" y2="8.49" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="MISO">
+<contactref element="U2" pad="7"/>
+<contactref element="U$1" pad="12"/>
+<wire x1="-62.34" y1="15.7" x2="47.38" y2="8.49" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="MOSI">
+<contactref element="U2" pad="3"/>
+<contactref element="U$1" pad="11"/>
+<wire x1="-66.74" y1="15.7" x2="47.38" y2="11.03" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="CS">
+<contactref element="U$1" pad="10"/>
+<contactref element="U2" pad="2"/>
+<wire x1="-67.84" y1="15.3" x2="47.38" y2="13.57" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
