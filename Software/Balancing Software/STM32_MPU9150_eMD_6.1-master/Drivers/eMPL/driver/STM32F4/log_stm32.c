@@ -39,6 +39,10 @@
 #define PACKET_QUAT     (2)
 #define PACKET_DATA     (3)
 
+#define ONE         2
+#define TWO         3
+#define THREE       0
+#define FOUR        1
 /**
  *  @brief      Prints a variable argument log message.
  *  USB output will be formatted as follows:\n
@@ -119,22 +123,22 @@ void eMPL_send_quat(long *quat)
 	memset(out, 0, 18);
 	out[0] = '$';
 	out[1] = PACKET_QUAT;
-	out[2] = (char)(quat[0] >> 24);
-	out[3] = (char)(quat[0] >> 16);
-	out[4] = (char)(quat[0] >> 8);
-	out[5] = (char)quat[0];
-	out[6] = (char)(quat[1] >> 24);
-	out[7] = (char)(quat[1] >> 16);
-	out[8] = (char)(quat[1] >> 8);
-	out[9] = (char)quat[1];
-	out[10] = (char)(quat[2] >> 24);
-	out[11] = (char)(quat[2] >> 16);
-	out[12] = (char)(quat[2] >> 8);
-	out[13] = (char)quat[2];
-	out[14] = (char)(quat[3] >> 24);
-	out[15] = (char)(quat[3] >> 16);
-	out[16] = (char)(quat[3] >> 8);
-	out[17] = (char)quat[3];
+	out[2] = (char)(quat[ONE] >> 24);
+	out[3] = (char)(quat[ONE] >> 16);
+	out[4] = (char)(quat[ONE] >> 8);
+	out[5] = (char)quat[ONE];
+	out[6] = (char)(quat[TWO] >> 24);
+	out[7] = (char)(quat[TWO] >> 16);
+	out[8] = (char)(quat[TWO] >> 8);
+	out[9] = (char)quat[TWO];
+	out[10] = (char)(quat[THREE] >> 24);
+	out[11] = (char)(quat[THREE] >> 16);
+	out[12] = (char)(quat[THREE] >> 8);
+	out[13] = (char)quat[THREE];
+	out[14] = (char)(quat[FOUR] >> 24);
+	out[15] = (char)(quat[FOUR] >> 16);
+	out[16] = (char)(quat[FOUR] >> 8);
+	out[17] = (char)quat[FOUR];
 	
 	USBD_CDC_SetTxBuffer (&hUsbDeviceFS, (uint8_t *)out, 18);
 	USBD_CDC_TransmitPacket (&hUsbDeviceFS);
