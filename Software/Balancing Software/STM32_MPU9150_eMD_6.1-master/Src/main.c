@@ -155,7 +155,9 @@ static void read_from_mpl(void)
 		* the MPL has new data.
 		*/
 		eMPL_send_quat(data);
-
+        //eMPL_send_data(PACKET_DATA_EULER, data);
+        //eMPL_send_data(PACKET_DATA_ROT, data);
+        
 		/* Specific data packets can be sent or suppressed using USB commands. */
 		if (hal.report & PRINT_QUAT)
 			eMPL_send_data(PACKET_DATA_QUAT, data);

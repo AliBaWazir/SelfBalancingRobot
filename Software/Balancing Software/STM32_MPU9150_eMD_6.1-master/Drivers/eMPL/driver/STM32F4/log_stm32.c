@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <math.h>
 
 #include "main.h"
 #include "packet.h"
@@ -121,24 +122,26 @@ void eMPL_send_quat(long *quat)
 		return;
 	
 	memset(out, 0, 18);
-	out[0] = '$';
+	//out[0] = '$';
 	out[1] = PACKET_QUAT;
 	out[2] = (char)(quat[ONE] >> 24);
-	out[3] = (char)(quat[ONE] >> 16);
-	out[4] = (char)(quat[ONE] >> 8);
-	out[5] = (char)quat[ONE];
+	//out[3] = (char)(quat[ONE] >> 16);
+	//out[4] = (char)(quat[ONE] >> 8);
+	//out[5] = (char)quat[ONE];
 	out[6] = (char)(quat[TWO] >> 24);
-	out[7] = (char)(quat[TWO] >> 16);
-	out[8] = (char)(quat[TWO] >> 8);
-	out[9] = (char)quat[TWO];
+	//out[7] = (char)(quat[TWO] >> 16);
+	//out[8] = (char)(quat[TWO] >> 8);
+	//out[9] = (char)quat[TWO];
 	out[10] = (char)(quat[THREE] >> 24);
-	out[11] = (char)(quat[THREE] >> 16);
-	out[12] = (char)(quat[THREE] >> 8);
-	out[13] = (char)quat[THREE];
+	//out[11] = (char)(quat[THREE] >> 16);
+	//out[12] = (char)(quat[THREE] >> 8);
+	//out[13] = (char)quat[THREE];
 	out[14] = (char)(quat[FOUR] >> 24);
-	out[15] = (char)(quat[FOUR] >> 16);
-	out[16] = (char)(quat[FOUR] >> 8);
-	out[17] = (char)quat[FOUR];
+	//out[15] = (char)(quat[FOUR] >> 16);
+	//out[16] = (char)(quat[FOUR] >> 8);
+	//out[17] = (char)quat[FOUR];
+    //out[0] = (char) asin(-2.0*(q.x*q.z - q.w*q.y));
+    out[0] =  (char)asin(-2.0*((double)out[6]*(double)out[14] - (double)out[2]*(double)out[10]));
 	
 	USBD_CDC_SetTxBuffer (&hUsbDeviceFS, (uint8_t *)out, 18);
 	USBD_CDC_TransmitPacket (&hUsbDeviceFS);
@@ -161,23 +164,23 @@ void eMPL_send_data(unsigned char type, long *data)
 	/* Two bytes per-element. */
 	case PACKET_DATA_ROT:
 		out[3] = (char)(data[0] >> 24);
-		out[4] = (char)(data[0] >> 16);
+		//out[4] = (char)(data[0] >> 16);
 		out[5] = (char)(data[1] >> 24);
-		out[6] = (char)(data[1] >> 16);
+		//out[6] = (char)(data[1] >> 16);
 		out[7] = (char)(data[2] >> 24);
-		out[8] = (char)(data[2] >> 16);
+		//out[8] = (char)(data[2] >> 16);
 		out[9] = (char)(data[3] >> 24);
-		out[10] = (char)(data[3] >> 16);
+		//out[10] = (char)(data[3] >> 16);
 		out[11] = (char)(data[4] >> 24);
-		out[12] = (char)(data[4] >> 16);
+		//out[12] = (char)(data[4] >> 16);
 		out[13] = (char)(data[5] >> 24);
-		out[14] = (char)(data[5] >> 16);
+		//out[14] = (char)(data[5] >> 16);
 		out[15] = (char)(data[6] >> 24);
-		out[16] = (char)(data[6] >> 16);
+		//out[16] = (char)(data[6] >> 16);
 		out[17] = (char)(data[7] >> 24);
-		out[18] = (char)(data[7] >> 16);
+		//out[18] = (char)(data[7] >> 16);
 		out[19] = (char)(data[8] >> 24);
-		out[20] = (char)(data[8] >> 16);
+		//out[20] = (char)(data[8] >> 16);
 		break;
 	/* Four bytes per-element. */
 	/* Four elements. */
@@ -186,11 +189,18 @@ void eMPL_send_data(unsigned char type, long *data)
 		out[16] = (char)(data[3] >> 16);
 		out[17] = (char)(data[3] >> 8);
 		out[18] = (char)data[3];
+    
+        
 	/* Three elements. */
 	case PACKET_DATA_ACCEL:
 	case PACKET_DATA_GYRO:
 	case PACKET_DATA_COMPASS:
 	case PACKET_DATA_EULER:
+        
+        //out[3] = (char)(data[0] >> 24);
+		out[4] = (char)(data[1] >> 24)-'0';
+        out[5] = (char)(data[2] >> 24)-'0';
+        /*
 		out[3] = (char)(data[0] >> 24);
 		out[4] = (char)(data[0] >> 16);
 		out[5] = (char)(data[0] >> 8);
@@ -203,6 +213,7 @@ void eMPL_send_data(unsigned char type, long *data)
 		out[12] = (char)(data[2] >> 16);
 		out[13] = (char)(data[2] >> 8);
 		out[14] = (char)data[2];
+        */
 		break;
 	case PACKET_DATA_HEADING:
 		out[3] = (char)(data[0] >> 24);
