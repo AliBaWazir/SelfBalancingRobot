@@ -40,10 +40,11 @@
 #define PACKET_QUAT     (2)
 #define PACKET_DATA     (3)
 
-#define ONE         2
-#define TWO         3
-#define THREE       0
-#define FOUR        1
+#define ONE         0
+#define TWO         1
+#define THREE       2
+#define FOUR        3
+
 /**
  *  @brief      Prints a variable argument log message.
  *  USB output will be formatted as follows:\n
@@ -116,7 +117,12 @@ int _MLPrintLog (int priority, const char* tag, const char* fmt, ...)
 
 void eMPL_send_quat(long *quat)
 {
-	char out[18];
+    double angle;
+    double quat1 = 0;
+    double quat2 = 0;
+    double quat3 = 0;
+    double quat4 = 0;
+	double out[18];
 	
 	if (!quat)
 		return;
@@ -125,23 +131,29 @@ void eMPL_send_quat(long *quat)
 	//out[0] = '$';
 	out[1] = PACKET_QUAT;
 	out[2] = (char)(quat[ONE] >> 24);
-	//out[3] = (char)(quat[ONE] >> 16);
-	//out[4] = (char)(quat[ONE] >> 8);
-	//out[5] = (char)quat[ONE];
+	out[3] = (char)(quat[ONE] >> 16);
+	out[4] = (char)(quat[ONE] >> 8);
+	out[5] = (char)quat[ONE];
 	out[6] = (char)(quat[TWO] >> 24);
-	//out[7] = (char)(quat[TWO] >> 16);
-	//out[8] = (char)(quat[TWO] >> 8);
-	//out[9] = (char)quat[TWO];
+	out[7] = (char)(quat[TWO] >> 16);
+	out[8] = (char)(quat[TWO] >> 8);
+	out[9] = (char)quat[TWO];
 	out[10] = (char)(quat[THREE] >> 24);
-	//out[11] = (char)(quat[THREE] >> 16);
-	//out[12] = (char)(quat[THREE] >> 8);
-	//out[13] = (char)quat[THREE];
+	out[11] = (char)(quat[THREE] >> 16);
+	out[12] = (char)(quat[THREE] >> 8);
+	out[13] = (char)quat[THREE];
 	out[14] = (char)(quat[FOUR] >> 24);
-	//out[15] = (char)(quat[FOUR] >> 16);
-	//out[16] = (char)(quat[FOUR] >> 8);
-	//out[17] = (char)quat[FOUR];
+	out[15] = (char)(quat[FOUR] >> 16);
+	out[16] = (char)(quat[FOUR] >> 8);
+	out[17] = (char)quat[FOUR];
     //out[0] = (char) asin(-2.0*(q.x*q.z - q.w*q.y));
-    out[0] =  (char)asin(-2.0*((double)out[6]*(double)out[14] - (double)out[2]*(double)out[10]));
+    quat1 = (double)quat[ONE]/0xFFFFFFFF;
+    quat2 = (double)quat[TWO]/0xFFFFFFFF;
+    quat3 = (double)quat[THREE]/0xFFFFFFFF;
+    quat4 = (double)quat[FOUR]/0xFFFFFFFF;
+    //angle =  (double)quat2*(double)quat4 - (double)quat1*(double)quat3;
+    angle =  asin(-2.0*((double)quat2*(double)quat4 - (double)quat1*(double)quat3));
+    //angle =  (double)asin(-2.0*((double)out[6]*(double)out[14] - (double)out[2]*(double)out[10]));
 	
 	USBD_CDC_SetTxBuffer (&hUsbDeviceFS, (uint8_t *)out, 18);
 	USBD_CDC_TransmitPacket (&hUsbDeviceFS);
