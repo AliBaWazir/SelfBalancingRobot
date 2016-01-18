@@ -117,19 +117,20 @@ int _MLPrintLog (int priority, const char* tag, const char* fmt, ...)
 
 void eMPL_send_quat(long *quat)
 {
-    double angle;
+    int32_t angle;
     double quat1 = 0;
     double quat2 = 0;
     double quat3 = 0;
     double quat4 = 0;
-	double out[18];
+	char out[18];
 	
 	if (!quat)
 		return;
 	
 	memset(out, 0, 18);
 	//out[0] = '$';
-	out[1] = PACKET_QUAT;
+	//out[1] = '$';
+    /*
 	out[2] = (char)(quat[ONE] >> 24);
 	out[3] = (char)(quat[ONE] >> 16);
 	out[4] = (char)(quat[ONE] >> 8);
@@ -146,14 +147,17 @@ void eMPL_send_quat(long *quat)
 	out[15] = (char)(quat[FOUR] >> 16);
 	out[16] = (char)(quat[FOUR] >> 8);
 	out[17] = (char)quat[FOUR];
-    //out[0] = (char) asin(-2.0*(q.x*q.z - q.w*q.y));
-    quat1 = (double)quat[ONE]/0xFFFFFFFF;
-    quat2 = (double)quat[TWO]/0xFFFFFFFF;
-    quat3 = (double)quat[THREE]/0xFFFFFFFF;
-    quat4 = (double)quat[FOUR]/0xFFFFFFFF;
-    //angle =  (double)quat2*(double)quat4 - (double)quat1*(double)quat3;
-    angle =  asin(-2.0*((double)quat2*(double)quat4 - (double)quat1*(double)quat3));
-    //angle =  (double)asin(-2.0*((double)out[6]*(double)out[14] - (double)out[2]*(double)out[10]));
+    */
+    quat1 = (double)quat[ONE]/0xEFFFFFFF;
+    quat2 = (double)quat[TWO]/0xEFFFFFFF;
+    quat3 = (double)quat[THREE]/0xEFFFFFFF;
+    quat4 = (double)quat[FOUR]/0xEFFFFFFF;
+    
+    angle =  4096*asin(-2.0*((double)quat2*(double)quat4 - (double)quat1*(double)quat3));
+    out[0] = angle>>24;
+    out[1] = angle>>16;
+    out[2] = angle>>8;
+    out[3] = angle;
 	
 	USBD_CDC_SetTxBuffer (&hUsbDeviceFS, (uint8_t *)out, 18);
 	USBD_CDC_TransmitPacket (&hUsbDeviceFS);
@@ -165,13 +169,13 @@ void eMPL_send_data(unsigned char type, long *data)
 	
 	if (!data)
 		return;
-	
+	 
 	memset(out, 0, PACKET_LENGTH);
 	out[0] = '$';
 	out[1] = PACKET_DATA;
 	out[2] = type;
-	out[21] = '\r';
-	out[22] = '\n';
+	//out[21] = '\r';
+	//out[22] = '\n';
 	switch (type) {
 	/* Two bytes per-element. */
 	case PACKET_DATA_ROT:
@@ -210,8 +214,8 @@ void eMPL_send_data(unsigned char type, long *data)
 	case PACKET_DATA_EULER:
         
         //out[3] = (char)(data[0] >> 24);
-		out[4] = (char)(data[1] >> 24)-'0';
-        out[5] = (char)(data[2] >> 24)-'0';
+		//out[4] = (char)(data[1] >> 24)-'0';
+        //out[5] = (char)(data[2] >> 24)-'0';
         /*
 		out[3] = (char)(data[0] >> 24);
 		out[4] = (char)(data[0] >> 16);
