@@ -171,6 +171,22 @@
 <pad name="14" x="13.97" y="-6.35" drill="1.016" shape="octagon" rot="R90"/>
 <pad name="15" x="13.97" y="-3.81" drill="1.016" shape="square" rot="R90"/>
 <pad name="16" x="13.97" y="-1.27" drill="1.016" shape="octagon" rot="R90"/>
+<text x="2.54" y="-1.905" size="1.27" layer="21">!EN</text>
+<text x="2.54" y="-4.445" size="1.27" layer="21">M0</text>
+<text x="2.54" y="-6.985" size="1.27" layer="21">M1</text>
+<text x="2.54" y="-12.065" size="1.27" layer="21">VREF</text>
+<text x="2.54" y="-14.605" size="1.27" layer="21">!SLP</text>
+<text x="2.54" y="-17.145" size="1.27" layer="21">STEP</text>
+<text x="2.54" y="-19.685" size="1.27" layer="21">DIR</text>
+<text x="12.7" y="-18.415" size="1.27" layer="21" rot="R180">GND</text>
+<text x="12.7" y="-15.875" size="1.27" layer="21" rot="R180">!FLT</text>
+<text x="12.7" y="-13.335" size="1.27" layer="21" rot="R180">A2</text>
+<text x="12.7" y="-10.795" size="1.27" layer="21" rot="R180">A1</text>
+<text x="12.7" y="-8.255" size="1.27" layer="21" rot="R180">B1</text>
+<text x="12.7" y="-3.175" size="1.27" layer="21" rot="R180">MGND</text>
+<text x="12.7" y="-0.635" size="1.27" layer="21" rot="R180">VMOT</text>
+<text x="12.7" y="-5.715" size="1.27" layer="21" rot="R180">B2</text>
+<text x="2.54" y="-9.525" size="1.27" layer="21">CNFG</text>
 </package>
 </packages>
 <symbols>
