@@ -870,13 +870,13 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\stm32f407vgt6\startup_stm32f407xx.d -o.\stm32f407vgt6\startup
-_stm32f407xx.o -I..\..\Inc -I"C:\Users\Panoply\Documents\bot\Software\Balancing
- Software\STM32_MPU9150_eMD_6.1-master\Projects\MDK-ARM\RTE" -IC:\Keil_v5\ARM\P
-ACK\Keil\STM32F4xx_DFP\2.7.0 -IC:\Keil_v5\ARM\CMSIS\Include -IC:\Keil_v5\ARM\PA
-CK\Keil\STM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --predefi
-ne="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 514" --predefine="ST
-M32F407xx SETA 1" --list=startup_stm32f407xx.lst ..\..\Drivers\CMSIS\Device\ST\
-STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
+_stm32f407xx.o -I..\..\Inc -I"C:\Users\jonathangoldnauvogt\Documents\bot\Softwa
+re\Balancing Software\STM32_MPU9150_eMD_6.1-master\Projects\MDK-ARM\RTE" -IC:\K
+eil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.6.0\Drivers\CMSIS\Device\ST\STM32F4xx\Incl
+ude -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --predefine=
+"__UVISION_VERSION SETA 517" --predefine="STM32F407xx SETA 1" --list=startup_st
+m32f407xx.lst ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\star
+tup_stm32f407xx.s
 
 
 
