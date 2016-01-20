@@ -1,5 +1,5 @@
 #include "Arduino32.h"
-#include "tm_stm32f4_delay.h"
+
 
 
 uint32_t micros(void){
@@ -8,8 +8,10 @@ uint32_t micros(void){
 }
 
 
-void pinMode(uint8_t, uint8_t){
-    
+void pinMode(uint8_t pin, uint8_t mode){
+
+		
+    TM_GPIO_Init(pinPort(pin), gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 }
 void digitalWrite(uint8_t, uint8_t){
     
@@ -35,3 +37,96 @@ void delayMicroseconds(unsigned int us){
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout){
     return 1;
 }
+GPIO_TypeDef* pinPort(uint8_t pin){
+	GPIO_TypeDef* gpioPort;
+	//determine port letter
+		if(pin < 15) gpioPort = GPIOA;
+		else{
+			pin-=16;
+			if(pin < 15) gpioPort = GPIOB;
+			else{
+				pin-=16;
+				if(pin < 15) gpioPort = GPIOC;
+				else{
+					pin-=16;
+					if(pin < 15) gpioPort = GPIOD;
+					else{
+						pin-=16;
+						if(pin < 15) gpioPort = GPIOE;
+						else{
+							pin-=16;
+							if(pin < 15) gpioPort = GPIOF;
+							else{
+								pin-=16;
+								if(pin < 15) gpioPort = GPIOG;
+								else{
+									return 0;
+								//add more later?
+									
+								}
+							}
+						}
+					}
+				}
+			}
+		}		
+	
+	return gpioPort;
+}
+uint16_t gpioPin(uint8_t pin){
+		uint16_t gpioPin = 0;
+		//determine pin number on port
+		switch (pin-1%16){
+			case 0:
+				gpioPin = GPIO_PIN_0;
+				break;
+			case 1:
+				gpioPin = GPIO_PIN_1;
+				break;
+			case 2:
+				gpioPin = GPIO_PIN_2;
+				break;
+			case 3:
+				gpioPin = GPIO_PIN_3;
+				break;
+			case 4:
+				gpioPin = GPIO_PIN_4;
+				break;
+			case 5:
+				gpioPin = GPIO_PIN_5;
+				break;
+			case 6:
+				gpioPin = GPIO_PIN_6;
+				break;
+			case 7:
+				gpioPin = GPIO_PIN_7;
+				break;
+			case 8:
+				gpioPin = GPIO_PIN_8;
+				break;
+			case 9:
+				gpioPin = GPIO_PIN_9;
+				break;
+			case 10:
+				gpioPin = GPIO_PIN_10;
+				break;
+			case 11:
+				gpioPin = GPIO_PIN_11;
+				break;
+			case 12:
+				gpioPin = GPIO_PIN_12;
+				break;
+			case 13:
+				gpioPin = GPIO_PIN_13;
+				break;
+			case 14:
+				gpioPin = GPIO_PIN_14;
+				break;
+			case 15:
+				gpioPin = GPIO_PIN_15;
+				break;
+			default:
+			return -1;
+				
+		}
+	}
