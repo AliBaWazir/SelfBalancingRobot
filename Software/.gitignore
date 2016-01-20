@@ -7,3 +7,4 @@
 /**/*.sct
 /**/*.dep
 /**/*.axf
+/**/Targets/**/*.htm*
