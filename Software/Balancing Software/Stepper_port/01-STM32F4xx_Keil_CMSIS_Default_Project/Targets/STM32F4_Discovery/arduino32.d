@@ -1,5 +1,5 @@
-.\targets\stm32f4_discovery\arduino32.o: ..\STM32F4xx_stepper\Arduino32.c
-.\targets\stm32f4_discovery\arduino32.o: ..\STM32F4xx_stepper\Arduino32.h
+.\targets\stm32f4_discovery\arduino32.o: User\STM32F4xx_stepper\arduino32.cpp
+.\targets\stm32f4_discovery\arduino32.o: User\STM32F4xx_stepper\arduino32.h
 .\targets\stm32f4_discovery\arduino32.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\targets\stm32f4_discovery\arduino32.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\targets\stm32f4_discovery\arduino32.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\algorithm
@@ -58,3 +58,4 @@
 .\targets\stm32f4_discovery\arduino32.o: .\User\defines.h
 .\targets\stm32f4_discovery\arduino32.o: ..\00-STM32F429_LIBRARIES\attributes.h
 .\targets\stm32f4_discovery\arduino32.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\targets\stm32f4_discovery\arduino32.o: ..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h

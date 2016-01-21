@@ -1,4 +1,4 @@
-#include "Arduino32.h"
+#include "arduino32.h"
 
 
 
@@ -9,12 +9,11 @@ uint32_t micros(void){
 
 
 void pinMode(uint8_t pin, uint8_t mode){
-
-		
     TM_GPIO_Init(pinPort(pin), gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 }
-void digitalWrite(uint8_t, uint8_t){
-    
+void digitalWrite(uint8_t pin, uint8_t state){
+	if(state == HIGH) TM_GPIO_SetPinHigh(pinPort(pin), gpioPin(pin));
+	if(state == LOW) TM_GPIO_SetPinLow(pinPort(pin), gpioPin(pin));
 }
 int digitalRead(uint8_t){
     return 1;
@@ -37,6 +36,11 @@ void delayMicroseconds(unsigned int us){
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout){
     return 1;
 }
+
+
+
+
+
 GPIO_TypeDef* pinPort(uint8_t pin){
 	GPIO_TypeDef* gpioPort;
 	//determine port letter
@@ -75,8 +79,9 @@ GPIO_TypeDef* pinPort(uint8_t pin){
 }
 uint16_t gpioPin(uint8_t pin){
 		uint16_t gpioPin = 0;
+		uint8_t _pin = (pin-1)%16;
 		//determine pin number on port
-		switch (pin-1%16){
+		switch (_pin){
 			case 0:
 				gpioPin = GPIO_PIN_0;
 				break;
@@ -126,7 +131,9 @@ uint16_t gpioPin(uint8_t pin){
 				gpioPin = GPIO_PIN_15;
 				break;
 			default:
-			return -1;
+				
+			return 0;
 				
 		}
+		return gpioPin;
 	}

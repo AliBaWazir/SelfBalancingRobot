@@ -17,7 +17,9 @@
  * |----------------------------------------------------------------------
  */
 #include "tm_stm32f4_delay.h"
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 __IO uint32_t TM_TimingDelay = 0;
 __IO uint32_t TM_Time = 0;
 __IO uint32_t TM_Time2 = 0;
@@ -289,3 +291,7 @@ TM_DELAY_Timer_t* TM_DELAY_TimerAutoReloadValue(TM_DELAY_Timer_t* Timer, uint32_
 	/* Return pointer */
 	return Timer;
 }
+
+#ifdef __cplusplus
+}
+#endif

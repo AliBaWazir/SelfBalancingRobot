@@ -14,31 +14,57 @@
 /* Include core modules */
 #include "stm32f4xx.h"
 /* Include my libraries here */
+#include "arduino32.h"
 #include "defines.h"
 #include "tm_stm32f4_delay.h"
 #include "tm_stm32f4_disco.h"
-
+#define OUTPUTPIN  4*16+3
 int main(void) {
-	/* Initialize system */
+	
+
 	SystemInit();
 	
-	/* Initialize delay */
+
 	TM_DELAY_Init();
 	
-	/* Initialize leds on board */
+
 	TM_DISCO_LedInit();
 	
-	/* Turn on all leds */
+
 	TM_DISCO_LedOn(LED_ALL);
 	
-	/* Delay 2 seconds */
+
 	Delayms(2000);
 	
 	while (1) {
-		/* Toggle leds */
+
 		TM_DISCO_LedToggle(LED_ALL);
 		
-		/* Wait 500ms */
+
 		Delayms(500);
 	}
+	
+/*
+	SystemInit();
+	
+
+	TM_DELAY_Init();
+	
+
+	pinMode(OUTPUTPIN, OUTPUT);
+	
+	
+
+
+	
+	while (1) {
+		
+		//Delayms(5);
+		digitalWrite(OUTPUTPIN, LOW);
+
+		//Delayms(5);
+		digitalWrite(OUTPUTPIN, HIGH);
+	}
+	
+	*/
 }

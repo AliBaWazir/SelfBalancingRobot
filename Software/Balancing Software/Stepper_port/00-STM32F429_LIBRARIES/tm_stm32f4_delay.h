@@ -210,6 +210,11 @@ typedef struct {
 #define LIB_FREE_FUNC     free
 #endif
 
+
+/* C++ detection */
+#ifdef __cplusplus
+extern "C" {
+#endif
 /**
  * @}
  */
@@ -441,5 +446,7 @@ __weak void TM_DELAY_1msHandler(void);
 /**
  * @}
  */
-
+#ifdef __cplusplus
+}
+#endif
 #endif
