@@ -20,6 +20,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+__IO uint32_t millisecondCounter =0;
 __IO uint32_t TM_TimingDelay = 0;
 __IO uint32_t TM_Time = 0;
 __IO uint32_t TM_Time2 = 0;
@@ -47,6 +48,8 @@ void TimingDelay_Decrement(void) {
 #else
 void SysTick_Handler(void) {
 #endif
+	
+	millisecondCounter+=10000;
 	uint8_t i;
 	
 	TM_Time++;
@@ -95,7 +98,7 @@ void TM_DELAY_Init(void) {
 		/* Capture error */
 		while (1);
 	}
-	
+
 	#ifdef __GNUC__
 		/* Set multiplier for delay under 1us with pooling mode = not so accurate */
 		mult = SystemCoreClock / 7000000;

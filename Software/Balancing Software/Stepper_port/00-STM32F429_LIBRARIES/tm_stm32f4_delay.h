@@ -232,6 +232,7 @@ extern "C" {
 extern __IO uint32_t TM_Time;
 extern __IO uint32_t TM_Time2;
 extern __IO uint32_t mult;
+extern __IO uint32_t millisecondCounter;
 
 /**
  * @}

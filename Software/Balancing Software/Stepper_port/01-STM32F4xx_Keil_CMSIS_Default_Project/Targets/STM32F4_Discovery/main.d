@@ -60,3 +60,5 @@
 .\targets\stm32f4_discovery\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\targets\stm32f4_discovery\main.o: ..\00-STM32F429_LIBRARIES\tm_stm32f4_gpio.h
 .\targets\stm32f4_discovery\main.o: ..\00-STM32F429_LIBRARIES\tm_stm32f4_disco.h
+.\targets\stm32f4_discovery\main.o: .\User\STM32F4xx_stepper\AccelStepper.h
+.\targets\stm32f4_discovery\main.o: .\User\STM32F4xx_stepper\Arduino32.h

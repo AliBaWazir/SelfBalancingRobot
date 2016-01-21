@@ -18,33 +18,23 @@
 #include "defines.h"
 #include "tm_stm32f4_delay.h"
 #include "tm_stm32f4_disco.h"
+#include "AccelStepper.h"
 #define OUTPUTPIN  4*16+3
+
+
+void TM_DELAY_1msHandler()
+{
+	//digitalWrite(OUTPUTPIN, HIGH);
+	//Delay(5);
+	//digitalWrite(OUTPUTPIN, LOW);
+	
+}
+AccelStepper stepper(AccelStepper::DRIVER, OUTPUTPIN, OUTPUTPIN+1);
 int main(void) {
 	
 
-	SystemInit();
 	
 
-	TM_DELAY_Init();
-	
-
-	TM_DISCO_LedInit();
-	
-
-	TM_DISCO_LedOn(LED_ALL);
-	
-
-	Delayms(2000);
-	
-	while (1) {
-
-		TM_DISCO_LedToggle(LED_ALL);
-		
-
-		Delayms(500);
-	}
-	
-/*
 	SystemInit();
 	
 
@@ -52,19 +42,20 @@ int main(void) {
 	
 
 	pinMode(OUTPUTPIN, OUTPUT);
-	
+	stepper.setMaxSpeed(1000.0);
+  stepper.setAcceleration(20.0);
 	
 
 
 	
 	while (1) {
-		
-		//Delayms(5);
-		digitalWrite(OUTPUTPIN, LOW);
+		stepper.runToNewPosition(0);
+    stepper.runToNewPosition(1000);
 
-		//Delayms(5);
-		digitalWrite(OUTPUTPIN, HIGH);
+		//Delay(1);
+
+//stepper.runSpeed();
 	}
 	
-	*/
+	
 }
