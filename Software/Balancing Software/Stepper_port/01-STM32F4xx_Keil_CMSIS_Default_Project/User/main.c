@@ -21,6 +21,32 @@
 #include "AccelStepper.h"
 #define OUTPUTPIN  4*16+3
 
+#define PORTPINS 16
+
+#define PORTA PORTPINS*0
+#define PORTB PORTPINS*1
+#define PORTC PORTPINS*2
+#define PORTD PORTPINS*3
+#define PORTE PORTPINS*4
+#define PORTF PORTPINS*5
+#define PORTG PORTPINS*6
+#define PORTH PORTPINS*7
+
+#define STEPPER_RIGHT_STEP_PIN PORTA+2
+#define STEPPER_RIGHT_DIR_PIN PORTA+5
+
+
+
+#define STEPPER_LEFT_STEP_PIN PORTC+3
+#define STEPPER_LEFT_DIR_PIN PORTC+4
+
+
+#define STEPPER_RIGHT_M0_PIN PORTC+7
+#define STEPPER_RIGHT_M1_PIN PORTC+6
+
+#define STEPPER_LEFT_M0_PIN PORTD+14
+#define STEPPER_LEFT_M1_PIN PORTD+15
+
 
 void TM_DELAY_1msHandler()
 {
@@ -29,7 +55,8 @@ void TM_DELAY_1msHandler()
 	//digitalWrite(OUTPUTPIN, LOW);
 	
 }
-AccelStepper stepper(AccelStepper::DRIVER, OUTPUTPIN, OUTPUTPIN+1);
+AccelStepper stepperR(AccelStepper::DRIVER, STEPPER_RIGHT_STEP_PIN, STEPPER_RIGHT_DIR_PIN);
+AccelStepper stepperL(AccelStepper::DRIVER, STEPPER_LEFT_STEP_PIN, STEPPER_LEFT_DIR_PIN);
 int main(void) {
 	
 
@@ -39,19 +66,61 @@ int main(void) {
 	
 
 	TM_DELAY_Init();
-	
+	pinMode(PORTD+11, OUTPUT);
+    digitalWrite(PORTD+11, HIGH);
+    
+    pinMode(STEPPER_RIGHT_M0_PIN, INPUT);
+    pinMode(STEPPER_RIGHT_M1_PIN, OUTPUT);
+    pinMode(STEPPER_LEFT_M0_PIN, INPUT);
+    pinMode(STEPPER_LEFT_M1_PIN, OUTPUT);
+    
+    /*   M0    M1
+    FULL LOW   LOW
+    HALF HIGH  LOW
+    1/4  FLOAT LOW
+    */
+    
+    
+    //digitalWrite(STEPPER_RIGHT_M0_PIN, HIGH);
+    digitalWrite(STEPPER_RIGHT_M1_PIN, LOW);
+    
+    //digitalWrite(STEPPER_LEFT_M0_PIN, HIGH);
+    digitalWrite(STEPPER_LEFT_M1_PIN, HIGH);
+    
+    
+    pinMode(STEPPER_RIGHT_DIR_PIN, OUTPUT);
+    pinMode(STEPPER_RIGHT_STEP_PIN, OUTPUT);
+    pinMode(STEPPER_LEFT_DIR_PIN, OUTPUT);
+    pinMode(STEPPER_LEFT_STEP_PIN, OUTPUT);
 
-	pinMode(OUTPUTPIN, OUTPUT);
-	stepper.setMaxSpeed(1000.0);
-  stepper.setAcceleration(20.0);
-	
+	stepperR.setMaxSpeed(10000.0);
+    stepperR.setAcceleration(2000.0);
+    
+    stepperL.setMaxSpeed(10000000.0);
+    stepperL.setAcceleration(2000.0);
+	stepperR.setSpeed(600);
+    stepperL.setSpeed(600);
 
 
 	
 	while (1) {
-		stepper.runToNewPosition(0);
-    stepper.runToNewPosition(1000);
-
+        
+        //stepperR.runToNewPosition(0);
+        //stepperR.runToNewPosition(2000);
+        //stepperL.runToNewPosition(0);
+        //stepperL.runToNewPosition(2000);
+        
+        
+        //for(uint32_t i = 1000000; i>0;i--){
+            //Delay(1);
+            stepperR.runSpeed();
+            stepperL.runSpeed();
+            
+        //}
+        //digitalWrite(OUTPUTPIN, HIGH);
+        //Delay(10);
+        //digitalWrite(OUTPUTPIN, LOW);
+        //Delay(10);
 		//Delay(1);
 
 //stepper.runSpeed();

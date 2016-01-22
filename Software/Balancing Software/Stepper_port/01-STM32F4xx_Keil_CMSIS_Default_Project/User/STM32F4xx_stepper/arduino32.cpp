@@ -12,7 +12,7 @@ void pinMode(uint8_t pin, uint8_t mode){
     TM_GPIO_Init(pinPort(pin), gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 }
 void digitalWrite(uint8_t pin, uint8_t state){
-	Delay(1000);
+	//Delay(1);
 	if(state == HIGH) TM_GPIO_SetPinHigh(pinPort(pin), gpioPin(pin));
 	if(state == LOW) TM_GPIO_SetPinLow(pinPort(pin), gpioPin(pin));
 }
@@ -80,7 +80,7 @@ GPIO_TypeDef* pinPort(uint8_t pin){
 }
 uint16_t gpioPin(uint8_t pin){
 		uint16_t gpioPin = 0;
-		uint8_t _pin = (pin-1)%16;
+		uint8_t _pin = (pin)%16;
 		//determine pin number on port
 		switch (_pin){
 			case 0:
@@ -131,9 +131,9 @@ uint16_t gpioPin(uint8_t pin){
 			case 15:
 				gpioPin = GPIO_PIN_15;
 				break;
-			default:
+			//default:
 				
-			return 0;
+			
 				
 		}
 		return gpioPin;
