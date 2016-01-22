@@ -42,19 +42,20 @@ int main(void) {
 	
 
 	pinMode(OUTPUTPIN, OUTPUT);
-	stepper.setMaxSpeed(1000.0);
-  stepper.setAcceleration(20.0);
-	
+	stepper.setMaxSpeed(10000000.0);
+  stepper.setAcceleration(10.0);
+	//stepper.setSpeed(50);
 
 
 	
 	while (1) {
+        
 		stepper.runToNewPosition(0);
     stepper.runToNewPosition(1000);
 
 		//Delay(1);
 
-//stepper.runSpeed();
+        //stepper.runSpeed();
 	}
 	
 	
