@@ -1,5 +1,6 @@
 */**/*.lst*
 */**/*.uvguix.*
+*/**/**.uvoptx
 */**/*/DebugConfig/*
 */**/*.crf
 */**/*.d
