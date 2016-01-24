@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.5.0">
+<eagle version="7.2.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -1841,6 +1841,56 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </deviceset>
 </devicesets>
 </library>
+<library name="IIC OLED MODULE LIBRARY">
+<packages>
+<package name="IIC128X64OLED">
+<wire x1="-13.5" y1="14" x2="13.5" y2="14" width="0.127" layer="21"/>
+<wire x1="13.5" y1="14" x2="13.5" y2="-14" width="0.127" layer="21"/>
+<wire x1="13.5" y1="-14" x2="-13.5" y2="-14" width="0.127" layer="21"/>
+<wire x1="-13.5" y1="-14" x2="-13.5" y2="14" width="0.127" layer="21"/>
+<text x="-11" y="-7" size="1.27" layer="25" rot="R90">IIC 128x64 OLED</text>
+<text x="6" y="-15" size="1.27" layer="49" rot="R180">Display Module</text>
+<pad name="VCC" x="-2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="SCL" x="0" y="12.7" drill="0.8" shape="square"/>
+<pad name="SDA" x="2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="GND" x="5.08" y="12.7" drill="0.8" shape="square"/>
+</package>
+</packages>
+<symbols>
+<symbol name="IIC-128X64-OLED-MODULE">
+<wire x1="16.54" y1="16.04" x2="16.54" y2="-10.96" width="0.254" layer="94"/>
+<wire x1="16.54" y1="-10.96" x2="-11.46" y2="-10.96" width="0.254" layer="94"/>
+<wire x1="16.54" y1="16.04" x2="-11.46" y2="16.04" width="0.254" layer="94"/>
+<wire x1="-11.46" y1="16.04" x2="-11.46" y2="-10.96" width="0.254" layer="94"/>
+<pin name="SCL" x="21.59" y="5.08" length="middle" rot="R180"/>
+<pin name="SDA" x="21.59" y="2.54" length="middle" rot="R180"/>
+<pin name="GND" x="21.59" y="0" length="middle" rot="R180"/>
+<pin name="VCC" x="21.59" y="7.62" length="middle" rot="R180"/>
+<text x="-4.46" y="-13.46" size="1.778" layer="94">Display Module</text>
+<text x="-7.46" y="13.54" size="1.778" layer="95">IIC 128x64 OLED</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="IIC128X64OLED">
+<gates>
+<gate name="G$1" symbol="IIC-128X64-OLED-MODULE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="IIC128X64OLED">
+<connects>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="SCL" pad="SCL"/>
+<connect gate="G$1" pin="SDA" pad="SDA"/>
+<connect gate="G$1" pin="VCC" pad="VCC"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1865,6 +1915,12 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY4" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="U$2" library="IIC OLED MODULE LIBRARY" deviceset="IIC128X64OLED" device=""/>
+<part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="U$3" library="IIC OLED MODULE LIBRARY" deviceset="IIC128X64OLED" device=""/>
+<part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1885,6 +1941,12 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="GND3" gate="1" x="-38.1" y="27.94" rot="R90"/>
 <instance part="GND4" gate="1" x="-60.96" y="-5.08" rot="R270"/>
 <instance part="SUPPLY4" gate="G$1" x="-58.42" y="0" rot="R90"/>
+<instance part="U$2" gate="G$1" x="-27.94" y="66.04"/>
+<instance part="SUPPLY5" gate="G$1" x="-2.54" y="73.66" rot="R270"/>
+<instance part="GND5" gate="1" x="0" y="66.04" rot="R90"/>
+<instance part="U$3" gate="G$1" x="17.78" y="66.04"/>
+<instance part="SUPPLY6" gate="G$1" x="43.18" y="73.66" rot="R270"/>
+<instance part="GND6" gate="1" x="45.72" y="66.04" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -1905,6 +1967,16 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="GND4" gate="1" pin="GND"/>
 <wire x1="-50.8" y1="-5.08" x2="-58.42" y2="-5.08" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="GND"/>
+<wire x1="-2.54" y1="66.04" x2="-6.35" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="U$3" gate="G$1" pin="GND"/>
+<wire x1="43.18" y1="66.04" x2="39.37" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="GND6" gate="1" pin="GND"/>
+</segment>
 </net>
 <net name="3.3V" class="0">
 <segment>
@@ -1921,6 +1993,16 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="U2" gate="G$1" pin="VCC"/>
 <pinref part="SUPPLY4" gate="G$1" pin="3.3V"/>
 <wire x1="-50.8" y1="0" x2="-58.42" y2="0" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="VCC"/>
+<wire x1="-2.54" y1="73.66" x2="-6.35" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="SUPPLY5" gate="G$1" pin="3.3V"/>
+</segment>
+<segment>
+<pinref part="U$3" gate="G$1" pin="VCC"/>
+<wire x1="43.18" y1="73.66" x2="39.37" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="SUPPLY6" gate="G$1" pin="3.3V"/>
 </segment>
 </net>
 <net name="5V" class="0">
@@ -1997,6 +2079,54 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="U2" gate="G$1" pin="CS"/>
 <wire x1="-50.8" y1="5.08" x2="-55.88" y2="5.08" width="0.1524" layer="91"/>
 <label x="-55.88" y="5.08" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SDA0" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="18/A4/T/SDA0"/>
+<wire x1="-17.78" y1="-2.54" x2="-20.32" y2="-2.54" width="0.1524" layer="91"/>
+<label x="-20.32" y="-2.54" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="SDA"/>
+<wire x1="-2.54" y1="68.58" x2="-6.35" y2="68.58" width="0.1524" layer="91"/>
+<label x="-5.08" y="68.58" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SCL0" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="19/A5/T/SCL0"/>
+<wire x1="-17.78" y1="-5.08" x2="-20.32" y2="-5.08" width="0.1524" layer="91"/>
+<label x="-20.32" y="-5.08" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$2" gate="G$1" pin="SCL"/>
+<wire x1="-2.54" y1="71.12" x2="-6.35" y2="71.12" width="0.1524" layer="91"/>
+<label x="-5.08" y="71.12" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SDA1" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="30/A19/SDA1"/>
+<wire x1="27.94" y1="-5.08" x2="30.48" y2="-5.08" width="0.1524" layer="91"/>
+<label x="27.94" y="-5.08" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$3" gate="G$1" pin="SDA"/>
+<wire x1="43.18" y1="68.58" x2="39.37" y2="68.58" width="0.1524" layer="91"/>
+<label x="40.64" y="68.58" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="SCL1" class="0">
+<segment>
+<pinref part="U$1" gate="G$1" pin="29/A18/SCL1"/>
+<wire x1="27.94" y1="-7.62" x2="30.48" y2="-7.62" width="0.1524" layer="91"/>
+<label x="27.94" y="-7.62" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$3" gate="G$1" pin="SCL"/>
+<wire x1="43.18" y1="71.12" x2="39.37" y2="71.12" width="0.1524" layer="91"/>
+<label x="40.64" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>

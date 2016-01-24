@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.05" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -76,26 +76,26 @@
 <wire x1="13.5" y1="14" x2="13.5" y2="-14" width="0.127" layer="21"/>
 <wire x1="13.5" y1="-14" x2="-13.5" y2="-14" width="0.127" layer="21"/>
 <wire x1="-13.5" y1="-14" x2="-13.5" y2="14" width="0.127" layer="21"/>
-<pad name="SCL" x="-0.73" y="12" drill="0.8" shape="square"/>
-<pad name="SDA" x="2" y="12" drill="0.8" shape="square"/>
-<pad name="GND" x="4.73" y="12" drill="0.8" shape="square"/>
-<pad name="VCC" x="-3.46" y="12" drill="0.8" shape="square"/>
 <text x="-11" y="-7" size="1.27" layer="25" rot="R90">IIC 128x64 OLED</text>
 <text x="6" y="-15" size="1.27" layer="49" rot="R180">Display Module</text>
+<pad name="VCC" x="-2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="SCL" x="0" y="12.7" drill="0.8" shape="square"/>
+<pad name="SDA" x="2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="GND" x="5.08" y="12.7" drill="0.8" shape="square"/>
 </package>
 </packages>
 <symbols>
 <symbol name="IIC-128X64-OLED-MODULE">
-<wire x1="-13.5" y1="14" x2="13.5" y2="14" width="0.254" layer="94"/>
-<wire x1="13.5" y1="14" x2="13.5" y2="-14" width="0.254" layer="94"/>
-<wire x1="-13.5" y1="14" x2="-13.5" y2="-14" width="0.254" layer="94"/>
-<wire x1="-13.5" y1="-14" x2="13.5" y2="-14" width="0.254" layer="94"/>
-<pin name="SCL" x="-2" y="19" length="middle" rot="R270"/>
-<pin name="SDA" x="2" y="19" length="middle" rot="R270"/>
-<pin name="GND" x="6" y="19" length="middle" rot="R270"/>
-<pin name="VCC" x="-6" y="19" length="middle" rot="R270"/>
-<text x="-7" y="-16" size="1.778" layer="94">Display Module</text>
-<text x="-11" y="-10" size="1.778" layer="95" rot="R90">IIC 128x64 OLED</text>
+<wire x1="16.54" y1="16.04" x2="16.54" y2="-10.96" width="0.254" layer="94"/>
+<wire x1="16.54" y1="-10.96" x2="-11.46" y2="-10.96" width="0.254" layer="94"/>
+<wire x1="16.54" y1="16.04" x2="-11.46" y2="16.04" width="0.254" layer="94"/>
+<wire x1="-11.46" y1="16.04" x2="-11.46" y2="-10.96" width="0.254" layer="94"/>
+<pin name="SCL" x="21.54" y="5.048" length="middle" rot="R180"/>
+<pin name="SDA" x="21.54" y="2.572" length="middle" rot="R180"/>
+<pin name="GND" x="21.54" y="0.096" length="middle" rot="R180"/>
+<pin name="VCC" x="21.54" y="7.778" length="middle" rot="R180"/>
+<text x="-4.46" y="-13.46" size="1.778" layer="94">Display Module</text>
+<text x="-7.46" y="13.54" size="1.778" layer="95">IIC 128x64 OLED</text>
 </symbol>
 </symbols>
 <devicesets>
