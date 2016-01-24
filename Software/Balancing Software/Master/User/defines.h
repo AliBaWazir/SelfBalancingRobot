@@ -29,5 +29,28 @@
 #define TM_DEFINES_H
 
 /* Put your global defines for all libraries here used in your project */
+#define PORTPINS 16
+
+#define PORTA PORTPINS*0
+#define PORTB PORTPINS*1
+#define PORTC PORTPINS*2
+#define PORTD PORTPINS*3
+#define PORTE PORTPINS*4
+#define PORTF PORTPINS*5
+#define PORTG PORTPINS*6
+#define PORTH PORTPINS*7
+
+#define STEPPER_RIGHT_STEP_PIN PORTA+2
+#define STEPPER_RIGHT_DIR_PIN PORTA+5
+
+#define STEPPER_LEFT_STEP_PIN PORTC+3
+#define STEPPER_LEFT_DIR_PIN PORTC+4
+
+#define STEPPER_RIGHT_M0_PIN PORTC+7
+#define STEPPER_RIGHT_M1_PIN PORTC+6
+
+#define STEPPER_LEFT_M0_PIN PORTD+14
+#define STEPPER_LEFT_M1_PIN PORTD+15
+
 
 #endif
