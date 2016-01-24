@@ -1891,6 +1891,77 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </deviceset>
 </devicesets>
 </library>
+<library name="CLASS D AUDIO AMP">
+<packages>
+<package name="AUDIOAMP">
+<wire x1="-3.81" y1="13.97" x2="-3.81" y2="-13.97" width="0.127" layer="21"/>
+<wire x1="3.81" y1="-13.97" x2="3.81" y2="13.97" width="0.127" layer="21"/>
+<text x="3.81" y="-13.97" size="1.27" layer="25" rot="R90">PAM8403</text>
+<text x="6.35" y="-15.24" size="1.27" layer="49" rot="R180">Audio Amplifier</text>
+<pad name="L+" x="-2.54" y="7.62" drill="0.8" shape="square"/>
+<pad name="R-" x="-2.54" y="10.16" drill="0.8" shape="square"/>
+<pad name="L-" x="-2.54" y="5.08" drill="0.8" shape="square"/>
+<pad name="GND0" x="-2.54" y="2.54" drill="0.8" shape="square"/>
+<pad name="+5V" x="-2.54" y="0" drill="0.8" shape="square"/>
+<pad name="SW" x="-2.54" y="-2.54" drill="0.8" shape="square"/>
+<pad name="GND1" x="-2.54" y="-5.08" drill="0.8" shape="square"/>
+<pad name="LN" x="-2.54" y="-7.62" drill="0.8" shape="square"/>
+<pad name="GND2" x="-2.54" y="-10.16" drill="0.8" shape="square"/>
+<pad name="R+" x="-2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="RN" x="-2.54" y="-12.7" drill="0.8" shape="square"/>
+<wire x1="-3.81" y1="-13.97" x2="3.81" y2="-13.97" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="13.97" x2="3.81" y2="13.97" width="0.127" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="AUDIOAMP">
+<wire x1="-7.62" y1="15.24" x2="-7.62" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-15.24" x2="7.62" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-15.24" x2="7.62" y2="15.24" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="15.24" x2="7.62" y2="15.24" width="0.254" layer="94"/>
+<pin name="R+" x="-12.7" y="12.7" length="middle"/>
+<pin name="R-" x="-12.7" y="10.16" length="middle"/>
+<pin name="L-" x="-12.7" y="7.62" length="middle"/>
+<pin name="L+" x="-12.7" y="5.08" length="middle"/>
+<pin name="GND0" x="-12.7" y="2.54" length="middle"/>
+<pin name="+5V" x="-12.7" y="0" length="middle"/>
+<pin name="SW" x="-12.7" y="-2.54" length="middle"/>
+<pin name="GND1" x="-12.7" y="-5.08" length="middle"/>
+<pin name="LN" x="-12.7" y="-7.62" length="middle"/>
+<pin name="GND2" x="-12.7" y="-10.16" length="middle"/>
+<pin name="RN" x="-12.7" y="-12.7" length="middle"/>
+<text x="-7.62" y="-17.78" size="1.778" layer="94">Audio Amplifier</text>
+<text x="-2.54" y="-15.24" size="1.778" layer="95">PAM8403</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="AUDIOAMP">
+<gates>
+<gate name="G$1" symbol="AUDIOAMP" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="AUDIOAMP">
+<connects>
+<connect gate="G$1" pin="+5V" pad="+5V"/>
+<connect gate="G$1" pin="GND0" pad="GND0"/>
+<connect gate="G$1" pin="GND1" pad="GND1"/>
+<connect gate="G$1" pin="GND2" pad="GND2"/>
+<connect gate="G$1" pin="L+" pad="L+"/>
+<connect gate="G$1" pin="L-" pad="L-"/>
+<connect gate="G$1" pin="LN" pad="LN"/>
+<connect gate="G$1" pin="R+" pad="R+"/>
+<connect gate="G$1" pin="R-" pad="R-"/>
+<connect gate="G$1" pin="RN" pad="RN"/>
+<connect gate="G$1" pin="SW" pad="SW"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1921,6 +1992,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <part name="U$3" library="IIC OLED MODULE LIBRARY" deviceset="IIC128X64OLED" device=""/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
+<part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND9" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="U$4" library="CLASS D AUDIO AMP" deviceset="AUDIOAMP" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -1947,6 +2023,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <instance part="U$3" gate="G$1" x="17.78" y="66.04"/>
 <instance part="SUPPLY6" gate="G$1" x="43.18" y="73.66" rot="R270"/>
 <instance part="GND6" gate="1" x="45.72" y="66.04" rot="R90"/>
+<instance part="SUPPLY7" gate="G$1" x="53.34" y="-10.16" rot="R90"/>
+<instance part="GND7" gate="1" x="55.88" y="-15.24" rot="R270"/>
+<instance part="GND8" gate="1" x="55.88" y="-7.62" rot="R270"/>
+<instance part="GND9" gate="1" x="55.88" y="-20.32" rot="R270"/>
+<instance part="U$4" gate="G$1" x="73.66" y="-10.16"/>
 </instances>
 <busses>
 </busses>
@@ -1976,6 +2057,21 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="U$3" gate="G$1" pin="GND"/>
 <wire x1="43.18" y1="66.04" x2="39.37" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="GND6" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="GND8" gate="1" pin="GND"/>
+<pinref part="U$4" gate="G$1" pin="GND0"/>
+<wire x1="58.42" y1="-7.62" x2="60.96" y2="-7.62" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND7" gate="1" pin="GND"/>
+<pinref part="U$4" gate="G$1" pin="GND1"/>
+<wire x1="58.42" y1="-15.24" x2="60.96" y2="-15.24" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND9" gate="1" pin="GND"/>
+<pinref part="U$4" gate="G$1" pin="GND2"/>
+<wire x1="58.42" y1="-20.32" x2="60.96" y2="-20.32" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
@@ -2010,6 +2106,11 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 <pinref part="TOBALANCE" gate="G$1" pin="6"/>
 <pinref part="SUPPLY2" gate="G$1" pin="5V"/>
 <wire x1="-48.26" y1="33.02" x2="-55.88" y2="33.02" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="SUPPLY7" gate="G$1" pin="5V"/>
+<pinref part="U$4" gate="G$1" pin="+5V"/>
+<wire x1="53.34" y1="-10.16" x2="60.96" y2="-10.16" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="ARDUINO_RX" class="0">
