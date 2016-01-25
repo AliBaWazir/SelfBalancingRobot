@@ -800,35 +800,35 @@ design rules under a new name.
 <wire x1="-163.35" y1="-5" x2="-173.35" y2="-5" width="0" layer="19" extent="1-1"/>
 <wire x1="60.08" y1="8.49" x2="-163.35" y2="-5" width="0" layer="19" extent="1-1"/>
 </signal>
-<signal name="N$3">
-<contactref element="J1" pad="2"/>
-<contactref element="C4" pad="C"/>
-<wire x1="-172.46" y1="-15" x2="-186.65" y2="-15" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$4">
-<contactref element="J2" pad="2"/>
-<contactref element="C5" pad="C"/>
-<wire x1="-172.46" y1="-20" x2="-196.65" y2="-15" width="0" layer="19" extent="1-1"/>
-</signal>
 <signal name="N$5">
 <contactref element="C4" pad="A"/>
 <contactref element="U$4" pad="R+"/>
 <wire x1="-147.54" y1="22.7" x2="-183.35" y2="-15" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
-<contactref element="J1" pad="1"/>
 <contactref element="U$4" pad="R-"/>
-<wire x1="-147.54" y1="20.16" x2="-175" y2="-15" width="0" layer="19" extent="1-1"/>
+<contactref element="J1" pad="2"/>
+<wire x1="-147.54" y1="20.16" x2="-172.46" y2="-15" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$7">
 <contactref element="U$4" pad="L-"/>
-<contactref element="J2" pad="1"/>
-<wire x1="-147.54" y1="15.08" x2="-175" y2="-20" width="0" layer="19" extent="1-1"/>
+<contactref element="J2" pad="2"/>
+<wire x1="-147.54" y1="15.08" x2="-172.46" y2="-20" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$8">
 <contactref element="C5" pad="A"/>
 <contactref element="U$4" pad="L+"/>
 <wire x1="-147.54" y1="17.62" x2="-193.35" y2="-15" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$3">
+<contactref element="C5" pad="C"/>
+<contactref element="J2" pad="1"/>
+<wire x1="-175" y1="-20" x2="-196.65" y2="-15" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$4">
+<contactref element="C4" pad="C"/>
+<contactref element="J1" pad="1"/>
+<wire x1="-175" y1="-15" x2="-186.65" y2="-15" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
