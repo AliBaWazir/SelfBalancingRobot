@@ -9,12 +9,16 @@ uint32_t micros(void){
 
 
 void pinMode(uint8_t pin, uint8_t mode){
-    //TM_GPIO_Init(pinPort(pin), gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+    TM_GPIO_Init(pinPort(pin), gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 }
 void digitalWrite(uint8_t pin, uint8_t state){
 	//Delay(1);
-	//if(state == HIGH) TM_GPIO_SetPinHigh(pinPort(pin), gpioPin(pin));
-	//if(state == LOW) TM_GPIO_SetPinLow(pinPort(pin), gpioPin(pin));
+	if(state == HIGH) {
+        TM_GPIO_SetPinHigh(pinPort(pin), gpioPin(pin));
+    }
+	if(state == LOW) {
+        TM_GPIO_SetPinLow(pinPort(pin), gpioPin(pin));
+    }
 }
 int digitalRead(uint8_t){
     return 1;
@@ -39,7 +43,7 @@ unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout){
 }
 
 
-/*
+
 
 
 GPIO_TypeDef* pinPort(uint8_t pin){
@@ -140,4 +144,4 @@ uint16_t gpioPin(uint8_t pin){
 		}
 		return gpioPin;
 	}
-    */
+    

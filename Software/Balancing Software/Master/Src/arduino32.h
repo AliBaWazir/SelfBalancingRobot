@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <math.h>
 //#include "tm_stm32f4_delay.h"
-//#include "tm_stm32f4_gpio.h"
+#include "tm_stm32_gpio.h"
 typedef uint8_t boolean;
 typedef uint8_t byte;
     
@@ -36,8 +36,8 @@ int digitalRead(uint8_t);
 int analogRead(uint8_t);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t, int);
-//GPIO_TypeDef* pinPort(uint8_t pin);
-//uint16_t gpioPin(uint8_t pin);
+GPIO_TypeDef* pinPort(uint8_t pin);
+uint16_t gpioPin(uint8_t pin);
 
 void delayMicroseconds(unsigned int us);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);

@@ -28,6 +28,8 @@
 #ifndef TM_DEFINES_H
 #define TM_DEFINES_H
 
+#define STM32F4xx
+
 /* Put your global defines for all libraries here used in your project */
 #define PORTPINS 16
 
