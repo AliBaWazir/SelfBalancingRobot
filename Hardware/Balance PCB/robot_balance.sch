@@ -735,12 +735,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="-1.016" y="3.556" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="3.3V" x="0" y="0" visible="off" length="short" direction="sup" rot="R90"/>
 </symbol>
-<symbol name="V_BATT">
-<wire x1="0.762" y1="1.27" x2="0" y2="2.54" width="0.254" layer="94"/>
-<wire x1="0" y1="2.54" x2="-0.762" y2="1.27" width="0.254" layer="94"/>
-<text x="-1.016" y="3.556" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="V_BATT" x="0" y="0" visible="off" length="short" direction="sup" rot="R90"/>
-</symbol>
 <symbol name="5V">
 <wire x1="0.762" y1="1.27" x2="0" y2="2.54" width="0.254" layer="94"/>
 <wire x1="0" y1="2.54" x2="-0.762" y2="1.27" width="0.254" layer="94"/>
@@ -766,20 +760,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
 <gate name="G$1" symbol="3.3V" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="V_BATT" prefix="SUPPLY">
-<description>&lt;b&gt;V_BATT&lt;/b&gt;&lt;br&gt;
-Generic symbol for the battery input to a system.</description>
-<gates>
-<gate name="G$1" symbol="V_BATT" x="0" y="0"/>
 </gates>
 <devices>
 <device name="">
@@ -6214,13 +6194,11 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="R33" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="1K"/>
 <part name="JP1" library="SparkFun-Connectors" deviceset="M04" device="POLAR_LOCK"/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="V_BATT" device=""/>
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="C3" library="SparkFun-Capacitors" deviceset="47UF-10V-10%(TANT)" device="" value="47uF"/>
 <part name="U$3" library="pololu" deviceset="POLOLU_DRV8834" device=""/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="M04" device="POLAR_LOCK"/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="V_BATT" device=""/>
 <part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="C4" library="SparkFun-Capacitors" deviceset="47UF-10V-10%(TANT)" device="" value="47uF"/>
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
@@ -6262,6 +6240,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <part name="B2" library="SparkFun-Electromechanical" deviceset="TAC_SWITCH" device="SMD"/>
 <part name="C6" library="SparkFun-Capacitors" deviceset="2.2UF-25V-+80/-20(0805)" device="" value="0.1uF"/>
 <part name="GND15" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
+<part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6339,13 +6319,11 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 </instance>
 <instance part="JP1" gate="G$1" x="322.58" y="30.48" rot="R180"/>
 <instance part="GND2" gate="1" x="312.42" y="15.24"/>
-<instance part="SUPPLY2" gate="G$1" x="312.42" y="55.88"/>
 <instance part="GND3" gate="1" x="335.28" y="35.56"/>
 <instance part="C3" gate="G$1" x="317.5" y="43.18"/>
 <instance part="U$3" gate="G$1" x="287.02" y="-12.7"/>
 <instance part="JP2" gate="G$1" x="322.58" y="-22.86" rot="R180"/>
 <instance part="GND4" gate="1" x="312.42" y="-38.1"/>
-<instance part="SUPPLY3" gate="G$1" x="312.42" y="2.54"/>
 <instance part="GND5" gate="1" x="335.28" y="-17.78"/>
 <instance part="C4" gate="G$1" x="317.5" y="-10.16"/>
 <instance part="GND6" gate="1" x="312.42" y="-139.7"/>
@@ -6387,6 +6365,8 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <instance part="B2" gate="S" x="182.88" y="-33.02"/>
 <instance part="C6" gate="G$1" x="175.26" y="-43.18"/>
 <instance part="GND15" gate="1" x="175.26" y="-53.34"/>
+<instance part="SUPPLY2" gate="G$1" x="312.42" y="2.54"/>
+<instance part="SUPPLY3" gate="G$1" x="312.42" y="55.88"/>
 </instances>
 <busses>
 </busses>
@@ -6724,26 +6704,6 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <pinref part="CONTROL" gate="G$1" pin="5"/>
 <pinref part="SUPPLY14" gate="G$1" pin="3.3V"/>
 <wire x1="226.06" y1="-68.58" x2="218.44" y2="-68.58" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="V_USB" class="3">
-<segment>
-<pinref part="U$1" gate="G$1" pin="VMOT"/>
-<pinref part="SUPPLY2" gate="G$1" pin="V_BATT"/>
-<wire x1="312.42" y1="55.88" x2="312.42" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="C3" gate="G$1" pin="+"/>
-<wire x1="312.42" y1="45.72" x2="312.42" y2="38.1" width="0.1524" layer="91"/>
-<wire x1="317.5" y1="45.72" x2="312.42" y2="45.72" width="0.1524" layer="91"/>
-<junction x="312.42" y="45.72"/>
-</segment>
-<segment>
-<pinref part="U$3" gate="G$1" pin="VMOT"/>
-<pinref part="SUPPLY3" gate="G$1" pin="V_BATT"/>
-<wire x1="312.42" y1="2.54" x2="312.42" y2="-7.62" width="0.1524" layer="91"/>
-<pinref part="C4" gate="G$1" pin="+"/>
-<wire x1="312.42" y1="-7.62" x2="312.42" y2="-15.24" width="0.1524" layer="91"/>
-<wire x1="317.5" y1="-7.62" x2="312.42" y2="-7.62" width="0.1524" layer="91"/>
-<junction x="312.42" y="-7.62"/>
 </segment>
 </net>
 <net name="N$18" class="1">
@@ -7342,6 +7302,24 @@ Basic 0.1" spaced jumper. Use with breakaway headers.</description>
 <pinref part="P1" gate="G$1" pin="VCC"/>
 <pinref part="SUPPLY13" gate="G$1" pin="5V"/>
 <wire x1="312.42" y1="-119.38" x2="312.42" y2="-121.92" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U$3" gate="G$1" pin="VMOT"/>
+<wire x1="312.42" y1="2.54" x2="312.42" y2="-7.62" width="0.1524" layer="91"/>
+<pinref part="C4" gate="G$1" pin="+"/>
+<wire x1="312.42" y1="-7.62" x2="312.42" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="317.5" y1="-7.62" x2="312.42" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="312.42" y="-7.62"/>
+<pinref part="SUPPLY2" gate="G$1" pin="5V"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="VMOT"/>
+<wire x1="312.42" y1="55.88" x2="312.42" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="C3" gate="G$1" pin="+"/>
+<wire x1="312.42" y1="45.72" x2="312.42" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="317.5" y1="45.72" x2="312.42" y2="45.72" width="0.1524" layer="91"/>
+<junction x="312.42" y="45.72"/>
+<pinref part="SUPPLY3" gate="G$1" pin="5V"/>
 </segment>
 </net>
 <net name="N$9" class="1">
