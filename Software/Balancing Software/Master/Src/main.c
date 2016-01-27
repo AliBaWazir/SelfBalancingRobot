@@ -16,6 +16,8 @@
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
 
+#include "stm32fxxx_hal.h"
+#include "tm_stm32_disco.h"
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include "invensense.h"
@@ -585,6 +587,29 @@ void Board_Init (void)
 
 int main(void)
 {
+    
+    while(1){
+        	/* Init system clock for maximum system speed */
+	TM_RCC_InitSystem();
+	
+	/* Init HAL layer */
+	HAL_Init();
+	
+	/* Init leds */
+	TM_GPIO_Init(GPIOD, 0x1000U, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+	
+	/* Init button */
+	
+	
+	while (1) {
+
+			TM_GPIO_SetPinHigh(GPIOD, (uint16_t)(0x1000U));
+            TM_GPIO_SetPinLow(GPIOD, (uint16_t)(0x1000U));
+
+	}
+        
+        
+    }
 	inv_error_t result;
 	struct int_param_s int_param;
 	
