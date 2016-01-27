@@ -4,7 +4,8 @@
 
 AccelStepper stepperR(AccelStepper::DRIVER, STEPPER_RIGHT_STEP_PIN, STEPPER_RIGHT_DIR_PIN);
 AccelStepper stepperL(AccelStepper::DRIVER, STEPPER_LEFT_STEP_PIN, STEPPER_LEFT_DIR_PIN);
-void initSteppers(){
+extern "C"{
+void initSteppers(void){
     
     
     
@@ -48,7 +49,7 @@ void initSteppers(){
    // }
     
 }
-void stepperProgram(){
+void stepperProgram(void){
     
     	
 	while (1) {
@@ -73,4 +74,5 @@ void stepperProgram(){
 
 //stepper.runSpeed();
 	}
+}
 }

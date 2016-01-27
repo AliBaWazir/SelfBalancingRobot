@@ -8,6 +8,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "usb_device.h"
@@ -17,7 +18,7 @@
 #include "usbd_cdc_if.h"
 
 
-//#include "stepper_interface.h"
+#include "stepper_interface.h"
 #include "tm_stm32_delay.h"
 #include "stm32fxxx_hal.h"
 #include "tm_stm32_disco.h"
@@ -983,3 +984,4 @@ void assert_failed(uint8_t* file, uint32_t line)
 */ 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
