@@ -16,6 +16,9 @@
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
 
+
+//#include "stepper_interface.h"
+#include "tm_stm32_delay.h"
 #include "stm32fxxx_hal.h"
 #include "tm_stm32_disco.h"
 #include "inv_mpu.h"
@@ -594,7 +597,7 @@ int main(void)
 	
 	/* Init HAL layer */
 	HAL_Init();
-	
+	TM_DELAY_Init();
 	/* Init leds */
 	TM_GPIO_Init(GPIOD, 0x1000U, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	
@@ -602,8 +605,9 @@ int main(void)
 	
 	
 	while (1) {
-
+            HAL_Delay(100);
 			TM_GPIO_SetPinHigh(GPIOD, (uint16_t)(0x1000U));
+            HAL_Delay(100);
             TM_GPIO_SetPinLow(GPIOD, (uint16_t)(0x1000U));
 
 	}

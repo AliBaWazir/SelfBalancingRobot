@@ -3,7 +3,7 @@
 
 
 uint32_t micros(void){
-    return 1;//TM_Time*1000;
+    return HAL_GetTick()*1000;
     
 }
 
