@@ -28,6 +28,10 @@
 #ifndef TM_DEFINES_H
 #define TM_DEFINES_H
 
+
+
+
+
 #define STM32F4xx
 #define STM32F4_DISCOVERY
 #define DISCO_USE_FUNCTIONS
@@ -42,7 +46,8 @@
 #define PORTE PORTPINS*4
 #define PORTF PORTPINS*5
 #define PORTG PORTPINS*6
-#define PORTH PORTPINS*7
+#define PORTH PORTPINS*#ifdef __cplusplus
+
 
 #define STEPPER_RIGHT_STEP_PIN PORTA+2
 #define STEPPER_RIGHT_DIR_PIN PORTA+5

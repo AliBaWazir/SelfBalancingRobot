@@ -4,7 +4,6 @@
 
 AccelStepper stepperR(AccelStepper::DRIVER, STEPPER_RIGHT_STEP_PIN, STEPPER_RIGHT_DIR_PIN);
 AccelStepper stepperL(AccelStepper::DRIVER, STEPPER_LEFT_STEP_PIN, STEPPER_LEFT_DIR_PIN);
-extern "C"{
 void initSteppers(void){
     
     
@@ -24,10 +23,10 @@ void initSteppers(void){
     */
     
     
-    //digitalWrite(STEPPER_RIGHT_M0_PIN, HIGH);
+    digitalWrite(STEPPER_RIGHT_M0_PIN, HIGH);
     digitalWrite(STEPPER_RIGHT_M1_PIN, LOW);
     
-    //digitalWrite(STEPPER_LEFT_M0_PIN, HIGH);
+    digitalWrite(STEPPER_LEFT_M0_PIN, HIGH);
     digitalWrite(STEPPER_LEFT_M1_PIN, HIGH);
     
     
@@ -36,26 +35,27 @@ void initSteppers(void){
     pinMode(STEPPER_LEFT_DIR_PIN, OUTPUT);
     pinMode(STEPPER_LEFT_STEP_PIN, OUTPUT);
 
-	stepperR.setMaxSpeed(10000.0);
+		stepperR.setMaxSpeed(8000.0);
     stepperR.setAcceleration(2000.0);
     
-    stepperL.setMaxSpeed(10000000.0);
-    stepperL.setAcceleration(2000.0);
-	stepperR.setSpeed(600);
-    stepperL.setSpeed(600);
+    stepperL.setMaxSpeed(100.0);
+    stepperL.setAcceleration(10000.0);
+		stepperR.setSpeed(6000);
+    stepperL.setSpeed(6000);
     //while(1){
     //    stepperR.runSpeed();
     //    stepperL.runSpeed();
    // }
     
 }
+
 void stepperProgram(void){
     
     	
 	while (1) {
         
-        //stepperR.runToNewPosition(0);
-        //stepperR.runToNewPosition(2000);
+        stepperR.runToNewPosition(0);
+        stepperR.runToNewPosition(5000);
         //stepperL.runToNewPosition(0);
         //stepperL.runToNewPosition(2000);
         
@@ -75,4 +75,4 @@ void stepperProgram(void){
 //stepper.runSpeed();
 	}
 }
-}
+

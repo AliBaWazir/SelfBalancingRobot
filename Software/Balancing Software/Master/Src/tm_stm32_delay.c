@@ -19,6 +19,8 @@
 #include "tm_stm32_delay.h"
 
 /* Functions for delay */
+__IO uint16_t TM_Counter = 0;
+__IO uint32_t TM_uTime = 0;
 __IO uint32_t TM_Time2 = 0;
 __IO uint32_t TM_Time = 0;
 
@@ -189,6 +191,14 @@ __weak void TM_DELAY_1msHandler(void) {
 
 /* Called from Systick handler */
 void HAL_IncTick(void) {
+	
+	if(TM_Counter <1000){
+		TM_uTime++;
+		TM_Counter++;
+		return;
+	}
+	TM_Counter = 0;
+	
 	uint8_t i;
 	
 	/* Increase system time */
@@ -260,5 +270,6 @@ void HAL_Delay(uint32_t Delay) {
 
 uint32_t HAL_GetTick(void) {
 	/* Return current time in milliseconds */
-	return TM_Time;
+	return TM_uTime;
 }
+
