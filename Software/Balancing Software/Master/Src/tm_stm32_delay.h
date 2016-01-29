@@ -27,6 +27,8 @@
    ----------------------------------------------------------------------
 \endverbatim
  */
+#include "ert_main.h"
+#include "stepper_interface.h"
 #ifndef TM_DELAY_H
 #define TM_DELAY_H 100
 
@@ -309,6 +311,9 @@ TM_DELAY_Timer_t* TM_DELAY_TimerAutoReloadValue(TM_DELAY_Timer_t* Timer, uint32_
  */
 void TM_DELAY_1msHandler(void);
 
+
+
+uint32_t HAL_GetuTick(void);
 /**
  * @}
  */

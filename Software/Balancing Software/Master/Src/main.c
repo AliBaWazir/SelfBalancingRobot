@@ -10,30 +10,12 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "main.h"
-#include "stm32f4xx_hal.h"
-#include "usb_device.h"
-#include "usbd_core.h"
-#include "usbd_desc.h"
-#include "usbd_cdc.h"
-#include "usbd_cdc_if.h"
 
 
-#include "stepper_interface.h"
 
-#include "tm_stm32_delay.h"
-#include "stm32fxxx_hal.h"
-#include "tm_stm32_disco.h"
-#include "inv_mpu.h"
-#include "inv_mpu_dmp_motion_driver.h"
-#include "invensense.h"
-#include "invensense_adv.h"
-#include "eMPL_outputs.h"
-#include "mltypes.h"
-#include "mpu.h"
-#include "log.h"
-#include "packet.h"
-#include "defines.h"
 volatile uint32_t hal_timestamp = 0;
+
+
 
 
 /* Private variables ---------------------------------------------------------*/
@@ -573,11 +555,11 @@ static void handle_input(void)
 void Board_Init (void)
 {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  //HAL_Init();
 
   /* Configure the system clock */
   SystemClock_Config();
-
+  setup();
   /* System interrupt init*/
   /* Sets the priority grouping field */
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_0);
@@ -593,29 +575,6 @@ void Board_Init (void)
 int main(void)
 {
     
-    while(1){
-        	/* Init system clock for maximum system speed */
-	TM_RCC_InitSystem();
-	
-	/* Init HAL layer */
-	HAL_Init();
-	TM_DELAY_Init();
-	/* Init leds */
-	TM_GPIO_Init(GPIOD, 0x1000U, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
-	
-	/* Init button */
-	initSteppers();
-	
-	while (1) {
-			HAL_Delay(100);
-			TM_GPIO_SetPinHigh(GPIOD, (uint16_t)(0x1000U));
-			HAL_Delay(100);
-			TM_GPIO_SetPinLow(GPIOD, (uint16_t)(0x1000U));
-			
-			stepperProgram();
-			}
-        
-  }
 	inv_error_t result;
 	struct int_param_s int_param;
 	

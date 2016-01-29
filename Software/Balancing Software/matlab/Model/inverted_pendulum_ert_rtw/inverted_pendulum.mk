@@ -2,7 +2,7 @@
 ## Makefile generated for Simulink model 'inverted_pendulum'. 
 ## 
 ## Makefile     : inverted_pendulum.mk
-## Generated on : Thu Jan 28 19:38:59 2016
+## Generated on : Thu Jan 28 21:02:12 2016
 ## MATLAB Coder version: 2.8 (R2015a)
 ## 
 ## Build Info:
@@ -34,7 +34,7 @@ ARCH                      = win64
 SOLVER                    = 
 SOLVER_OBJ                = 
 CLASSIC_INTERFACE         = 0
-TGT_FCN_LIB               = None
+TGT_FCN_LIB               = ISO_C
 MODELREF_LINK_RSPFILE_NAME = inverted_pendulum_ref.rsp
 RELATIVE_PATH_TO_ANCHOR   = ..
 
@@ -143,9 +143,9 @@ ECHO                = @echo
 MV                  = @move
 RUN                 =
 
-#----------------------------------------
-# "Faster Builds" Build Configuration
-#----------------------------------------
+#--------------------------------
+# "Debug" Build Configuration
+#--------------------------------
 
 ARFLAGS              = ruvs
 ASFLAGS              = -MD \
@@ -154,7 +154,8 @@ ASFLAGS              = -MD \
                        $(ASFLAGS_ADDITIONAL) \
                        $(DEFINES) \
                        $(INCLUDES) \
-                       -c
+                       -c \
+                       -g
 OBJCOPYFLAGS_BIN     = -O binary $(PRODUCT) $(PRODUCT_BIN)
 CFLAGS               = -std=c99 \
                        -MD \
@@ -162,7 +163,8 @@ CFLAGS               = -std=c99 \
                        -fdata-sections \
                        -Wall \
                        -c \
-                       -O0
+                       -O0 \
+                       -g
 CPPFLAGS             = -std=c++98 \
                        -fno-rtti \
                        -fno-exceptions \
@@ -171,16 +173,19 @@ CPPFLAGS             = -std=c++98 \
                        -fdata-sections \
                        -Wall \
                        -c \
-                       -O0
+                       -O0 \
+                       -g
 CPP_LDFLAGS          = -Wl,--gc-sections \
-                       -Wl,-Map="$(PRODUCT_NAME).map"
+                       -Wl,-Map="$(PRODUCT_NAME).map" \
+                       -g
 CPP_SHAREDLIB_LDFLAGS  =
 DOWNLOAD_FLAGS       = $(TARGET_LOAD_CMD_ARGS) $(PRODUCT_HEX)
 EXESIZE_FLAGS        = $(PRODUCT)
 EXECUTE_FLAGS        =
 OBJCOPYFLAGS_HEX     = -O ihex $(PRODUCT) $(PRODUCT_HEX)
 LDFLAGS              = -Wl,--gc-sections \
-                       -Wl,-Map="$(PRODUCT_NAME).map"
+                       -Wl,-Map="$(PRODUCT_NAME).map" \
+                       -g
 MEX_CFLAGS           =
 MEX_LDFLAGS          =
 MAKE_FLAGS           = -f $(MAKEFILE)
@@ -231,11 +236,11 @@ INCLUDES = $(INCLUDES_BUILDINFO)
 ## DEFINES
 ###########################################################################
 
-DEFINES_ = -DMODEL=inverted_pendulum -DNUMST=2 -DNCSTATES=2 -DHAVESTDIO -DONESTEPFCN=1 -DTERMFCN=1 -DMAT_FILE=0 -DMULTI_INSTANCE_CODE=0 -DINTEGER_CODE=0 -DMT=0 -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DTID01EQ=1 -D__MW_TARGET_USE_HARDWARE_RESOURCES_H__ -DUSE_STDPERIPH_DRIVER -DUSE_STM32F4_DISCOVERY -DSTM32F4XX -DARM_MATH_CM4=1 -D__FPU_PRESENT=1 -D__FPU_USED=1 -DHSE_VALUE=8000000 -DNULL=0   -D__START=_start -DEXIT_FAILURE=1 -DEXTMODE_DISABLEPRINTF -DEXTMODE_DISABLETESTING -DEXTMODE_DISABLE_ARGS_PROCESSING=1 -DOS_ROBIN=0 -DOS_TIMERS=1 -DOS_TIMERPRIO=6 -DOS_TIMERSTKSZ=200 -DRT -DSTACK_SIZE=64
-DEFINES_BUILD_ARGS = -DONESTEPFCN=1 -DTERMFCN=1 -DMAT_FILE=0 -DMULTI_INSTANCE_CODE=0 -DINTEGER_CODE=0 -DMT=0 -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0
+DEFINES_ = -DMODEL=inverted_pendulum -DNUMST=3 -DNCSTATES=2 -DHAVESTDIO -DONESTEPFCN=1 -DTERMFCN=1 -DMAT_FILE=0 -DMULTI_INSTANCE_CODE=0 -DINTEGER_CODE=0 -DMT=1 -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0 -DTID01EQ=1 -D__MW_TARGET_USE_HARDWARE_RESOURCES_H__ -DUSE_STDPERIPH_DRIVER -DUSE_STM32F4_DISCOVERY -DSTM32F4XX -DARM_MATH_CM4=1 -D__FPU_PRESENT=1 -D__FPU_USED=1 -DHSE_VALUE=8000000 -DNULL=0   -D__START=_start -DEXIT_FAILURE=1 -DEXTMODE_DISABLEPRINTF -DEXTMODE_DISABLETESTING -DEXTMODE_DISABLE_ARGS_PROCESSING=1 -DOS_ROBIN=0 -DOS_TIMERS=1 -DOS_TIMERPRIO=6 -DOS_TIMERSTKSZ=200 -DRT -DSTACK_SIZE=64
+DEFINES_BUILD_ARGS = -DONESTEPFCN=1 -DTERMFCN=1 -DMAT_FILE=0 -DMULTI_INSTANCE_CODE=0 -DINTEGER_CODE=0 -DMT=1 -DCLASSIC_INTERFACE=0 -DALLOCATIONFCN=0
 DEFINES_OPTS = -DTID01EQ=1
 DEFINES_SKIPFORSIL = -DUSE_STDPERIPH_DRIVER -DUSE_STM32F4_DISCOVERY -DSTM32F4XX -DARM_MATH_CM4=1 -D__FPU_PRESENT=1 -D__FPU_USED=1 -DHSE_VALUE=8000000 -DNULL=0   -D__START=_start -DEXIT_FAILURE=1 -DEXTMODE_DISABLEPRINTF -DEXTMODE_DISABLETESTING -DEXTMODE_DISABLE_ARGS_PROCESSING=1 -DOS_ROBIN=0 -DOS_TIMERS=1 -DOS_TIMERPRIO=6 -DOS_TIMERSTKSZ=200 -DRT -DSTACK_SIZE=64
-DEFINES_STANDARD = -DMODEL=inverted_pendulum -DNUMST=2 -DNCSTATES=2 -DHAVESTDIO
+DEFINES_STANDARD = -DMODEL=inverted_pendulum -DNUMST=3 -DNCSTATES=2 -DHAVESTDIO
 
 DEFINES = $(DEFINES_) $(DEFINES_BUILD_ARGS) $(DEFINES_OPTS) $(DEFINES_SKIPFORSIL) $(DEFINES_STANDARD)
 

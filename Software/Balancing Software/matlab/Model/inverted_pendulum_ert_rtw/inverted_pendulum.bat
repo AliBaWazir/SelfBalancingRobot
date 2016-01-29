@@ -1,3 +1,5 @@
+@echo off
+
 cd .
 
 if "%1"=="" (C:\PROGRA~1\MATLAB\MATLAB~1\R2015a\bin\win64\gmake -f inverted_pendulum.mk all) else (C:\PROGRA~1\MATLAB\MATLAB~1\R2015a\bin\win64\gmake -f inverted_pendulum.mk %1)

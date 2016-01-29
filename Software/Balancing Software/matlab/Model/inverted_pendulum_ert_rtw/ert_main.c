@@ -5,7 +5,7 @@
  *
  * Model version                  : 1.48
  * Simulink Coder version         : 8.8 (R2015a) 09-Feb-2015
- * C/C++ source code generated on : Thu Jan 28 19:38:51 2016
+ * C/C++ source code generated on : Thu Jan 28 21:02:07 2016
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -17,22 +17,70 @@
 #include "rtwtypes.h"
 
 volatile int IsrOverrun = 0;
-static boolean_T OverrunFlag = 0;
+boolean_T isRateRunning[3] = { 0, 0, 0 };
+
+boolean_T need2runFlags[3] = { 0, 0, 0 };
+
 void rt_OneStep(void)
 {
-  /* Check for overrun. Protect OverrunFlag against preemption */
-  if (OverrunFlag++) {
+  boolean_T eventFlags[3];
+
+  /* Check base rate for overrun */
+  if (isRateRunning[0]++) {
     IsrOverrun = 1;
-    OverrunFlag--;
+    isRateRunning[0]--;                /* allow future iterations to succeed*/
     return;
   }
 
+  /*
+   * For a bare-board target (i.e., no operating system), the rates
+   * that execute this base step are buffered locally to allow for
+   * overlapping preemption.  The generated code includes function
+   * writeCodeInfoFcn() which sets the rates
+   * that need to run this time step.  The return values are 1 and 0
+   * for true and false, respectively.
+   */
+  inverted_pendulum_SetEventsForThisBaseStep(eventFlags);
   __enable_irq();
-  inverted_pendulum_step();
+  inverted_pendulum_step0();
 
   /* Get model outputs here */
   __disable_irq();
-  OverrunFlag--;
+  isRateRunning[0]--;
+  if (eventFlags[2]) {
+    if (need2runFlags[2]++) {
+      IsrOverrun = 1;
+      need2runFlags[2]--;              /* allow future iterations to succeed*/
+      return;
+    }
+  }
+
+  if (need2runFlags[2]) {
+    if (isRateRunning[1]) {
+      /* Yield to higher priority*/
+      return;
+    }
+
+    isRateRunning[2]++;
+    __enable_irq();
+
+    /* Step the model for subrate "2" */
+    switch (2)
+    {
+     case 2 :
+      inverted_pendulum_step2();
+
+      /* Get model outputs here */
+      break;
+
+     default :
+      break;
+    }
+
+    __disable_irq();
+    need2runFlags[2]--;
+    isRateRunning[2]--;
+  }
 }
 
 int main(void)

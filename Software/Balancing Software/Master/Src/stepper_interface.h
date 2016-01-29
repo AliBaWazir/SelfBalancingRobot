@@ -16,6 +16,7 @@ EXTERNC void initSteppers(void);
 EXTERNC void setSteppingMode(uint8_t);
 EXTERNC void setStepperMaxSpeed(uint16_t maxSpeed);
 EXTERNC void setStepperAccel(uint16_t accel);
-EXTERNC void setStepperSpeed(uint16_t speed);
+EXTERNC void setStepperSpeed(int16_t speed);
 EXTERNC void runSpeed(void);
+EXTERNC void dWrite(uint8_t pin, uint8_t mode);
 

@@ -69,8 +69,8 @@
 #define MICROSTEPS_16   (0x10)
 #define MICROSTEPS_32   (0x20)
 
-#define MAXSPEED        (10000)
-#define MAXACCEL        (10000)
+#define MAXSPEED        (1000000)
+#define MAXACCEL        (1000000)
 
 #define PRINT_ACCEL     (0x01)
 #define PRINT_GYRO      (0x02)

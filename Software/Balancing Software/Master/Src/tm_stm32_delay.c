@@ -191,12 +191,15 @@ __weak void TM_DELAY_1msHandler(void) {
 
 /* Called from Systick handler */
 void HAL_IncTick(void) {
-	
-	if(TM_Counter <1000){
-		TM_uTime++;
+	TM_uTime+=1000;
+	if(TM_Counter <100){
+		
 		TM_Counter++;
+        
 		return;
 	}
+    
+    //rt_OneStep();
 	TM_Counter = 0;
 	
 	uint8_t i;
@@ -269,6 +272,11 @@ void HAL_Delay(uint32_t Delay) {
 }
 
 uint32_t HAL_GetTick(void) {
+	/* Return current time in milliseconds */
+	return TM_Time;
+}
+
+uint32_t HAL_GetuTick(void) {
 	/* Return current time in milliseconds */
 	return TM_uTime;
 }

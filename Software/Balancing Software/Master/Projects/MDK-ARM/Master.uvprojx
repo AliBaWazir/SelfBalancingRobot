@@ -347,7 +347,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>0</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -365,7 +365,7 @@
               <MiscControls>--wchar32 --C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,MPU9250,USE_DMP,MPL_LOG_NDEBUG=1,EMPL,EMPL_TARGET_STM32F4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Inc;..\..\Drivers\STM32F4xx_HAL_Driver\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\eMPL\driver\eMPL;..\..\Drivers\eMPL\driver\include;..\..\Drivers\eMPL\driver\STM32F4;..\..\Drivers\eMPL\eMPL-hal;..\..\Drivers\eMPL\mllite;..\..\Drivers\eMPL\mpl</IncludePath>
+              <IncludePath>..\..\Inc;..\..\Drivers\STM32F4xx_HAL_Driver\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\eMPL\driver\eMPL;..\..\Drivers\eMPL\driver\include;..\..\Drivers\eMPL\driver\STM32F4;..\..\Drivers\eMPL\eMPL-hal;..\..\Drivers\eMPL\mllite;..\..\Drivers\eMPL\mpl;..\..\..\matlab\Model\model2\R2015a\simulink\include;..\..\..\matlab\Model\model2\otherFiles;..\..\..\matlab\Model\model2\Model\inverted_pendulum_ert_rtw</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -622,6 +622,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Src\tm_stm32_delay.c</FilePath>
             </File>
+            <File>
+              <FileName>application_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Src\application_main.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -823,6 +828,24 @@
               <FilePath>..\..\Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>Matlab</GroupName>
+          <Files>
+            <File>
+              <FileName>ert_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\matlab\Model\model2\Model\inverted_pendulum_ert_rtw\ert_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>inverted_pendulum.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\matlab\Model\model2\Model\inverted_pendulum_ert_rtw\inverted_pendulum.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Simulink</GroupName>
         </Group>
       </Groups>
     </Target>

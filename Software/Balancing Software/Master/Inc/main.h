@@ -2,6 +2,31 @@
 #define __MAIN_H
 
 #include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal.h"
+#include "usb_device.h"
+#include "usbd_core.h"
+#include "usbd_desc.h"
+#include "usbd_cdc.h"
+#include "usbd_cdc_if.h"
+
+
+#include "stepper_interface.h"
+#include "ert_main.h"
+#include "application_main.h"
+
+#include "tm_stm32_delay.h"
+#include "stm32fxxx_hal.h"
+#include "tm_stm32_disco.h"
+#include "inv_mpu.h"
+#include "inv_mpu_dmp_motion_driver.h"
+#include "invensense.h"
+#include "invensense_adv.h"
+#include "eMPL_outputs.h"
+#include "mltypes.h"
+#include "mpu.h"
+#include "log.h"
+#include "packet.h"
+#include "defines.h"
 
 struct rx_s {
     unsigned char header[3];

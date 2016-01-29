@@ -30,6 +30,8 @@
 #include "log.h"
 #include "stm32f4xx_hal.h"
 
+
+
 #include "usb_device.h"
 #include "usbd_cdc.h"
 
@@ -161,6 +163,9 @@ void eMPL_send_quat(long *quat)
 	
 	USBD_CDC_SetTxBuffer (&hUsbDeviceFS, (uint8_t *)out, 18);
 	USBD_CDC_TransmitPacket (&hUsbDeviceFS);
+    application_main(angle);
+        
+    
 }
 
 void eMPL_send_data(unsigned char type, long *data)
