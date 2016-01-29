@@ -46,7 +46,7 @@
 #define PORTE PORTPINS*4
 #define PORTF PORTPINS*5
 #define PORTG PORTPINS*6
-#define PORTH PORTPINS*#ifdef __cplusplus
+#define PORTH PORTPINS*7
 
 
 #define STEPPER_RIGHT_STEP_PIN PORTA+2
@@ -58,11 +58,19 @@
 #define STEPPER_RIGHT_M0_PIN PORTC+7
 #define STEPPER_RIGHT_M1_PIN PORTC+6
 
-#define STEPPER_LEFT_M0_PIN PORTD+14
-#define STEPPER_LEFT_M1_PIN PORTD+15
+#define STEPPER_LEFT_M0_PIN PORTD+10
+#define STEPPER_LEFT_M1_PIN PORTD+9
 
 
+#define MICROSTEPS_1    (0x01)
+#define MICROSTEPS_2    (0x02)
+#define MICROSTEPS_4    (0x04)
+#define MICROSTEPS_8    (0x08)
+#define MICROSTEPS_16   (0x10)
+#define MICROSTEPS_32   (0x20)
 
+#define MAXSPEED        (10000)
+#define MAXACCEL        (10000)
 
 #define PRINT_ACCEL     (0x01)
 #define PRINT_GYRO      (0x02)
