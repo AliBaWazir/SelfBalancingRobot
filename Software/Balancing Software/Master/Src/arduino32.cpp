@@ -12,7 +12,7 @@ void pinMode(uint8_t pin, uint8_t mode){
     TM_GPIO_Init(pinPort(pin), (uint16_t)gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 }
 void digitalWrite(uint8_t pin, uint8_t state){
-	Delay(1);
+	//Delay(1);
 	if(state == HIGH) {
         TM_GPIO_SetPinHigh(pinPort(pin), gpioPin(pin));
     }

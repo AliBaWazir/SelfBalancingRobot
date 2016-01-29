@@ -17,6 +17,7 @@
  * |----------------------------------------------------------------------
  */
 #include "tm_stm32_delay.h"
+#include "defines.h"
 
 /* Functions for delay */
 __IO uint16_t TM_Counter = 0;
@@ -191,8 +192,10 @@ __weak void TM_DELAY_1msHandler(void) {
 
 /* Called from Systick handler */
 void HAL_IncTick(void) {
-	TM_uTime+=1000;
-	if(TM_Counter <100){
+	TM_uTime+=20;
+    //dWrite(PORTE+9, HIGH);
+    //dWrite(PORTE+9, LOW);
+	if(TM_Counter <25){
 		
 		TM_Counter++;
         

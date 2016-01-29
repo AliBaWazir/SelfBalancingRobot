@@ -7,16 +7,13 @@
 #include <math.h>
 #include "tm_stm32_delay.h"
 #include "tm_stm32_gpio.h"
+#include "defines.h"
 
 typedef uint8_t boolean;
 typedef uint8_t byte;
     
 
-#define HIGH 0x1
-#define LOW  0x0
 
-#define INPUT 0x0
-#define OUTPUT 0x1
 	
 #define min(a,b) ((a)<(b)?(a):(b))		
 #define max(a,b) ((a)>(b)?(a):(b))	

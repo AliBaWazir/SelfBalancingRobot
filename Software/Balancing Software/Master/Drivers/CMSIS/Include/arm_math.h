@@ -377,6 +377,7 @@ extern "C"
   /**
    * @brief definition to read/write two 16 bit values.
    */
+#include "defines.h"
 #if defined __CC_ARM
 #define __SIMD32_TYPE int32_t __packed
 #define CMSIS_UNUSED __attribute__((unused))

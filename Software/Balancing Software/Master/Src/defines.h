@@ -31,12 +31,19 @@
 
 
 
-
 #define STM32F4xx
 #define STM32F4_DISCOVERY
 #define DISCO_USE_FUNCTIONS
 
 /* Put your global defines for all libraries here used in your project */
+
+#define HIGH 0x1
+#define LOW  0x0
+
+#define INPUT 0x0
+#define OUTPUT 0x1
+
+
 #define PORTPINS 16
 
 #define PORTA PORTPINS*0
@@ -69,8 +76,8 @@
 #define MICROSTEPS_16   (0x10)
 #define MICROSTEPS_32   (0x20)
 
-#define MAXSPEED        (1000000)
-#define MAXACCEL        (1000000)
+#define MAXSPEED        (uint16_t)(1000000)
+#define MAXACCEL        (uint16_t)(1000000)
 
 #define PRINT_ACCEL     (0x01)
 #define PRINT_GYRO      (0x02)

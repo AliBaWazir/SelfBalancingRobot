@@ -1,6 +1,6 @@
 #include "stm32f4xx_hal.h"
 #include "stepper_interface.h"
-
+#include "arm_math.h"
 
 #include "tm_stm32_delay.h"
 #include "stm32fxxx_hal.h"

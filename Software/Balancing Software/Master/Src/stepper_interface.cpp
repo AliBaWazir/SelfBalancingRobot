@@ -6,12 +6,14 @@ AccelStepper stepperR(AccelStepper::DRIVER, STEPPER_RIGHT_STEP_PIN, STEPPER_RIGH
 AccelStepper stepperL(AccelStepper::DRIVER, STEPPER_LEFT_STEP_PIN, STEPPER_LEFT_DIR_PIN);
 void initSteppers(void){
     
+    stepperR.setMinPulseWidth(0);
+    stepperL.setMinPulseWidth(0);
     
     //enable steppers
     pinMode(PORTD+11, OUTPUT);
     digitalWrite(PORTD+11, HIGH);
     
-    setSteppingMode(MICROSTEPS_8);
+    setSteppingMode(MICROSTEPS_4);
 
     pinMode(STEPPER_RIGHT_DIR_PIN, OUTPUT);
     pinMode(STEPPER_RIGHT_STEP_PIN, OUTPUT);
@@ -19,32 +21,44 @@ void initSteppers(void){
     pinMode(STEPPER_LEFT_STEP_PIN, OUTPUT);
     pinMode(PORTD+15, OUTPUT);
     
-
+    pinMode(PORTE+9, OUTPUT);
+    setStepperMaxSpeed(MAXSPEED);
+    setStepperAccel(MAXACCEL);
 
 
     
 }
+void stepperRun(void){
+    stepperR.run();
+    stepperL.run();
+}
+int32_t stepperCurrentPosition(void){
+    return stepperL.currentPosition();
+    
+}
+void stepperMoveTo(int16_t position){
+        stepperR.moveTo(position);
+        stepperL.moveTo(position);
+}
 void setStepperMaxSpeed(uint16_t maxSpeed){
-    stepperR.setMaxSpeed(maxSpeed);
-    stepperL.setMaxSpeed(maxSpeed);
+        stepperR.setMaxSpeed(maxSpeed);
+        stepperL.setMaxSpeed(maxSpeed);
 }
 void setStepperAccel(uint16_t accel){
-    stepperR.setAcceleration(MAXACCEL);
-    stepperL.setAcceleration(MAXACCEL);
+        stepperR.setAcceleration(accel);
+        stepperL.setAcceleration(accel);
 }
 void setStepperSpeed(float speed){
-    stepperR.setSpeed(speed);
-    stepperL.setSpeed(speed);
+        stepperR.setSpeed(speed);
+        stepperL.setSpeed(speed);
 }
 void dWrite(uint8_t pin, uint8_t mode){
-    digitalWrite(pin, mode);
+        digitalWrite(pin, mode);
 }
 
 void runSpeed(){
-    stepperR.runSpeed();
-    stepperL.runSpeed();
-    digitalWrite(PORTD+13, HIGH);
-    digitalWrite(PORTD+13, LOW);
+        stepperR.runSpeed();
+        stepperL.runSpeed();
 }
 
 void setSteppingMode(uint8_t mode){

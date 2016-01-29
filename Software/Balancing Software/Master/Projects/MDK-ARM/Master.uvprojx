@@ -347,7 +347,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -363,9 +363,9 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--wchar32 --C99</MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx,MPU9250,USE_DMP,MPL_LOG_NDEBUG=1,EMPL,EMPL_TARGET_STM32F4</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,MPU9250,USE_DMP,MPL_LOG_NDEBUG=1,EMPL,EMPL_TARGET_STM32F4,ARM_MATH_CM4,__FPU_PRESENT=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Inc;..\..\Drivers\STM32F4xx_HAL_Driver\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\eMPL\driver\eMPL;..\..\Drivers\eMPL\driver\include;..\..\Drivers\eMPL\driver\STM32F4;..\..\Drivers\eMPL\eMPL-hal;..\..\Drivers\eMPL\mllite;..\..\Drivers\eMPL\mpl;..\..\..\matlab\Model\model2\R2015a\simulink\include;..\..\..\matlab\Model\model2\otherFiles;..\..\..\matlab\Model\model2\Model\inverted_pendulum_ert_rtw</IncludePath>
+              <IncludePath>..\..\Inc;..\..\Drivers\STM32F4xx_HAL_Driver\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\eMPL\driver\eMPL;..\..\Drivers\eMPL\driver\include;..\..\Drivers\eMPL\driver\STM32F4;..\..\Drivers\eMPL\eMPL-hal;..\..\Drivers\eMPL\mllite;..\..\Drivers\eMPL\mpl;..\..\..\matlab\Model\model2\R2015a\simulink\include;..\..\..\matlab\Model\model2\otherFiles;..\..\..\matlab\Model\model2\Model\inverted_pendulum_ert_rtw;..\..\Src;..\..\..\..\..\..\..\Downloads\PROJECT-03-STM32F4xx_PID\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -636,6 +636,16 @@
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pid_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\stm32f429-master\stm32f429-master\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ControllerFunctions\arm_pid_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pid_reset_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\stm32f429-master\stm32f429-master\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\DSP_Lib\Source\ControllerFunctions\arm_pid_reset_f32.c</FilePath>
             </File>
           </Files>
         </Group>
