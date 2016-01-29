@@ -46,6 +46,7 @@ void loop() {
   digitalWrite(exposurePin, HIGH);
   delayMicroseconds(50);
   digitalWrite(clkPin, HIGH);
+  int frame_buffer[128];
   
   
   delayMicroseconds(1);
@@ -55,19 +56,18 @@ void loop() {
   
   digitalWrite(exposurePin, LOW);
   
-  Serial.print("sensor = ");
-  for (int i=0; i<129; i++){
+  
+  for (int i=0; i<128; i++){
     digitalWrite(clkPin, HIGH);
     delayMicroseconds(50);
     
     // read the analog in value:
     sensorValue = analogRead(analogInPin);
-
+    frame_buffer[i]= sensorValue;
   
-    // print the results to the serial monitor:
     
-    Serial.print(sensorValue);
-    Serial.print(",");
+    
+    
     
 
     
@@ -78,7 +78,20 @@ void loop() {
     
     
   }
-  Serial.println("");
+
+  // print the results to the serial monitor:
+  debug_print_array(frame_buffer, 128, 16); //will ignore the first 16 bits
+  
 
   delay(10);
 }
+
+void debug_print_array (int *input_array, int length, int margin_offset){
+    Serial.print("sensor = ");
+    for (int i=(margin_offset-1); i<(length-margin_offset); i++){
+       Serial.print(input_array[i]);
+       Serial.print(",");
+    }
+    Serial.println("");
+}
+
