@@ -3648,6 +3648,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <part name="LINEAR_ARRAY_SENSOR2" library="SparkFun-Connectors" deviceset="M05" device="LOCK"/>
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY8" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3657,7 +3658,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <instance part="U$1" gate="G$1" x="5.08" y="15.24"/>
 <instance part="U1" gate="G$1" x="90.17" y="41.91"/>
 <instance part="J_BT_BOARD_1" gate="J_BT_BOARD" x="110.49" y="-1.27" rot="R180"/>
-<instance part="J_ULTRASONIC_1" gate="J_ULTRASONIC" x="-87.63" y="2.54"/>
+<instance part="J_ULTRASONIC_1" gate="J_ULTRASONIC" x="-85.09" y="2.54"/>
 <instance part="SUPPLY1" gate="G$1" x="35.56" y="40.64"/>
 <instance part="GND1" gate="1" x="30.48" y="33.02"/>
 <instance part="GND2" gate="G$1" x="-25.4" y="-25.4"/>
@@ -3684,6 +3685,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <instance part="LINEAR_ARRAY_SENSOR2" gate="G$1" x="-93.98" y="55.88"/>
 <instance part="GND7" gate="1" x="-71.12" y="60.96" rot="R90"/>
 <instance part="SUPPLY8" gate="G$1" x="-66.04" y="58.42"/>
+<instance part="GND8" gate="1" x="-106.68" y="10.16" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -3736,6 +3738,15 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <wire x1="-86.36" y1="60.96" x2="-73.66" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 </segment>
+<segment>
+<wire x1="-99.06" y1="10.16" x2="-97.79" y2="10.16" width="0.1524" layer="91"/>
+<pinref part="GND8" gate="1" pin="GND"/>
+<wire x1="-97.79" y1="10.16" x2="-104.14" y2="10.16" width="0.1524" layer="91"/>
+<wire x1="-104.14" y1="10.16" x2="-106.68" y2="10.16" width="0.1524" layer="91"/>
+<junction x="-104.14" y="10.16"/>
+<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="GND"/>
+<junction x="-97.79" y="10.16"/>
+</segment>
 </net>
 <net name="3.3V" class="0">
 <segment>
@@ -3783,6 +3794,12 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="C1" gate="G$1" pin="+"/>
 <junction x="45.72" y="-10.16"/>
 <wire x1="45.72" y1="-10.16" x2="45.72" y2="-7.62" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<wire x1="-99.06" y1="-5.08" x2="-97.79" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="5V"/>
+<wire x1="-97.79" y1="-5.08" x2="-106.68" y2="-5.08" width="0.1524" layer="91"/>
+<junction x="-97.79" y="-5.08"/>
 </segment>
 </net>
 <net name="ARDUINO_RX" class="0">
@@ -3991,6 +4008,32 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="LINEAR_ARRAY_SENSOR2" gate="G$1" pin="1"/>
 <wire x1="-86.36" y1="50.8" x2="-71.12" y2="50.8" width="0.1524" layer="91"/>
 <label x="-83.82" y="50.8" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ECHO" class="0">
+<segment>
+<wire x1="-99.06" y1="5.08" x2="-97.79" y2="5.08" width="0.1524" layer="91"/>
+<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="ECHO"/>
+<wire x1="-97.79" y1="5.08" x2="-106.68" y2="5.08" width="0.1524" layer="91"/>
+<junction x="-97.79" y="5.08"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="20/A6/PWM"/>
+<wire x1="-17.78" y1="-7.62" x2="-20.32" y2="-7.62" width="0.1524" layer="91"/>
+<label x="-20.32" y="-7.62" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TRIG" class="0">
+<segment>
+<wire x1="-99.06" y1="0" x2="-97.79" y2="0" width="0.1524" layer="91"/>
+<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="TRIG"/>
+<wire x1="-97.79" y1="0" x2="-106.68" y2="0" width="0.1524" layer="91"/>
+<junction x="-97.79" y="0"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="21/A7/PWM"/>
+<wire x1="-17.78" y1="-10.16" x2="-20.32" y2="-10.16" width="0.1524" layer="91"/>
+<label x="-20.32" y="-10.16" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
