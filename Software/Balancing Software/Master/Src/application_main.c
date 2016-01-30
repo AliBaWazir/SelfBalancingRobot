@@ -10,7 +10,7 @@
 float temps[2];
 float pid_error;
 float output;
-
+int32_t force;
 arm_pid_instance_f32 PID;
 
 
@@ -18,7 +18,7 @@ arm_pid_instance_f32 PID;
 void setup(){
     TM_RCC_InitSystem();
     TM_DELAY_Init();
-    initSteppers();
+    //initSteppers();
     
     setStepperAccel(1);
     ANGLE_WANT = -0.02;
@@ -35,6 +35,11 @@ void setup(){
 }
 //This function gets called by the MPU with angle Data
 void application_main(int16_t angle){
+	Theta = angle/1000;
+	inverted_pendulum_initialize();
+	force = F;
+	
+	/*
     ANGLE_CURRENT = angle/10;
     if(abs(ANGLE_CURRENT) > 7){
         stepperMoveTo(stepperCurrentPosition());
@@ -56,7 +61,7 @@ void application_main(int16_t angle){
     //Delay(1);
    
     
-   
+   */
     
 }
 void TM_DELAY_1msHandler(){

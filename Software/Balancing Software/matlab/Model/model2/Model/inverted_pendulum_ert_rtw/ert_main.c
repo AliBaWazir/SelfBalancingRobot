@@ -112,8 +112,8 @@ void main_pend(void)
   __enable_irq();
   while (runModel) {
     runModel =
-      (rtmGetErrorStatus(inverted_pendulum_M) == (NULL)) && !rtmGetStopRequested
-      (inverted_pendulum_M);
+      (rtmGetErrorStatus(inverted_pendulum_M) == (NULL)) 
+		   && !rtmGetStopRequested(inverted_pendulum_M);
   }
 
   /* Disable rt_OneStep() here */

@@ -190,6 +190,9 @@ __weak void TM_DELAY_1msHandler(void) {
 /*       Custom HAL function implementations       */
 /***************************************************/
 
+
+extern void rt_OneStep(void);
+
 /* Called from Systick handler */
 void HAL_IncTick(void) {
 	TM_uTime+=20;
@@ -201,7 +204,11 @@ void HAL_IncTick(void) {
         
 		return;
 	}
-    
+  __disable_irq();
+	rt_OneStep();
+	__enable_irq();
+	
+	
     //rt_OneStep();
 	TM_Counter = 0;
 	
