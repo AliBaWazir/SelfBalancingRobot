@@ -2949,10 +2949,10 @@ Standard 5-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="-13.5" y1="-14" x2="-13.5" y2="14" width="0.127" layer="21"/>
 <text x="-11" y="-7" size="1.27" layer="25" rot="R90">IIC 128x64 OLED</text>
 <text x="6" y="-15" size="1.27" layer="49" rot="R180">Display Module</text>
-<pad name="VCC" x="-2.54" y="12.7" drill="0.8" shape="square"/>
-<pad name="SCL" x="0" y="12.7" drill="0.8" shape="square"/>
-<pad name="SDA" x="2.54" y="12.7" drill="0.8" shape="square"/>
-<pad name="GND" x="5.08" y="12.7" drill="0.8" shape="square"/>
+<pad name="VCC" x="-3.81" y="11.7475" drill="0.8" shape="square"/>
+<pad name="SCL" x="-1.27" y="11.684" drill="0.8" shape="octagon"/>
+<pad name="SDA" x="1.27" y="11.684" drill="0.8" shape="octagon"/>
+<pad name="GND" x="3.81" y="11.684" drill="0.8" shape="octagon"/>
 </package>
 </packages>
 <symbols>
