@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'discrete_PID'.
  *
- * Model version                  : 1.2
+ * Model version                  : 1.8
  * Simulink Coder version         : 8.8 (R2015a) 09-Feb-2015
- * C/C++ source code generated on : Mon Feb 01 03:38:39 2016
+ * C/C++ source code generated on : Mon Feb 01 06:07:24 2016
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -41,37 +41,49 @@ typedef struct tag_RTM_discrete_PID_T RT_MODEL_discrete_PID_T;
 
 /* Block states (auto storage) for system '<Root>' */
 typedef struct {
-  real_T Integrator_DSTATE;            /* '<S1>/Integrator' */
-  real_T Filter_DSTATE;                /* '<S1>/Filter' */
-  real_T Integrator_DSTATE_h;          /* '<S2>/Integrator' */
-  real_T Filter_DSTATE_l;              /* '<S2>/Filter' */
+  real_T Filter_DSTATE;                /* '<S2>/Filter' */
+  real_T Integrator_DSTATE;            /* '<S2>/Integrator' */
+  real_T Integrator_DSTATE_l;          /* '<S1>/Integrator' */
+  real_T Filter_DSTATE_f;              /* '<S1>/Filter' */
 } DW_discrete_PID_T;
 
 /* Parameters (auto storage) */
 struct P_discrete_PID_T_ {
-  real_T Integrator_gainval;           /* Computed Parameter: Integrator_gainval
-                                        * Referenced by: '<S1>/Integrator'
+  real_T Position_LowerSaturationLimit;/* Mask Parameter: Position_LowerSaturationLimit
+                                        * Referenced by: '<S2>/Saturate'
                                         */
-  real_T Integrator_IC;                /* Expression: InitialConditionForIntegrator
-                                        * Referenced by: '<S1>/Integrator'
+  real_T Angle_LowerSaturationLimit;   /* Mask Parameter: Angle_LowerSaturationLimit
+                                        * Referenced by: '<S1>/Saturate'
+                                        */
+  real_T Position_UpperSaturationLimit;/* Mask Parameter: Position_UpperSaturationLimit
+                                        * Referenced by: '<S2>/Saturate'
+                                        */
+  real_T Angle_UpperSaturationLimit;   /* Mask Parameter: Angle_UpperSaturationLimit
+                                        * Referenced by: '<S1>/Saturate'
                                         */
   real_T Filter_gainval;               /* Computed Parameter: Filter_gainval
-                                        * Referenced by: '<S1>/Filter'
+                                        * Referenced by: '<S2>/Filter'
                                         */
   real_T Filter_IC;                    /* Expression: InitialConditionForFilter
-                                        * Referenced by: '<S1>/Filter'
+                                        * Referenced by: '<S2>/Filter'
                                         */
-  real_T Integrator_gainval_c;         /* Computed Parameter: Integrator_gainval_c
+  real_T Integrator_gainval;           /* Computed Parameter: Integrator_gainval
                                         * Referenced by: '<S2>/Integrator'
                                         */
-  real_T Integrator_IC_b;              /* Expression: InitialConditionForIntegrator
+  real_T Integrator_IC;                /* Expression: InitialConditionForIntegrator
                                         * Referenced by: '<S2>/Integrator'
+                                        */
+  real_T Integrator_gainval_n;         /* Computed Parameter: Integrator_gainval_n
+                                        * Referenced by: '<S1>/Integrator'
+                                        */
+  real_T Integrator_IC_f;              /* Expression: InitialConditionForIntegrator
+                                        * Referenced by: '<S1>/Integrator'
                                         */
   real_T Filter_gainval_h;             /* Computed Parameter: Filter_gainval_h
-                                        * Referenced by: '<S2>/Filter'
+                                        * Referenced by: '<S1>/Filter'
                                         */
-  real_T Filter_IC_b;                  /* Expression: InitialConditionForFilter
-                                        * Referenced by: '<S2>/Filter'
+  real_T Filter_IC_a;                  /* Expression: InitialConditionForFilter
+                                        * Referenced by: '<S1>/Filter'
                                         */
 };
 
@@ -84,7 +96,7 @@ struct tag_RTM_discrete_PID_T {
 };
 
 /* Imported (extern) block signals */
-extern real_T controllerOutput;        /* '<Root>/Sum' */
+extern real_T controllerOutput;        /* '<S1>/Saturate' */
 extern real_T controllerInputAngle;    /* '<Root>/In1' */
 extern real_T controllerAngleP;        /* '<Root>/In2' */
 extern real_T controllerAngleI;        /* '<Root>/In3' */
@@ -93,6 +105,7 @@ extern real_T controllerInputPosition; /* '<Root>/In5' */
 extern real_T controllerPositionP;     /* '<Root>/In6' */
 extern real_T controllerPositionI;     /* '<Root>/In7' */
 extern real_T controllerPositionD;     /* '<Root>/In8' */
+extern real_T angleSetpoint;           /* '<Root>/In9' */
 
 /* Block parameters (auto storage) */
 extern P_discrete_PID_T discrete_PID_P;

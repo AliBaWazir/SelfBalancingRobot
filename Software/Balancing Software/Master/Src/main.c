@@ -559,6 +559,7 @@ void Board_Init (void)
 
   /* Configure the system clock */
   SystemClock_Config();
+ 
   setup();
   /* System interrupt init*/
   /* Sets the priority grouping field */
@@ -569,6 +570,7 @@ void Board_Init (void)
   MX_GPIO_Init();
   MX_USB_DEVICE_Init();
   MX_I2C1_Init();
+  
 }
 
 
@@ -852,7 +854,7 @@ void SystemClock_Config(void)
 void MX_I2C1_Init(void)
 {
 
-  hi2c1.Instance = I2C1;
+  hi2c1.Instance = I2C2;
   hi2c1.Init.ClockSpeed = 400000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_16_9;
   hi2c1.Init.OwnAddress1 = 0;

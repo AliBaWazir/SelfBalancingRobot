@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'discrete_PID'.
  *
- * Model version                  : 1.2
+ * Model version                  : 1.8
  * Simulink Coder version         : 8.8 (R2015a) 09-Feb-2015
- * C/C++ source code generated on : Mon Feb 01 03:38:39 2016
+ * C/C++ source code generated on : Mon Feb 01 06:07:24 2016
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -68,7 +68,7 @@ void rt_OneStep(void)
 //  discrete_PID_terminate();
 //  __disable_irq();
 //  return 0;
-
+//}
 
 /*
  * File trailer for generated code.

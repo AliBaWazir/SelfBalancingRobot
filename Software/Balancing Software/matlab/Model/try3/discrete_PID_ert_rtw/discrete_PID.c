@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'discrete_PID'.
  *
- * Model version                  : 1.2
+ * Model version                  : 1.8
  * Simulink Coder version         : 8.8 (R2015a) 09-Feb-2015
- * C/C++ source code generated on : Mon Feb 01 03:38:39 2016
+ * C/C++ source code generated on : Mon Feb 01 06:07:24 2016
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -17,29 +17,41 @@
 
 /* Block parameters (auto storage) */
 P_discrete_PID_T discrete_PID_P = {
-  0.01,                                /* Computed Parameter: Integrator_gainval
-                                        * Referenced by: '<S1>/Integrator'
+  -100.0,                              /* Mask Parameter: Position_LowerSaturationLimit
+                                        * Referenced by: '<S2>/Saturate'
                                         */
-  0.0,                                 /* Expression: InitialConditionForIntegrator
-                                        * Referenced by: '<S1>/Integrator'
+  -100.0,                              /* Mask Parameter: Angle_LowerSaturationLimit
+                                        * Referenced by: '<S1>/Saturate'
+                                        */
+  100.0,                               /* Mask Parameter: Position_UpperSaturationLimit
+                                        * Referenced by: '<S2>/Saturate'
+                                        */
+  100.0,                               /* Mask Parameter: Angle_UpperSaturationLimit
+                                        * Referenced by: '<S1>/Saturate'
                                         */
   0.01,                                /* Computed Parameter: Filter_gainval
-                                        * Referenced by: '<S1>/Filter'
+                                        * Referenced by: '<S2>/Filter'
                                         */
   0.0,                                 /* Expression: InitialConditionForFilter
-                                        * Referenced by: '<S1>/Filter'
+                                        * Referenced by: '<S2>/Filter'
                                         */
-  0.01,                                /* Computed Parameter: Integrator_gainval_c
+  0.01,                                /* Computed Parameter: Integrator_gainval
                                         * Referenced by: '<S2>/Integrator'
                                         */
   0.0,                                 /* Expression: InitialConditionForIntegrator
                                         * Referenced by: '<S2>/Integrator'
                                         */
+  0.01,                                /* Computed Parameter: Integrator_gainval_n
+                                        * Referenced by: '<S1>/Integrator'
+                                        */
+  0.0,                                 /* Expression: InitialConditionForIntegrator
+                                        * Referenced by: '<S1>/Integrator'
+                                        */
   0.01,                                /* Computed Parameter: Filter_gainval_h
-                                        * Referenced by: '<S2>/Filter'
+                                        * Referenced by: '<S1>/Filter'
                                         */
   0.0                                  /* Expression: InitialConditionForFilter
-                                        * Referenced by: '<S2>/Filter'
+                                        * Referenced by: '<S1>/Filter'
                                         */
 };
 
@@ -53,18 +65,10 @@ RT_MODEL_discrete_PID_T *const discrete_PID_M = &discrete_PID_M_;
 /* Model step function */
 void discrete_PID_step(void)
 {
+  real_T rtb_Sum1;
   real_T rtb_NOut;
-  real_T rtb_NOut_j;
-
-  /* Product: '<S1>/NOut' incorporates:
-   *  DiscreteIntegrator: '<S1>/Filter'
-   *  Inport: '<Root>/In1'
-   *  Inport: '<Root>/In4'
-   *  Product: '<S1>/DOut'
-   *  Sum: '<S1>/SumD'
-   */
-  rtb_NOut = (controllerInputAngle * controllerAngleD -
-              discrete_PID_DW.Filter_DSTATE) * 0.0;
+  real_T rtb_NOut_b;
+  real_T u0;
 
   /* Product: '<S2>/NOut' incorporates:
    *  DiscreteIntegrator: '<S2>/Filter'
@@ -73,35 +77,63 @@ void discrete_PID_step(void)
    *  Product: '<S2>/DOut'
    *  Sum: '<S2>/SumD'
    */
-  rtb_NOut_j = (controllerInputPosition * controllerPositionD -
-                discrete_PID_DW.Filter_DSTATE_l) * 0.0;
+  rtb_NOut = (controllerInputPosition * controllerPositionD -
+              discrete_PID_DW.Filter_DSTATE) * 0.0;
 
-  /* Sum: '<Root>/Sum' incorporates:
-   *  DiscreteIntegrator: '<S1>/Integrator'
+  /* Sum: '<S2>/Sum' incorporates:
    *  DiscreteIntegrator: '<S2>/Integrator'
-   *  Inport: '<Root>/In1'
-   *  Inport: '<Root>/In2'
    *  Inport: '<Root>/In5'
    *  Inport: '<Root>/In6'
-   *  Product: '<S1>/POut'
    *  Product: '<S2>/POut'
-   *  Sum: '<S1>/Sum'
-   *  Sum: '<S2>/Sum'
    */
-  controllerOutput = ((controllerInputAngle * controllerAngleP +
-                       discrete_PID_DW.Integrator_DSTATE) + rtb_NOut) +
-    ((controllerInputPosition * controllerPositionP +
-      discrete_PID_DW.Integrator_DSTATE_h) + rtb_NOut_j);
+  u0 = (controllerInputPosition * controllerPositionP +
+        discrete_PID_DW.Integrator_DSTATE) + rtb_NOut;
 
-  /* Update for DiscreteIntegrator: '<S1>/Integrator' incorporates:
+  /* Saturate: '<S2>/Saturate' */
+  if (u0 > discrete_PID_P.Position_UpperSaturationLimit) {
+    u0 = discrete_PID_P.Position_UpperSaturationLimit;
+  } else {
+    if (u0 < discrete_PID_P.Position_LowerSaturationLimit) {
+      u0 = discrete_PID_P.Position_LowerSaturationLimit;
+    }
+  }
+
+  /* Sum: '<Root>/Sum1' incorporates:
    *  Inport: '<Root>/In1'
-   *  Inport: '<Root>/In3'
-   *  Product: '<S1>/IOut'
+   *  Inport: '<Root>/In9'
+   *  Saturate: '<S2>/Saturate'
    */
-  discrete_PID_DW.Integrator_DSTATE += controllerInputAngle * controllerAngleI *
-    discrete_PID_P.Integrator_gainval;
+  rtb_Sum1 = (controllerInputAngle - angleSetpoint) - u0;
 
-  /* Update for DiscreteIntegrator: '<S1>/Filter' */
+  /* Product: '<S1>/NOut' incorporates:
+   *  DiscreteIntegrator: '<S1>/Filter'
+   *  Inport: '<Root>/In4'
+   *  Product: '<S1>/DOut'
+   *  Sum: '<S1>/SumD'
+   */
+  rtb_NOut_b = (rtb_Sum1 * controllerAngleD - discrete_PID_DW.Filter_DSTATE_f) *
+    0.0;
+
+  /* Sum: '<S1>/Sum' incorporates:
+   *  DiscreteIntegrator: '<S1>/Integrator'
+   *  Inport: '<Root>/In2'
+   *  Product: '<S1>/POut'
+   */
+  u0 = (rtb_Sum1 * controllerAngleP + discrete_PID_DW.Integrator_DSTATE_l) +
+    rtb_NOut_b;
+
+  /* Saturate: '<S1>/Saturate' */
+  if (u0 > discrete_PID_P.Angle_UpperSaturationLimit) {
+    controllerOutput = discrete_PID_P.Angle_UpperSaturationLimit;
+  } else if (u0 < discrete_PID_P.Angle_LowerSaturationLimit) {
+    controllerOutput = discrete_PID_P.Angle_LowerSaturationLimit;
+  } else {
+    controllerOutput = u0;
+  }
+
+  /* End of Saturate: '<S1>/Saturate' */
+
+  /* Update for DiscreteIntegrator: '<S2>/Filter' */
   discrete_PID_DW.Filter_DSTATE += discrete_PID_P.Filter_gainval * rtb_NOut;
 
   /* Update for DiscreteIntegrator: '<S2>/Integrator' incorporates:
@@ -109,12 +141,19 @@ void discrete_PID_step(void)
    *  Inport: '<Root>/In7'
    *  Product: '<S2>/IOut'
    */
-  discrete_PID_DW.Integrator_DSTATE_h += controllerInputPosition *
-    controllerPositionI * discrete_PID_P.Integrator_gainval_c;
+  discrete_PID_DW.Integrator_DSTATE += controllerInputPosition *
+    controllerPositionI * discrete_PID_P.Integrator_gainval;
 
-  /* Update for DiscreteIntegrator: '<S2>/Filter' */
-  discrete_PID_DW.Filter_DSTATE_l += discrete_PID_P.Filter_gainval_h *
-    rtb_NOut_j;
+  /* Update for DiscreteIntegrator: '<S1>/Integrator' incorporates:
+   *  Inport: '<Root>/In3'
+   *  Product: '<S1>/IOut'
+   */
+  discrete_PID_DW.Integrator_DSTATE_l += rtb_Sum1 * controllerAngleI *
+    discrete_PID_P.Integrator_gainval_n;
+
+  /* Update for DiscreteIntegrator: '<S1>/Filter' */
+  discrete_PID_DW.Filter_DSTATE_f += discrete_PID_P.Filter_gainval_h *
+    rtb_NOut_b;
 }
 
 /* Model initialize function */
@@ -129,17 +168,17 @@ void discrete_PID_initialize(void)
   (void) memset((void *)&discrete_PID_DW, 0,
                 sizeof(DW_discrete_PID_T));
 
-  /* InitializeConditions for DiscreteIntegrator: '<S1>/Integrator' */
-  discrete_PID_DW.Integrator_DSTATE = discrete_PID_P.Integrator_IC;
-
-  /* InitializeConditions for DiscreteIntegrator: '<S1>/Filter' */
+  /* InitializeConditions for DiscreteIntegrator: '<S2>/Filter' */
   discrete_PID_DW.Filter_DSTATE = discrete_PID_P.Filter_IC;
 
   /* InitializeConditions for DiscreteIntegrator: '<S2>/Integrator' */
-  discrete_PID_DW.Integrator_DSTATE_h = discrete_PID_P.Integrator_IC_b;
+  discrete_PID_DW.Integrator_DSTATE = discrete_PID_P.Integrator_IC;
 
-  /* InitializeConditions for DiscreteIntegrator: '<S2>/Filter' */
-  discrete_PID_DW.Filter_DSTATE_l = discrete_PID_P.Filter_IC_b;
+  /* InitializeConditions for DiscreteIntegrator: '<S1>/Integrator' */
+  discrete_PID_DW.Integrator_DSTATE_l = discrete_PID_P.Integrator_IC_f;
+
+  /* InitializeConditions for DiscreteIntegrator: '<S1>/Filter' */
+  discrete_PID_DW.Filter_DSTATE_f = discrete_PID_P.Filter_IC_a;
 }
 
 /* Model terminate function */

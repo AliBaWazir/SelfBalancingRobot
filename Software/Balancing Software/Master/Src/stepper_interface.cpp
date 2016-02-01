@@ -12,7 +12,7 @@ void initSteppers(void){
     pinMode(PORTD+11, OUTPUT);
     digitalWrite(PORTD+11, HIGH);
     
-    setSteppingMode(MICROSTEPS_4);
+    setSteppingMode(MICROSTEPS_8);
 
     pinMode(STEPPER_RIGHT_DIR_PIN, OUTPUT);
     pinMode(STEPPER_RIGHT_STEP_PIN, OUTPUT);
@@ -23,7 +23,10 @@ void initSteppers(void){
     pinMode(PORTE+9, OUTPUT);
     setStepperMaxSpeed(MAXSPEED);
     setStepperAccel(MAXACCEL);
-
+    
+    
+    pinMode(PORTD+12, OUTPUT);//led
+    
 
     
 }

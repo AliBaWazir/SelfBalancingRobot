@@ -23,7 +23,9 @@ real_T  controllerAngleP,
         controllerInputPosition;
 double acceleration = 0;
 double newSpeed = 0;
-double oldSpeed = 0.1;
+double oldSpeed = -0.1;
+real_T angleSetpoint = 0;
+real_T angle1, angle2, angle3, angle4, angle5, angle6;
 // This is where it happens
 void setup(){
     TM_RCC_InitSystem();
@@ -37,13 +39,15 @@ void setup(){
     //PID.Kp = PID_PARAM_KP;		/* Proporcional */
 	//PID.Ki = PID_PARAM_KI;		/* Integral */
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
-    controllerPositionP = 1;
+    controllerPositionP = 0.01;
     controllerPositionI = 0;
-    controllerPositionD = 0;
+    controllerPositionD = 0.01;
     
-    controllerAngleP = 2;
-    controllerAngleI = 0.1;
-    controllerAngleD = 0.6;
+    controllerAngleP = 10;
+    controllerAngleI = 6;
+    controllerAngleD = 0.2;
+    
+    
     
     
     /* Initialize PID system, float32_t format */
@@ -55,8 +59,21 @@ void setup(){
 
 
 void application_main(int16_t angle){
-	controllerInputAngle = ANGLE_WANT - angle;
-    controllerInputPosition = 0 - stepperCurrentPosition();
+    angle6 = angle5;
+    angle5 = angle4;
+    angle4 = angle3;
+    angle3 = angle2;
+    angle2 = angle1;
+    angle1 = angle;
+    angle = (angle6+angle5+angle4+angle2+angle3+angle1)/6;
+    if(HAL_GetTick()<5000)
+    {
+        
+        dWrite(PORTD+12, HIGH);
+        return;
+    }
+	controllerInputAngle = -angle;
+    controllerInputPosition = 0 + (real_T)stepperCurrentPosition();
 	__disable_irq();
 	rt_OneStep();
 	__enable_irq();
@@ -65,10 +82,12 @@ void application_main(int16_t angle){
     
     acceleration = output;
     
-    newSpeed = oldSpeed+(oldSpeed*acceleration);
+    newSpeed = acceleration/10;
     
     setStepperSpeed(-newSpeed);
-    
+    //oldSpeed = newSpeed;
+    if(newSpeed> MAXSPEED&& newSpeed >0)newSpeed = MAXSPEED;
+    if(newSpeed> -MAXSPEED&& newSpeed <0)newSpeed = -MAXSPEED;
 	/*
     ANGLE_CURRENT = angle/10;
     if(abs(ANGLE_CURRENT) > 7){
