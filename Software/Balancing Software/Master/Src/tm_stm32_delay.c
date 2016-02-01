@@ -198,7 +198,7 @@ void HAL_IncTick(void) {
 	TM_uTime+=20;
     //dWrite(PORTE+9, HIGH);
     //dWrite(PORTE+9, LOW);
-	if(TM_Counter <15){
+	if(TM_Counter <25){
 		
 		TM_Counter++;
         
