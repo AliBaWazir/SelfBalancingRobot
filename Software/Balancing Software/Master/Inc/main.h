@@ -11,7 +11,6 @@
 
 
 #include "stepper_interface.h"
-#include "ert_main.h"
 #include "application_main.h"
 
 #include "tm_stm32_delay.h"

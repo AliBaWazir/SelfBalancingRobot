@@ -1,7 +1,6 @@
 #include "stepper_interface.h"
 #include "AccelStepper.h"
 #include "defines.h"
-#include "ert_main.h"
 AccelStepper stepperR(AccelStepper::DRIVER, STEPPER_RIGHT_STEP_PIN, STEPPER_RIGHT_DIR_PIN);
 AccelStepper stepperL(AccelStepper::DRIVER, STEPPER_LEFT_STEP_PIN, STEPPER_LEFT_DIR_PIN);
 void initSteppers(void){

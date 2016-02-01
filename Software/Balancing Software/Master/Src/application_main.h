@@ -1,7 +1,7 @@
 #include "stm32f4xx_hal.h"
 #include "stepper_interface.h"
 #include "arm_math.h"
-
+#include "discrete_PID.h"
 #include "tm_stm32_delay.h"
 #include "stm32fxxx_hal.h"
 #include "tm_stm32_disco.h"
@@ -18,3 +18,5 @@
 
 void setup(void);
 void application_main(int16_t);
+extern void discrete_PID_initialize(void);
+extern void rt_OneStep(void);

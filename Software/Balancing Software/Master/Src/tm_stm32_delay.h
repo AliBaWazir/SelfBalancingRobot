@@ -27,7 +27,6 @@
    ----------------------------------------------------------------------
 \endverbatim
  */
-#include "ert_main.h"
 #include "stepper_interface.h"
 #ifndef TM_DELAY_H
 #define TM_DELAY_H 100

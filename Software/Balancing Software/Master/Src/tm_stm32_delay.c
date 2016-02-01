@@ -204,9 +204,7 @@ void HAL_IncTick(void) {
         
 		return;
 	}
-  __disable_irq();
-	rt_OneStep();
-	__enable_irq();
+//rtonestep was here
 	
 	
     //rt_OneStep();
