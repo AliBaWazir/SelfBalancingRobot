@@ -17,6 +17,6 @@
 #include "defines.h"
 
 void setup(void);
-void application_main(int16_t);
+void application_main(int32_t);
 extern void discrete_PID_initialize(void);
 extern void rt_OneStep(void);

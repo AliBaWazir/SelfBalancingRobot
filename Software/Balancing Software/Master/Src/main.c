@@ -527,7 +527,7 @@ static void handle_input(void)
 	case 'm':
 			/* Test the motion interrupt hardware feature. */
 #ifndef MPU6050 // not enabled for 6050 product
-		hal.motion_int_mode = 1;
+		hal.motion_int_mode = 0;
 #endif 
 		break;
 	case 'v':
@@ -885,11 +885,14 @@ void MX_GPIO_Init(void)
 	
 	__GPIOD_CLK_ENABLE ();
 	
-	GPIO_IS.Pin = GPIO_PIN_12;
+	GPIO_IS.Pin = GPIO_PIN_12|GPIO_PIN_4;
 	GPIO_IS.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_IS.Pull = GPIO_NOPULL;
-	GPIO_IS.Speed = GPIO_SPEED_MEDIUM;
+	GPIO_IS.Speed = GPIO_SPEED_FAST;
 	HAL_GPIO_Init(GPIOD, &GPIO_IS);
+    
+    
+    
 
 }
 

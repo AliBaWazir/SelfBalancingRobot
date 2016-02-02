@@ -69,6 +69,9 @@ void EXTI4_IRQHandler (void)
 	if (__HAL_GPIO_EXTI_GET_IT (GPIO_PIN_4))
 	{
 		hal.new_gyro = 1;
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
+        
 		
 		__HAL_GPIO_EXTI_CLEAR_IT (GPIO_PIN_4);
 	}

@@ -9,7 +9,7 @@
 #define PID_PARAM_KD		0.9			/* Derivative */
 float temps[2];
 float pid_error;
-float output;
+double output;
 int32_t force;
 arm_pid_instance_f32 PID;
 real_T  controllerAngleP, 
@@ -42,11 +42,11 @@ void setup(){
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
     controllerPositionP = 0.05;
     controllerPositionI = 0;
-    controllerPositionD = 0.05;
+    controllerPositionD = 0;//.05;
     
-    controllerAngleP = 2;
-    controllerAngleI = 6;
-    controllerAngleD = 3;
+    controllerAngleP = 1;
+    controllerAngleI = 1;//0.2;
+    controllerAngleD = 0.5;
     
     
     
@@ -59,7 +59,7 @@ void setup(){
 
 
 
-void application_main(int16_t angle){
+void application_main(int32_t angle){
     //angle6 = angle5;
     //angle5 = angle4;
     //angle4 = angle3;
@@ -74,7 +74,7 @@ void application_main(int16_t angle){
         return;
     }
 	controllerInputAngle = -angle;
-    controllerInputPosition = 0 + (real_T)stepperCurrentPosition();
+    controllerInputPosition = (real_T)stepperCurrentPosition();
 	__disable_irq();
 	rt_OneStep();
 	__enable_irq();
@@ -86,9 +86,9 @@ void application_main(int16_t angle){
     ac2 = ac1;
     ac1 = output;
     
-    acceleration = (+ac3+ac2+ac1)/3;
+    acceleration = (+ac3+ac2+ac1)/3.0;
     
-    newSpeed = acceleration/10;
+    newSpeed = acceleration/10.0;
     
     setStepperSpeed(-newSpeed);
     //oldSpeed = newSpeed;
