@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.2.0">
+<eagle version="7.4.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -349,47 +349,6 @@
 <library name="Bluetooth_HC-05">
 <description>Bluetooth HC05 Module. See http://mcuoneclipse.com/2013/02/14/bluetooth-with-the-freedom-board/</description>
 <packages>
-<package name="BLUETOOTH_SMD">
-<description>HC-05</description>
-<wire x1="-6.35" y1="4.81" x2="-6.35" y2="13.31" width="0.127" layer="21"/>
-<wire x1="-6.35" y1="13.31" x2="6.65" y2="13.31" width="0.127" layer="21"/>
-<wire x1="6.65" y1="13.31" x2="6.65" y2="4.81" width="0.127" layer="21"/>
-<smd name="1" x="-6.35" y="3.81" dx="2" dy="1" layer="1"/>
-<smd name="2" x="-6.35" y="2.31" dx="2" dy="1" layer="1"/>
-<smd name="3" x="-6.35" y="0.81" dx="2" dy="1" layer="1"/>
-<smd name="4" x="-6.35" y="-0.69" dx="2" dy="1" layer="1"/>
-<smd name="5" x="-6.35" y="-2.19" dx="2" dy="1" layer="1"/>
-<smd name="6" x="-6.35" y="-3.69" dx="2" dy="1" layer="1"/>
-<smd name="7" x="-6.35" y="-5.19" dx="2" dy="1" layer="1"/>
-<smd name="8" x="-6.35" y="-6.69" dx="2" dy="1" layer="1"/>
-<smd name="9" x="-6.35" y="-8.19" dx="2" dy="1" layer="1"/>
-<smd name="10" x="-6.35" y="-9.69" dx="2" dy="1" layer="1"/>
-<smd name="11" x="-6.35" y="-11.19" dx="2" dy="1" layer="1"/>
-<smd name="12" x="-6.35" y="-12.69" dx="2" dy="1" layer="1"/>
-<smd name="13" x="-6.35" y="-14.19" dx="2" dy="1" layer="1"/>
-<smd name="22" x="6.65" y="-14.19" dx="2" dy="1" layer="1"/>
-<smd name="23" x="6.65" y="-12.69" dx="2" dy="1" layer="1"/>
-<smd name="24" x="6.65" y="-11.19" dx="2" dy="1" layer="1"/>
-<smd name="25" x="6.65" y="-9.69" dx="2" dy="1" layer="1"/>
-<smd name="26" x="6.65" y="-8.19" dx="2" dy="1" layer="1"/>
-<smd name="27" x="6.65" y="-6.69" dx="2" dy="1" layer="1"/>
-<smd name="28" x="6.65" y="-5.19" dx="2" dy="1" layer="1"/>
-<smd name="29" x="6.65" y="-3.69" dx="2" dy="1" layer="1"/>
-<smd name="30" x="6.65" y="-2.19" dx="2" dy="1" layer="1"/>
-<smd name="31" x="6.65" y="-0.69" dx="2" dy="1" layer="1"/>
-<smd name="32" x="6.65" y="0.81" dx="2" dy="1" layer="1"/>
-<smd name="33" x="6.65" y="2.31" dx="2" dy="1" layer="1"/>
-<smd name="34" x="6.65" y="3.81" dx="2" dy="1" layer="1"/>
-<smd name="14" x="-5.1" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<smd name="15" x="-3.6" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<smd name="16" x="-2.1" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<smd name="17" x="-0.6" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<smd name="18" x="0.9" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<smd name="19" x="2.4" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<smd name="20" x="3.9" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<smd name="21" x="5.4" y="-15.94" dx="1.8" dy="1" layer="1" rot="R90"/>
-<text x="-5.35" y="11.31" size="1.27" layer="25">&gt;name</text>
-</package>
 <package name="BT_BOARD_FOOTPRINT">
 <description>Bluetooth Board V1.05 Footprint</description>
 <pad name="RX" x="-16.51" y="3.81" drill="0.9" diameter="1.778"/>
@@ -426,48 +385,6 @@
 </package>
 </packages>
 <symbols>
-<symbol name="HC-05">
-<wire x1="-17.78" y1="17.78" x2="-17.78" y2="-17.78" width="0.254" layer="94"/>
-<wire x1="-17.78" y1="-17.78" x2="20.32" y2="-17.78" width="0.254" layer="94"/>
-<wire x1="20.32" y1="-17.78" x2="20.32" y2="17.78" width="0.254" layer="94"/>
-<wire x1="20.32" y1="17.78" x2="-17.78" y2="17.78" width="0.254" layer="94"/>
-<text x="-17.78" y="22.86" size="1.778" layer="95">&gt;NAME</text>
-<text x="-17.78" y="20.32" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="TX" x="-22.86" y="15.24" length="middle"/>
-<pin name="RX" x="-22.86" y="12.7" length="middle"/>
-<pin name="CTS" x="-22.86" y="10.16" length="middle"/>
-<pin name="RTS" x="-22.86" y="7.62" length="middle"/>
-<pin name="PCM_CLK" x="-22.86" y="5.08" length="middle"/>
-<pin name="PCM_OUT" x="-22.86" y="2.54" length="middle"/>
-<pin name="PCM_IN" x="-22.86" y="0" length="middle"/>
-<pin name="PCN_SYNC" x="-22.86" y="-2.54" length="middle"/>
-<pin name="AIO0" x="-22.86" y="-5.08" length="middle"/>
-<pin name="AIO1" x="-22.86" y="-7.62" length="middle"/>
-<pin name="RST" x="-22.86" y="-10.16" length="middle"/>
-<pin name="3V3" x="-22.86" y="-12.7" length="middle"/>
-<pin name="GND" x="-22.86" y="-15.24" length="middle"/>
-<pin name="NC" x="-7.62" y="-22.86" length="middle" rot="R90"/>
-<pin name="VBUSD-" x="-5.08" y="-22.86" length="middle" rot="R90"/>
-<pin name="CSB" x="-2.54" y="-22.86" length="middle" rot="R90"/>
-<pin name="MOSI" x="0" y="-22.86" length="middle" rot="R90"/>
-<pin name="MISO" x="2.54" y="-22.86" length="middle" rot="R90"/>
-<pin name="CLK" x="5.08" y="-22.86" length="middle" rot="R90"/>
-<pin name="VBUSD+" x="7.62" y="-22.86" length="middle" rot="R90"/>
-<pin name="GND1" x="10.16" y="-22.86" length="middle" rot="R90"/>
-<pin name="GND2" x="25.4" y="-15.24" length="middle" rot="R180"/>
-<pin name="PIO0" x="25.4" y="-12.7" length="middle" rot="R180"/>
-<pin name="PIO1" x="25.4" y="-10.16" length="middle" rot="R180"/>
-<pin name="PIO2" x="25.4" y="-7.62" length="middle" rot="R180"/>
-<pin name="PIO3" x="25.4" y="-5.08" length="middle" rot="R180"/>
-<pin name="PIO4" x="25.4" y="-2.54" length="middle" rot="R180"/>
-<pin name="PIO5" x="25.4" y="0" length="middle" rot="R180"/>
-<pin name="PIO6" x="25.4" y="2.54" length="middle" rot="R180"/>
-<pin name="PIO7" x="25.4" y="5.08" length="middle" rot="R180"/>
-<pin name="PIO8" x="25.4" y="7.62" length="middle" rot="R180"/>
-<pin name="PIO9" x="25.4" y="10.16" length="middle" rot="R180"/>
-<pin name="PIO10" x="25.4" y="12.7" length="middle" rot="R180"/>
-<pin name="PIO11" x="25.4" y="15.24" length="middle" rot="R180"/>
-</symbol>
 <symbol name="BT_BOARD_SCHEMATIC">
 <description>Bluetooth Board V1.05 Schematic</description>
 <pin name="GND" x="-12.7" y="2.54" length="middle"/>
@@ -483,55 +400,6 @@
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="HC_05" prefix="U">
-<description>HC-05 Bluetooth Module</description>
-<gates>
-<gate name="G$1" symbol="HC-05" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="BLUETOOTH_SMD">
-<connects>
-<connect gate="G$1" pin="3V3" pad="12"/>
-<connect gate="G$1" pin="AIO0" pad="9"/>
-<connect gate="G$1" pin="AIO1" pad="10"/>
-<connect gate="G$1" pin="CLK" pad="19"/>
-<connect gate="G$1" pin="CSB" pad="16"/>
-<connect gate="G$1" pin="CTS" pad="3"/>
-<connect gate="G$1" pin="GND" pad="13"/>
-<connect gate="G$1" pin="GND1" pad="21"/>
-<connect gate="G$1" pin="GND2" pad="22"/>
-<connect gate="G$1" pin="MISO" pad="18"/>
-<connect gate="G$1" pin="MOSI" pad="17"/>
-<connect gate="G$1" pin="NC" pad="14"/>
-<connect gate="G$1" pin="PCM_CLK" pad="5"/>
-<connect gate="G$1" pin="PCM_IN" pad="7"/>
-<connect gate="G$1" pin="PCM_OUT" pad="6"/>
-<connect gate="G$1" pin="PCN_SYNC" pad="8"/>
-<connect gate="G$1" pin="PIO0" pad="23"/>
-<connect gate="G$1" pin="PIO1" pad="24"/>
-<connect gate="G$1" pin="PIO10" pad="33"/>
-<connect gate="G$1" pin="PIO11" pad="34"/>
-<connect gate="G$1" pin="PIO2" pad="25"/>
-<connect gate="G$1" pin="PIO3" pad="26"/>
-<connect gate="G$1" pin="PIO4" pad="27"/>
-<connect gate="G$1" pin="PIO5" pad="28"/>
-<connect gate="G$1" pin="PIO6" pad="29"/>
-<connect gate="G$1" pin="PIO7" pad="30"/>
-<connect gate="G$1" pin="PIO8" pad="31"/>
-<connect gate="G$1" pin="PIO9" pad="32"/>
-<connect gate="G$1" pin="RST" pad="11"/>
-<connect gate="G$1" pin="RTS" pad="4"/>
-<connect gate="G$1" pin="RX" pad="2"/>
-<connect gate="G$1" pin="TX" pad="1"/>
-<connect gate="G$1" pin="VBUSD+" pad="20"/>
-<connect gate="G$1" pin="VBUSD-" pad="15"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="BLUETOOTH_BOARD" prefix="J_BT_BOARD_">
 <description>Bluetooth Board V1.05</description>
 <gates>
@@ -2949,10 +2817,10 @@ Standard 5-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="-13.5" y1="-14" x2="-13.5" y2="14" width="0.127" layer="21"/>
 <text x="-11" y="-7" size="1.27" layer="25" rot="R90">IIC 128x64 OLED</text>
 <text x="6" y="-15" size="1.27" layer="49" rot="R180">Display Module</text>
-<pad name="VCC" x="-3.81" y="11.7475" drill="0.8" shape="square"/>
-<pad name="SCL" x="-1.27" y="11.684" drill="0.8" shape="octagon"/>
-<pad name="SDA" x="1.27" y="11.684" drill="0.8" shape="octagon"/>
-<pad name="GND" x="3.81" y="11.684" drill="0.8" shape="octagon"/>
+<pad name="VCC" x="-2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="SCL" x="0" y="12.7" drill="0.8" shape="square"/>
+<pad name="SDA" x="2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="GND" x="5.08" y="12.7" drill="0.8" shape="square"/>
 </package>
 </packages>
 <symbols>
@@ -2993,23 +2861,23 @@ Standard 5-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <library name="CLASS D AUDIO AMP">
 <packages>
 <package name="AUDIOAMP">
-<pad name="R+" x="-6" y="10" drill="0.8"/>
-<pad name="R-" x="-6" y="8" drill="0.8"/>
-<pad name="L-" x="-6" y="6" drill="0.8"/>
-<pad name="L+" x="-6" y="4" drill="0.8"/>
-<pad name="GND0" x="-6" y="2" drill="0.8" shape="square"/>
-<pad name="+5V" x="-6" y="0" drill="0.8"/>
-<pad name="SW" x="-6" y="-2" drill="0.8"/>
-<pad name="GND1" x="-6" y="-4" drill="0.8" shape="square"/>
-<pad name="LN" x="-6" y="-6" drill="0.8"/>
-<pad name="GND2" x="-6" y="-8" drill="0.8" shape="square"/>
-<pad name="RN" x="-6" y="-10" drill="0.8"/>
-<text x="6.62" y="-10.19" size="1.27" layer="25" rot="R180">PAM8403</text>
-<text x="6.62" y="-11.92" size="1.27" layer="49" rot="R180">Audio Amplifier</text>
-<wire x1="-7.7" y1="-12" x2="7.8" y2="-12" width="0.127" layer="21"/>
-<wire x1="-7.7" y1="12" x2="7.8" y2="12" width="0.127" layer="21"/>
-<wire x1="-7.7" y1="12" x2="-7.7" y2="-12" width="0.127" layer="21"/>
-<wire x1="7.8" y1="12" x2="7.8" y2="-12" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="13.97" x2="-3.81" y2="-13.97" width="0.127" layer="21"/>
+<wire x1="3.81" y1="-13.97" x2="3.81" y2="13.97" width="0.127" layer="21"/>
+<text x="3.81" y="-13.97" size="1.27" layer="25" rot="R90">PAM8403</text>
+<text x="6.35" y="-15.24" size="1.27" layer="49" rot="R180">Audio Amplifier</text>
+<pad name="L+" x="-2.54" y="7.62" drill="0.8" shape="square"/>
+<pad name="R-" x="-2.54" y="10.16" drill="0.8" shape="square"/>
+<pad name="L-" x="-2.54" y="5.08" drill="0.8" shape="square"/>
+<pad name="GND0" x="-2.54" y="2.54" drill="0.8" shape="square"/>
+<pad name="+5V" x="-2.54" y="0" drill="0.8" shape="square"/>
+<pad name="SW" x="-2.54" y="-2.54" drill="0.8" shape="square"/>
+<pad name="GND1" x="-2.54" y="-5.08" drill="0.8" shape="square"/>
+<pad name="LN" x="-2.54" y="-7.62" drill="0.8" shape="square"/>
+<pad name="GND2" x="-2.54" y="-10.16" drill="0.8" shape="square"/>
+<pad name="R+" x="-2.54" y="12.7" drill="0.8" shape="square"/>
+<pad name="RN" x="-2.54" y="-12.7" drill="0.8" shape="square"/>
+<wire x1="-3.81" y1="-13.97" x2="3.81" y2="-13.97" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="13.97" x2="3.81" y2="13.97" width="0.127" layer="21"/>
 </package>
 </packages>
 <symbols>
@@ -3619,7 +3487,6 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </classes>
 <parts>
 <part name="U$1" library="Teensy_3_and_LC_Series_Boards_v1.1" deviceset="TEENSY_3.1_ALL_PINS_AND_PADS" device=""/>
-<part name="U1" library="Bluetooth_HC-05" deviceset="HC_05" device=""/>
 <part name="J_BT_BOARD_1" library="Bluetooth_HC-05" deviceset="BLUETOOTH_BOARD" device=""/>
 <part name="J_ULTRASONIC_1" library="HC-SR04" deviceset="HC-SR04" device=""/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
@@ -3649,14 +3516,15 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY8" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="J_ULTRASONIC_2" library="HC-SR04" deviceset="HC-SR04" device=""/>
+<part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 </plain>
 <instances>
-<instance part="U$1" gate="G$1" x="5.08" y="15.24"/>
-<instance part="U1" gate="G$1" x="90.17" y="41.91"/>
+<instance part="U$1" gate="G$1" x="7.62" y="15.24"/>
 <instance part="J_BT_BOARD_1" gate="J_BT_BOARD" x="110.49" y="-1.27" rot="R180"/>
 <instance part="J_ULTRASONIC_1" gate="J_ULTRASONIC" x="-85.09" y="2.54"/>
 <instance part="SUPPLY1" gate="G$1" x="35.56" y="40.64"/>
@@ -3681,11 +3549,13 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <instance part="C1" gate="G$1" x="45.72" y="-12.7" rot="MR0"/>
 <instance part="C2" gate="G$1" x="66.04" y="-33.02" rot="R180"/>
 <instance part="J1" gate="G$1" x="63.5" y="12.7" rot="MR270"/>
-<instance part="J2" gate="G$1" x="50.8" y="12.7" rot="MR270"/>
+<instance part="J2" gate="G$1" x="50.8" y="17.78" rot="MR270"/>
 <instance part="LINEAR_ARRAY_SENSOR2" gate="G$1" x="-93.98" y="55.88"/>
 <instance part="GND7" gate="1" x="-71.12" y="60.96" rot="R90"/>
 <instance part="SUPPLY8" gate="G$1" x="-66.04" y="58.42"/>
-<instance part="GND8" gate="1" x="-106.68" y="10.16" rot="R270"/>
+<instance part="GND8" gate="1" x="-101.6" y="10.16"/>
+<instance part="J_ULTRASONIC_2" gate="J_ULTRASONIC" x="-101.6" y="30.48"/>
+<instance part="GND10" gate="1" x="-124.46" y="38.1" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -3694,7 +3564,6 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <segment>
 <pinref part="U$1" gate="G$1" pin="GND"/>
 <pinref part="GND1" gate="1" pin="GND"/>
-<wire x1="30.48" y1="35.56" x2="27.94" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="TOBALANCE" gate="G$1" pin="4"/>
@@ -3739,20 +3608,21 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 <segment>
-<wire x1="-99.06" y1="10.16" x2="-97.79" y2="10.16" width="0.1524" layer="91"/>
 <pinref part="GND8" gate="1" pin="GND"/>
-<wire x1="-97.79" y1="10.16" x2="-104.14" y2="10.16" width="0.1524" layer="91"/>
-<wire x1="-104.14" y1="10.16" x2="-106.68" y2="10.16" width="0.1524" layer="91"/>
-<junction x="-104.14" y="10.16"/>
+<wire x1="-97.79" y1="10.16" x2="-101.6" y2="12.7" width="0.1524" layer="91"/>
 <pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="GND"/>
-<junction x="-97.79" y="10.16"/>
+</segment>
+<segment>
+<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="GND"/>
+<pinref part="GND10" gate="1" pin="GND"/>
+<wire x1="-121.92" y1="38.1" x2="-114.3" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="3.3V"/>
 <pinref part="SUPPLY1" gate="G$1" pin="3.3V"/>
-<wire x1="35.56" y1="40.64" x2="27.94" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="40.64" x2="30.48" y2="40.64" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="TOBALANCE" gate="G$1" pin="5"/>
@@ -3796,10 +3666,14 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <wire x1="45.72" y1="-10.16" x2="45.72" y2="-7.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<wire x1="-99.06" y1="-5.08" x2="-97.79" y2="-5.08" width="0.1524" layer="91"/>
 <pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="5V"/>
 <wire x1="-97.79" y1="-5.08" x2="-106.68" y2="-5.08" width="0.1524" layer="91"/>
-<junction x="-97.79" y="-5.08"/>
+<label x="-106.68" y="-5.08" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="-114.3" y1="22.86" x2="-132.08" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="5V"/>
+<label x="-129.54" y="25.4" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="ARDUINO_RX" class="0">
@@ -3808,6 +3682,11 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <wire x1="-55.88" y1="25.4" x2="-45.72" y2="25.4" width="0.1524" layer="91"/>
 <label x="-55.88" y="25.4" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="-25.4" y1="43.18" x2="-15.24" y2="43.18" width="0.1524" layer="91"/>
+<label x="-27.94" y="43.18" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="0/RX1/T"/>
+</segment>
 </net>
 <net name="ARDUINO_TX" class="0">
 <segment>
@@ -3815,12 +3694,22 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <wire x1="-55.88" y1="22.86" x2="-45.72" y2="22.86" width="0.1524" layer="91"/>
 <label x="-55.88" y="22.86" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="-25.4" y1="40.64" x2="-15.24" y2="40.64" width="0.1524" layer="91"/>
+<label x="-27.94" y="40.64" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="1/TX1/T"/>
+</segment>
 </net>
 <net name="ENABLE" class="0">
 <segment>
 <pinref part="TOBALANCE" gate="G$1" pin="1"/>
 <wire x1="-55.88" y1="20.32" x2="-45.72" y2="20.32" width="0.1524" layer="91"/>
 <label x="-55.88" y="20.32" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="-25.4" y1="-17.78" x2="-15.24" y2="-17.78" width="0.1524" layer="91"/>
+<label x="-22.86" y="-17.78" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="24"/>
 </segment>
 </net>
 <net name="SCK" class="0">
@@ -3831,7 +3720,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="13/SCK/LED"/>
-<wire x1="-17.78" y1="10.16" x2="-20.32" y2="10.16" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="10.16" x2="-20.32" y2="10.16" width="0.1524" layer="91"/>
 <label x="-20.32" y="10.16" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -3843,7 +3732,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="12/MISO"/>
-<wire x1="-17.78" y1="12.7" x2="-20.32" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="12.7" x2="-20.32" y2="12.7" width="0.1524" layer="91"/>
 <label x="-20.32" y="12.7" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -3855,14 +3744,14 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="11/MOSI"/>
-<wire x1="-17.78" y1="15.24" x2="-20.32" y2="15.24" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="15.24" x2="-20.32" y2="15.24" width="0.1524" layer="91"/>
 <label x="-20.32" y="15.24" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="CS" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="10/TX2/PWM"/>
-<wire x1="-17.78" y1="17.78" x2="-20.32" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="17.78" x2="-20.32" y2="17.78" width="0.1524" layer="91"/>
 <label x="-20.32" y="17.78" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -3874,7 +3763,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <net name="SDA0" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="18/A4/T/SDA0"/>
-<wire x1="-17.78" y1="-2.54" x2="-20.32" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="-2.54" x2="-20.32" y2="-2.54" width="0.1524" layer="91"/>
 <label x="-20.32" y="-2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -3886,7 +3775,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <net name="SCL0" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="19/A5/T/SCL0"/>
-<wire x1="-17.78" y1="-5.08" x2="-20.32" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="-5.08" x2="-20.32" y2="-5.08" width="0.1524" layer="91"/>
 <label x="-20.32" y="-5.08" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -3897,26 +3786,26 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </net>
 <net name="SDA1" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="30/A19/SDA1"/>
-<wire x1="27.94" y1="-5.08" x2="30.48" y2="-5.08" width="0.1524" layer="91"/>
-<label x="27.94" y="-5.08" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="U$3" gate="G$1" pin="SDA"/>
 <wire x1="43.18" y1="68.58" x2="39.37" y2="68.58" width="0.1524" layer="91"/>
 <label x="40.64" y="68.58" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="35.56" y1="-5.08" x2="30.48" y2="-5.08" width="0.1524" layer="91"/>
+<label x="30.48" y="-5.08" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="30/A19/SDA1"/>
+</segment>
 </net>
 <net name="SCL1" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="29/A18/SCL1"/>
-<wire x1="27.94" y1="-7.62" x2="30.48" y2="-7.62" width="0.1524" layer="91"/>
-<label x="27.94" y="-7.62" size="1.778" layer="95"/>
-</segment>
 <segment>
 <pinref part="U$3" gate="G$1" pin="SCL"/>
 <wire x1="43.18" y1="71.12" x2="39.37" y2="71.12" width="0.1524" layer="91"/>
 <label x="40.64" y="71.12" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="33.02" y1="-7.62" x2="30.48" y2="-7.62" width="0.1524" layer="91"/>
+<label x="30.48" y="-7.62" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="29/A18/SCL1"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -3933,14 +3822,15 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </net>
 <net name="DAC" class="0">
 <segment>
-<pinref part="U$1" gate="G$1" pin="A14/DAC"/>
-<wire x1="27.94" y1="17.78" x2="30.48" y2="17.78" width="0.1524" layer="91"/>
-<label x="27.94" y="17.78" size="1.778" layer="95"/>
-</segment>
-<segment>
 <pinref part="C2" gate="G$1" pin="+"/>
 <wire x1="66.04" y1="-35.56" x2="66.04" y2="-40.64" width="0.1524" layer="91"/>
 <label x="66.04" y="-40.64" size="1.778" layer="95"/>
+<label x="66.04" y="-40.64" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="30.48" y1="17.78" x2="35.56" y2="17.78" width="0.1524" layer="91"/>
+<label x="30.48" y="17.78" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="A14/DAC"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -3964,20 +3854,21 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <pinref part="U$4" gate="G$1" pin="L-"/>
 <wire x1="68.58" y1="-2.54" x2="48.26" y2="-2.54" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="2"/>
-<wire x1="48.26" y1="5.08" x2="48.26" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="10.16" x2="48.26" y2="-2.54" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$8" class="0">
 <segment>
-<wire x1="50.8" y1="5.08" x2="50.8" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="10.16" x2="50.8" y2="-5.08" width="0.1524" layer="91"/>
 <pinref part="U$4" gate="G$1" pin="L+"/>
 <wire x1="50.8" y1="-5.08" x2="68.58" y2="-5.08" width="0.1524" layer="91"/>
+<pinref part="J2" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="CLK" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="14/A0"/>
-<wire x1="-17.78" y1="7.62" x2="-20.32" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="7.62" x2="-20.32" y2="7.62" width="0.1524" layer="91"/>
 <label x="-20.32" y="7.62" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -3989,7 +3880,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <net name="SI" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="15/A1/T"/>
-<wire x1="-17.78" y1="5.08" x2="-20.32" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="5.08" x2="-20.32" y2="5.08" width="0.1524" layer="91"/>
 <label x="-20.32" y="5.08" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -4001,7 +3892,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <net name="AOUT" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="16/A2/T"/>
-<wire x1="-17.78" y1="2.54" x2="-20.32" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="2.54" x2="-20.32" y2="2.54" width="0.1524" layer="91"/>
 <label x="-20.32" y="2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -4012,33 +3903,59 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </net>
 <net name="ECHO" class="0">
 <segment>
-<wire x1="-99.06" y1="5.08" x2="-97.79" y2="5.08" width="0.1524" layer="91"/>
 <pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="ECHO"/>
 <wire x1="-97.79" y1="5.08" x2="-106.68" y2="5.08" width="0.1524" layer="91"/>
-<junction x="-97.79" y="5.08"/>
+<label x="-106.68" y="5.08" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="20/A6/PWM"/>
-<wire x1="-17.78" y1="-7.62" x2="-20.32" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="-7.62" x2="-20.32" y2="-7.62" width="0.1524" layer="91"/>
 <label x="-20.32" y="-7.62" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="TRIG" class="0">
 <segment>
-<wire x1="-99.06" y1="0" x2="-97.79" y2="0" width="0.1524" layer="91"/>
 <pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="TRIG"/>
 <wire x1="-97.79" y1="0" x2="-106.68" y2="0" width="0.1524" layer="91"/>
-<junction x="-97.79" y="0"/>
+<label x="-106.68" y="0" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="21/A7/PWM"/>
-<wire x1="-17.78" y1="-10.16" x2="-20.32" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="-10.16" x2="-20.32" y2="-10.16" width="0.1524" layer="91"/>
 <label x="-20.32" y="-10.16" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ECHO2" class="0">
+<segment>
+<label x="-134.62" y="33.02" size="1.778" layer="95"/>
+<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="ECHO"/>
+<wire x1="-114.3" y1="33.02" x2="-134.62" y2="33.02" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="22/A8/T/PWM"/>
+<wire x1="-15.24" y1="-12.7" x2="-20.32" y2="-12.7" width="0.1524" layer="91"/>
+<label x="-20.32" y="-12.7" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="TRIG2" class="0">
+<segment>
+<label x="-134.62" y="27.94" size="1.778" layer="95"/>
+<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="TRIG"/>
+<wire x1="-114.3" y1="27.94" x2="-134.62" y2="27.94" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="23/A9/T/PWM"/>
+<wire x1="-15.24" y1="-15.24" x2="-20.32" y2="-15.24" width="0.1524" layer="91"/>
+<label x="-20.32" y="-15.24" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="113,1,-59.0973,28.1347,TOBALANCE,,,,,"/>
+<approved hash="113,1,-81.6986,57.3447,LINEAR_ARRAY_SENSOR2,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>
