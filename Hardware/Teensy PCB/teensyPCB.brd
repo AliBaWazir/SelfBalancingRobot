@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.4.0">
+<eagle version="7.2.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -9,6 +9,20 @@
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
@@ -464,6 +478,40 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </package>
 </packages>
 </library>
+<library name="DigiPot">
+<description>&lt;b&gt;Maxim Components&lt;/b&gt;&lt;p&gt;
+
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SOT23-8L">
+<description>&lt;b&gt;SC70/SOT23-8&lt;/b&gt;&lt;p&gt;
+Source: http://datasheets.maxim-ic.com/en/ds/MAX4335-MAX4338.pdf</description>
+<wire x1="-1.45" y1="0.825" x2="1.45" y2="0.825" width="0.1016" layer="51"/>
+<wire x1="1.45" y1="0.825" x2="1.45" y2="-0.825" width="0.1016" layer="21"/>
+<wire x1="1.45" y1="-0.825" x2="-1.45" y2="-0.825" width="0.1016" layer="51"/>
+<wire x1="-1.45" y1="-0.825" x2="-1.45" y2="0.825" width="0.1016" layer="21"/>
+<circle x="-1.15" y="-0.525" radius="0.125" width="0" layer="21"/>
+<smd name="W" x="-0.975" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="VDD" x="-0.325" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="GND" x="0.325" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="SCL" x="0.975" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="SDA" x="0.975" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<smd name="AD0" x="0.325" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<smd name="B" x="-0.325" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<smd name="A" x="-0.975" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<text x="-1.905" y="-1.905" size="1.27" layer="25" rot="R90">DigiPot</text>
+<text x="3.175" y="-1.905" size="1.27" layer="27" rot="R90">SOT23-8</text>
+<rectangle x1="-1.2" y1="-1.5" x2="-0.75" y2="-0.85" layer="51"/>
+<rectangle x1="-0.55" y1="-1.5" x2="-0.1" y2="-0.85" layer="51"/>
+<rectangle x1="0.1" y1="-1.5" x2="0.55" y2="-0.85" layer="51"/>
+<rectangle x1="0.75" y1="-1.5" x2="1.2" y2="-0.85" layer="51"/>
+<rectangle x1="0.75" y1="0.85" x2="1.2" y2="1.5" layer="51" rot="R180"/>
+<rectangle x1="0.1" y1="0.85" x2="0.55" y2="1.5" layer="51" rot="R180"/>
+<rectangle x1="-0.55" y1="0.85" x2="-0.1" y2="1.5" layer="51" rot="R180"/>
+<rectangle x1="-1.2" y1="0.85" x2="-0.75" y2="1.5" layer="51" rot="R180"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -667,6 +715,7 @@ design rules under a new name.</description>
 <element name="U$4" library="CLASS D AUDIO AMP" package="AUDIOAMP" value="AUDIOAMP" x="81.86" y="5.67" rot="R90"/>
 <element name="U2" library="SparkFun-Connectors" package="MICRO-SD-SOCKET-PP" value="USD-SOCKETNEW" x="43.71" y="21.59"/>
 <element name="J_ULTRASONIC_2" library="HC-SR04" package="HC-SR04_FOOTPRINT" value="HC-SR04" x="43.77" y="8.2" rot="R90"/>
+<element name="U$5" library="DigiPot" package="SOT23-8L" value="DIGIPOT" x="-4" y="2"/>
 </elements>
 <signals>
 <signal name="VIN">

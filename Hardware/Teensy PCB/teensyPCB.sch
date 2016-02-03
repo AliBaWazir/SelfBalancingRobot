@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.4.0">
+<eagle version="7.2.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -3476,6 +3476,82 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 </deviceset>
 </devicesets>
 </library>
+<library name="DigiPot">
+<description>&lt;b&gt;Maxim Components&lt;/b&gt;&lt;p&gt;
+
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SOT23-8L">
+<description>&lt;b&gt;SC70/SOT23-8&lt;/b&gt;&lt;p&gt;
+Source: http://datasheets.maxim-ic.com/en/ds/MAX4335-MAX4338.pdf</description>
+<wire x1="-1.45" y1="0.825" x2="1.45" y2="0.825" width="0.1016" layer="51"/>
+<wire x1="1.45" y1="0.825" x2="1.45" y2="-0.825" width="0.1016" layer="21"/>
+<wire x1="1.45" y1="-0.825" x2="-1.45" y2="-0.825" width="0.1016" layer="51"/>
+<wire x1="-1.45" y1="-0.825" x2="-1.45" y2="0.825" width="0.1016" layer="21"/>
+<circle x="-1.15" y="-0.525" radius="0.125" width="0" layer="21"/>
+<smd name="W" x="-0.975" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="VDD" x="-0.325" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="GND" x="0.325" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="SCL" x="0.975" y="-1.225" dx="0.45" dy="1" layer="1"/>
+<smd name="SDA" x="0.975" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<smd name="AD0" x="0.325" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<smd name="B" x="-0.325" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<smd name="A" x="-0.975" y="1.225" dx="0.45" dy="1" layer="1" rot="R180"/>
+<text x="-1.905" y="-1.905" size="1.27" layer="25" rot="R90">DigiPot</text>
+<text x="3.175" y="-1.905" size="1.27" layer="27" rot="R90">SOT23-8</text>
+<rectangle x1="-1.2" y1="-1.5" x2="-0.75" y2="-0.85" layer="51"/>
+<rectangle x1="-0.55" y1="-1.5" x2="-0.1" y2="-0.85" layer="51"/>
+<rectangle x1="0.1" y1="-1.5" x2="0.55" y2="-0.85" layer="51"/>
+<rectangle x1="0.75" y1="-1.5" x2="1.2" y2="-0.85" layer="51"/>
+<rectangle x1="0.75" y1="0.85" x2="1.2" y2="1.5" layer="51" rot="R180"/>
+<rectangle x1="0.1" y1="0.85" x2="0.55" y2="1.5" layer="51" rot="R180"/>
+<rectangle x1="-0.55" y1="0.85" x2="-0.1" y2="1.5" layer="51" rot="R180"/>
+<rectangle x1="-1.2" y1="0.85" x2="-0.75" y2="1.5" layer="51" rot="R180"/>
+</package>
+</packages>
+<symbols>
+<symbol name="SOT23-8L">
+<wire x1="-7.62" y1="10.16" x2="7.62" y2="10.16" width="0.254" layer="94"/>
+<wire x1="7.62" y1="10.16" x2="7.62" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-10.16" x2="-7.62" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-10.16" x2="-7.62" y2="10.16" width="0.254" layer="94"/>
+<pin name="A" x="12.7" y="7.62" length="middle" rot="R180"/>
+<pin name="B" x="12.7" y="2.54" length="middle" rot="R180"/>
+<pin name="AD0" x="12.7" y="-2.54" length="middle" rot="R180"/>
+<pin name="SDA" x="12.7" y="-7.62" length="middle" rot="R180"/>
+<pin name="W" x="-12.7" y="7.62" length="middle"/>
+<pin name="VDD" x="-12.7" y="2.54" length="middle"/>
+<pin name="GND" x="-12.7" y="-2.54" length="middle"/>
+<pin name="SCL" x="-12.7" y="-7.62" length="middle"/>
+<text x="-7.62" y="10.16" size="1.27" layer="95">AD5171</text>
+<text x="2.54" y="10.16" size="1.27" layer="95">DigiPot</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="DIGIPOT">
+<gates>
+<gate name="G$1" symbol="SOT23-8L" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23-8L">
+<connects>
+<connect gate="G$1" pin="A" pad="A"/>
+<connect gate="G$1" pin="AD0" pad="AD0"/>
+<connect gate="G$1" pin="B" pad="B"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="SCL" pad="SCL"/>
+<connect gate="G$1" pin="SDA" pad="SDA"/>
+<connect gate="G$1" pin="VDD" pad="VDD"/>
+<connect gate="G$1" pin="W" pad="W"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -3519,6 +3595,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <part name="J_ULTRASONIC_2" library="HC-SR04" deviceset="HC-SR04" device=""/>
 <part name="SUPPLY9" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="SUPPLY10" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
+<part name="U$5" library="DigiPot" deviceset="DIGIPOT" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -3558,6 +3635,7 @@ These are standard SMD and PTH capacitors. Normally 10uF, 47uF, and 100uF in ele
 <instance part="J_ULTRASONIC_2" gate="J_ULTRASONIC" x="-96.52" y="30.48"/>
 <instance part="SUPPLY9" gate="G$1" x="-106.68" y="-5.08"/>
 <instance part="SUPPLY10" gate="G$1" x="-124.46" y="22.86"/>
+<instance part="U$5" gate="G$1" x="76.2" y="40.64"/>
 </instances>
 <busses>
 </busses>
