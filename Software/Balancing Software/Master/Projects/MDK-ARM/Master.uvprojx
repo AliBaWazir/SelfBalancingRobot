@@ -363,7 +363,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--wchar32 --C99</MiscControls>
-              <Define>USE_HAL_DRIVER,STM32F407xx,MPU9250,USE_DMP,MPL_LOG_NDEBUG=1,EMPL,EMPL_TARGET_STM32F4,ARM_MATH_CM4,__FPU_PRESENT=1</Define>
+              <Define>USE_HAL_DRIVER,STM32F407xx,MPU9250,USE_DMP,MPL_LOG_NDEBUG=1,EMPL,EMPL_TARGET_STM32F4,ARM_MATH_CM4,__FPU_PRESENT=1,HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Inc;..\..\Drivers\STM32F4xx_HAL_Driver\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc;..\..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\eMPL\driver\eMPL;..\..\Drivers\eMPL\driver\include;..\..\Drivers\eMPL\driver\STM32F4;..\..\Drivers\eMPL\eMPL-hal;..\..\Drivers\eMPL\mllite;..\..\Drivers\eMPL\mpl;..\..\..\matlab\Model\model2\R2015a\simulink\include;..\..\..\matlab\Model\model2\otherFiles;..\..\Src;..\..\..\..\..\..\..\Downloads\PROJECT-03-STM32F4xx_PID\00-STM32F4xx_STANDARD_PERIPHERAL_DRIVERS\CMSIS\Include;..\..\..\matlab\Model\try3\discrete_PID_ert_rtw</IncludePath>
             </VariousControls>

@@ -1762,7 +1762,11 @@ int mpu_read_fifo(short *gyro, short *accel, unsigned long *timestamp,
         if (i2c_read(st.hw->addr, st.reg->int_status, 1, data))
             return -1;
         if (data[0] & BIT_FIFO_OVERFLOW) {
+            
             mpu_reset_fifo();
+#ifdef DEBUGFIFO
+            HAL_Delay(3000);
+#endif
             return -2;
         }
     }
@@ -1829,6 +1833,9 @@ int mpu_read_fifo_stream(unsigned short length, unsigned char *data,
             return -1;
         if (tmp[0] & BIT_FIFO_OVERFLOW) {
             mpu_reset_fifo();
+#ifdef DEBUGFIFO
+HAL_Delay(2000);
+#endif
             return -2;
         }
     }
@@ -2902,6 +2909,9 @@ int mpu_set_dmp_state(unsigned char enable)
         /* Enable DMP interrupt. */
         set_int_enable(1);
         mpu_reset_fifo();
+#ifdef DEBUGFIFO
+        HAL_Delay(2000);
+#endif
     } else {
         /* Disable DMP interrupt. */
         set_int_enable(0);
@@ -2910,6 +2920,9 @@ int mpu_set_dmp_state(unsigned char enable)
         i2c_write(st.hw->addr, 0x23, 1, &tmp);
         st.chip_cfg.dmp_on = 0;
         mpu_reset_fifo();
+#ifdef DEBUGFIFO
+        HAL_Delay(2000);
+#endif
     }
     return 0;
 }

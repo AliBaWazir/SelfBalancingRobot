@@ -42,7 +42,7 @@
 
 #define INPUT 0x0
 #define OUTPUT 0x1
-
+#define USB_VCP
 
 #define PORTPINS 16
 
@@ -55,6 +55,7 @@
 #define PORTG PORTPINS*6
 #define PORTH PORTPINS*7
 
+#define DEBUGFIFO
 
 #define STEPPER_RIGHT_STEP_PIN PORTA+2
 #define STEPPER_RIGHT_DIR_PIN PORTA+5
@@ -104,7 +105,7 @@
 
 #define PEDO_READ_MS    (1000)
 #define TEMP_READ_MS    (500)
-#define DATA_TX_MS      (20)
+#define DATA_TX_MS      (1)//was 20
 #define COMPASS_READ_MS (5)
 
 #endif

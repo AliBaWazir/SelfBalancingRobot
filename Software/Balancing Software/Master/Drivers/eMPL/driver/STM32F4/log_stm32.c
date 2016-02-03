@@ -24,7 +24,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <math.h>
-
+#include "defines.h"
 #include "main.h"
 #include "packet.h"
 #include "log.h"
@@ -160,11 +160,13 @@ void eMPL_send_quat(long *quat)
     out[1] = angle>>16;
     out[2] = angle>>8;
     out[3] = angle;
-	
-	USBD_CDC_SetTxBuffer (&hUsbDeviceFS, (uint8_t *)out, 18);
+	application_main(angle);
+#ifdef USB_VCP
+    __disable_irq();
+	USBD_CDC_SetTxBuffer (&hUsbDeviceFS, (uint8_t *)out, 10);
 	USBD_CDC_TransmitPacket (&hUsbDeviceFS);
-    application_main(angle);
-        
+    __enable_irq();
+#endif      
     
 }
 

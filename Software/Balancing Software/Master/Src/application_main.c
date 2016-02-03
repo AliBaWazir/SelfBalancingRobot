@@ -27,9 +27,10 @@ double oldSpeed = -0.1;
 real_T angleSetpoint = 0;
 real_T angle1, angle2, angle3, angle4, angle5, angle6;
 real_T ac1, ac2, ac3, ac4;
+uint32_t counter = 0;
 // This is where it happens
 void setup(){
-    TM_RCC_InitSystem();
+    //TM_RCC_InitSystem();
     TM_DELAY_Init();
     initSteppers();
     
@@ -40,13 +41,13 @@ void setup(){
     //PID.Kp = PID_PARAM_KP;		/* Proporcional */
 	//PID.Ki = PID_PARAM_KI;		/* Integral */
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
-    controllerPositionP = 0.05;
+    controllerPositionP = 0;//.05;
     controllerPositionI = 0;
     controllerPositionD = 0;//.05;
     
     controllerAngleP = 1;
-    controllerAngleI = 1;//0.2;
-    controllerAngleD = 0.5;
+    controllerAngleI = 0;//0.2;
+    controllerAngleD = 0;//.5;
     
     
     
@@ -60,13 +61,15 @@ void setup(){
 
 
 void application_main(int32_t angle){
+    counter++;
+    //if(1){return;};
     //angle6 = angle5;
     //angle5 = angle4;
     //angle4 = angle3;
     angle3 = angle2;
     angle2 = angle1;
     angle1 = angle;
-    angle = (angle2+angle3+angle1)/3;
+    //angle = (angle2+angle3+angle1)/3;
     if(HAL_GetTick()<5000)
     {
         
@@ -86,9 +89,9 @@ void application_main(int32_t angle){
     ac2 = ac1;
     ac1 = output;
     
-    acceleration = (+ac3+ac2+ac1)/3.0;
+    acceleration = output;//(+ac3+ac2+ac1)/3.0;
     
-    newSpeed = acceleration/10.0;
+    newSpeed = acceleration/0.1;
     
     setStepperSpeed(-newSpeed);
     //oldSpeed = newSpeed;

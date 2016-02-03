@@ -679,13 +679,13 @@ int main(void)
 		{
 			hal.next_compass_ms = timestamp + COMPASS_READ_MS;
 			new_compass = 1;
-    }
+        }
 		
 		if (timestamp > hal.next_temp_ms) 
 		{
-      hal.next_temp_ms = timestamp + TEMP_READ_MS;
-      new_temp = 1;
-    }
+            hal.next_temp_ms = timestamp + TEMP_READ_MS;
+            new_temp = 1;
+        }
 		
 		if (hal.motion_int_mode)
 		{
@@ -701,21 +701,31 @@ int main(void)
 			/* Restore the previous sensor configuration. */
 			mpu_lp_motion_interrupt(0, 0, 0);
 			hal.motion_int_mode = 0;
-    }
+        }
 		
 		if (!hal.sensors || !hal.new_gyro)
 		{
-      continue;
-    }    
+            continue;
+        }    
 		
 		if (hal.new_gyro && hal.dmp_on)
 		{
 			short gyro[3], accel_short[3], sensors;
 			unsigned char more;
 			long accel[3], quat[4], temperature;
+            //about to read fifo
 			
-      dmp_read_fifo(gyro, accel_short, quat, &sensor_timestamp, &sensors, &more);
+            
+            dmp_read_fifo(gyro, accel_short, quat, &sensor_timestamp, &sensors, &more);\
+//            for(int i = more; i > 0;i--){
+//                HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
+//                //HAL_Delay(1);
+//                HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_RESET);
+//                //HAL_Delay(1);
+//                
+//            }
 			if (!more)
+                
 				hal.new_gyro = 0;
 			
 			if (sensors & INV_XYZ_GYRO)
@@ -745,38 +755,39 @@ int main(void)
 					new_data = 1;
 			}
 		}
-		else if (hal.new_gyro)
-		{			
-			short gyro[3], accel_short[3];
-			unsigned char sensors, more;
-			long accel[3], temperature;
-			
-			hal.new_gyro = 0;
-			mpu_read_fifo(gyro, accel_short, &sensor_timestamp, &sensors, &more);
-			if (more)
-				hal.new_gyro = 1;
-			if (sensors & INV_XYZ_GYRO)
-			{
-				/* Push the new data to the MPL. */
-				inv_build_gyro(gyro, sensor_timestamp);
-				new_data = 1;
-				if (new_temp)
-				{
-					new_temp = 0;
-					/* Temperature only used for gyro temp comp. */
-					mpu_get_temperature(&temperature, &sensor_timestamp);
-					inv_build_temp(temperature, sensor_timestamp);
-				}
-			}
-			if (sensors & INV_XYZ_ACCEL)
-			{
-				accel[0] = (long)accel_short[0];
-				accel[1] = (long)accel_short[1];
-				accel[2] = (long)accel_short[2];
-				inv_build_accel(accel, 0, sensor_timestamp);
-				new_data = 1;
-			}
-		}
+        
+//		else if (hal.new_gyro)
+//		{			
+//			short gyro[3], accel_short[3];
+//			unsigned char sensors, more;
+//			long accel[3], temperature;
+//			
+//			hal.new_gyro = 0;
+//			mpu_read_fifo(gyro, accel_short, &sensor_timestamp, &sensors, &more);
+//			if (more)
+//				hal.new_gyro = 1;
+//			if (sensors & INV_XYZ_GYRO)
+//			{
+//				/* Push the new data to the MPL. */
+//				inv_build_gyro(gyro, sensor_timestamp);
+//				new_data = 1;
+//				if (new_temp)
+//				{
+//					new_temp = 0;
+//					/* Temperature only used for gyro temp comp. */
+//					mpu_get_temperature(&temperature, &sensor_timestamp);
+//					inv_build_temp(temperature, sensor_timestamp);
+//				}
+//			}
+//			if (sensors & INV_XYZ_ACCEL)
+//			{
+//				accel[0] = (long)accel_short[0];
+//				accel[1] = (long)accel_short[1];
+//				accel[2] = (long)accel_short[2];
+//				inv_build_accel(accel, 0, sensor_timestamp);
+//				new_data = 1;
+//			}
+//		}
 		
 		if (new_compass)
 		{
@@ -854,7 +865,7 @@ void SystemClock_Config(void)
 void MX_I2C1_Init(void)
 {
 
-  hi2c1.Instance = I2C2;
+  hi2c1.Instance = I2C3;
   hi2c1.Init.ClockSpeed = 400000;
   hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_16_9;
   hi2c1.Init.OwnAddress1 = 0;
@@ -879,17 +890,17 @@ void MX_GPIO_Init(void)
 	GPIO_InitTypeDef GPIO_IS;
 
   /* GPIO Ports Clock Enable */
-  __GPIOH_CLK_ENABLE();
-  __GPIOA_CLK_ENABLE();
-  __GPIOB_CLK_ENABLE();
+    __GPIOH_CLK_ENABLE();
+    __GPIOA_CLK_ENABLE();
+    __GPIOB_CLK_ENABLE();
+    __GPIOC_CLK_ENABLE();
+    __GPIOD_CLK_ENABLE();
 	
-	__GPIOD_CLK_ENABLE ();
-	
-	GPIO_IS.Pin = GPIO_PIN_12|GPIO_PIN_4;
-	GPIO_IS.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_IS.Pull = GPIO_NOPULL;
-	GPIO_IS.Speed = GPIO_SPEED_FAST;
-	HAL_GPIO_Init(GPIOD, &GPIO_IS);
+    GPIO_IS.Pin = GPIO_PIN_12|GPIO_PIN_4;
+    GPIO_IS.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_IS.Pull = GPIO_NOPULL;
+    GPIO_IS.Speed = GPIO_SPEED_FAST;
+    HAL_GPIO_Init(GPIOD, &GPIO_IS);
     
     
     
@@ -901,7 +912,7 @@ void MX_IRQ_Init (void)
 {
 	GPIO_InitTypeDef GPIO_IS;
 	
-	__GPIOB_CLK_ENABLE ();
+	__GPIOB_CLK_ENABLE();
 
 	GPIO_IS.Pin = GPIO_PIN_4;
 	GPIO_IS.Mode = GPIO_MODE_IT_RISING;
