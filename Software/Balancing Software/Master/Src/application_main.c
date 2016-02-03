@@ -45,9 +45,9 @@ void setup(){
     controllerPositionI = 0;
     controllerPositionD = 0;//.05;
     
-    controllerAngleP = 1;
-    controllerAngleI = 0;//0.2;
-    controllerAngleD = 0;//.5;
+    controllerAngleP = 100;
+    controllerAngleI = 5;//0.2;
+    controllerAngleD = 40;//.5;
     
     
     
@@ -91,12 +91,15 @@ void application_main(int32_t angle){
     
     acceleration = output;//(+ac3+ac2+ac1)/3.0;
     
-    newSpeed = acceleration/0.1;
+    if(output >0)stepperMove(-10000);
+    if(output <0)stepperMove(10000);
+    setStepperAccel(abs(output)*200);
+    //newSpeed = acceleration/0.1;
     
-    setStepperSpeed(-newSpeed);
+    //setStepperSpeed(-newSpeed);
     //oldSpeed = newSpeed;
-    if(newSpeed > MAXSPEED&& newSpeed > 0)newSpeed = MAXSPEED;
-    if(newSpeed > -MAXSPEED&& newSpeed < 0)newSpeed = -MAXSPEED;
+    //if(newSpeed > MAXSPEED&& newSpeed > 0)newSpeed = MAXSPEED;
+    //if(newSpeed > -MAXSPEED&& newSpeed < 0)newSpeed = -MAXSPEED;
 	/*
     ANGLE_CURRENT = angle/10;
     if(abs(ANGLE_CURRENT) > 7){

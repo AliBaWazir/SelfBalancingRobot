@@ -22,4 +22,4 @@ EXTERNC void dWrite(uint8_t, uint8_t);
 EXTERNC void stepperMoveTo(int16_t);
 EXTERNC void stepperRun(void);
 EXTERNC int32_t stepperCurrentPosition(void);
-
+EXTERNC void stepperMove(int16_t);

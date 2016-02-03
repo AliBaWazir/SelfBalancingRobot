@@ -30,6 +30,11 @@ void initSteppers(void){
 
     
 }
+void stepperMove(int16_t offset){
+    stepperR.move(offset);
+    stepperL.move(offset);
+    
+}
 void stepperRun(void){
     stepperR.run();
     stepperL.run();
