@@ -4191,7 +4191,6 @@ SMT- SWCH-08247</description>
 <part name="C4" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="100nF"/>
 <part name="SUPPLY14" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="SUPPLY15" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="C5" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="10uF"/>
 </parts>
@@ -4248,7 +4247,6 @@ SMT- SWCH-08247</description>
 <instance part="C4" gate="G$1" x="88.9" y="25.4" rot="MR0"/>
 <instance part="SUPPLY14" gate="G$1" x="81.28" y="38.1"/>
 <instance part="GND2" gate="1" x="81.28" y="7.62"/>
-<instance part="SUPPLY7" gate="G$1" x="40.64" y="43.18"/>
 <instance part="SUPPLY15" gate="G$1" x="139.7" y="-10.16"/>
 <instance part="C5" gate="G$1" x="177.8" y="48.26" rot="R270"/>
 </instances>
@@ -4433,11 +4431,6 @@ SMT- SWCH-08247</description>
 <pinref part="SUPPLY14" gate="G$1" pin="5V"/>
 <wire x1="81.28" y1="38.1" x2="73.66" y2="38.1" width="0.1524" layer="91"/>
 <junction x="81.28" y="38.1"/>
-</segment>
-<segment>
-<pinref part="U$1" gate="G$1" pin="VUSB"/>
-<pinref part="SUPPLY7" gate="G$1" pin="5V"/>
-<wire x1="40.64" y1="40.64" x2="40.64" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U$4" gate="G$1" pin="+5V"/>

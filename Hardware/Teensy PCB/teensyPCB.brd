@@ -870,10 +870,8 @@ design rules under a new name.</description>
 <contactref element="C4" pad="A"/>
 <contactref element="S2" pad="2"/>
 <contactref element="S2" pad="1"/>
-<contactref element="U$1" pad="VUSB"/>
 <contactref element="U$4" pad="+5V"/>
 <contactref element="C1" pad="A"/>
-<wire x1="69.5" y1="25.21" x2="59.88" y2="44.61" width="0" layer="19" extent="1-1"/>
 <wire x1="65.15" y1="3.246" x2="69.5" y2="25.21" width="0" layer="19" extent="1-1"/>
 <wire x1="81.86" y1="3.13" x2="65.15" y2="3.246" width="0" layer="19" extent="1-1"/>
 <wire x1="47.61" y1="3.47" x2="65.15" y2="3.246" width="0" layer="19" extent="1-1"/>
@@ -1060,6 +1058,9 @@ design rules under a new name.</description>
 <contactref element="U$5" pad="A"/>
 <contactref element="C5" pad="C"/>
 <wire x1="-4.975" y1="3.225" x2="-41.65" y2="-27" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="VUSB">
+<contactref element="U$1" pad="VUSB"/>
 </signal>
 </signals>
 </board>
