@@ -17,6 +17,7 @@
 
  */
 
+#include <PID_v1.h>
 /****************************************************************************************
  * PORTS ASSIGNMENTS
  ****************************************************************************************/
@@ -68,6 +69,7 @@ int black_lines_count= 0; // the count of the black lines is determined by the i
 pixel_data_t decoded_frame_buffer[FRAME_BUFFER_LENGTH];
 black_lines_info_t black_lines_info;
 
+double Setpoint, Input, Output;
 
 /****************************************************************************************
  * ARDUINO MAIN FUNCTIONS
@@ -86,6 +88,7 @@ void setup() {
 }
 
 void loop() {
+ 
   digitalWrite(togglePin,LOW); 
   
   // set the clk LOW
@@ -135,6 +138,7 @@ void loop() {
   decode_frame_buffer(frame_buffer, FRAME_BUFFER_LENGTH);
 
   //delay 10 m seconds
+ 
   delay(10);
 }
 
@@ -200,7 +204,31 @@ void debug_print_balck_lines_info(){
 }
 
 
+void create_test_frame(){
+    int frame [128];
+    int i =0;
+    int constant = 0;
+    
+    for (i=0; i<128; i++){
+        if (i<40){
+            frame[i]= 50;
 
+        }else if(i>=40 && i<45){
+            frame [i]= constant+200*i ;
+
+        }else if (i>=45 && i<84){
+            frame [i]= 1050;
+        } else if (i>=84 && i<90){
+            frame [i]= 18050- 200*i;
+        } else if(i>=90){
+            frame [i]= 50;
+        }
+
+    }
+
+    debug_print_array(frame, 128, 0);
+    //decode_frame_buffer (frame, 128);
+}
 /****************************************************************************************
  * STATIC FUNCTIONS
  ***************************************************************************************/
@@ -233,6 +261,7 @@ void decode_frame_buffer (int *frame_buffer, int frame_length){
   
   // loop through the decoded frame of pixels and set the other edge pixels
   for (int i= FRAME_BUFFER_MARGIN_LENGHT+1; i<FRAME_BUFFER_LENGTH-FRAME_BUFFER_MARGIN_LENGHT; i++){
+    // The following if block is intended to set the right most edge point if the line ends with black point 
     if (decoded_frame_buffer[i-1].pixel_color == PIXEL_BLACK && decoded_frame_buffer[i].pixel_color == PIXEL_BLACK){
           // set the right most pixel as edge pixel if it is black and there are already white pixel encountered at the middle (i.e contrast)
           if ((i==FRAME_BUFFER_LENGTH-FRAME_BUFFER_MARGIN_LENGHT-1) && (most_left_black_edge_detected) && (!most_right_black_edge_detected)){
@@ -240,6 +269,8 @@ void decode_frame_buffer (int *frame_buffer, int frame_length){
             most_right_black_edge_detected = true;
           }
     }
+
+    // The following if block is intended to set any black point that is followed with a white point within a margin to be edge point
     else if (decoded_frame_buffer[i-1].pixel_color == PIXEL_BLACK && decoded_frame_buffer[i].pixel_color != PIXEL_BLACK){
         //check if the following white pixel is within the next few pixels
         for (int j = i; j<i+MAX_CONTRAST_LENGTH && j<FRAME_BUFFER_LENGTH-FRAME_BUFFER_MARGIN_LENGHT; j++){
@@ -247,16 +278,18 @@ void decode_frame_buffer (int *frame_buffer, int frame_length){
             //set the black pixel as edge pixel
             decoded_frame_buffer[i].edge_pixel= true;
             
-            // go back and set the left most black pixel as edge pixel if the it is not set yet
-            for (int x= i-2; (!most_left_black_edge_detected) && (x>FRAME_BUFFER_MARGIN_LENGHT); x--){
+            // go back and set the left most black pixel as edge pixel if it is not set yet
+            for (int x= i-2; (!most_left_black_edge_detected) && (x>=FRAME_BUFFER_MARGIN_LENGHT); x--){
               if (decoded_frame_buffer[x].pixel_color == PIXEL_BLACK && decoded_frame_buffer[x--].pixel_color != PIXEL_BLACK){
                 decoded_frame_buffer[x].edge_pixel= true;
                 most_left_black_edge_detected= true;
               } else if (x== FRAME_BUFFER_MARGIN_LENGHT+1){
-                // if we reached the beggining of the frame, set the first pixel as edge pixel
-                decoded_frame_buffer[x].edge_pixel= true;
-                //Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> left most edge is detected");
-                break;
+                // if we reached the beggining of the frame, set the first pixel as edge pixel only if its black
+                if (decoded_frame_buffer[x].pixel_color == PIXEL_BLACK){
+                  decoded_frame_buffer[x].edge_pixel= true;
+                  break;
+                }
+
               }
             }
             
