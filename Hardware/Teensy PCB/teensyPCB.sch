@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.5.0">
+<eagle version="7.2.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -4936,6 +4936,14 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <part name="C5" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="10uF"/>
 <part name="BAT1" library="SparkFun-Electromechanical" deviceset="BATTERY" device="20PTH"/>
 <part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="S3" library="SparkFun-Retired" deviceset="TAC_SWITCH" device="SMD" value="TAC_SWITCHSMD"/>
+<part name="R7" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10k"/>
+<part name="C6" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="100nF"/>
+<part name="S4" library="SparkFun-Retired" deviceset="TAC_SWITCH" device="SMD" value="TAC_SWITCHSMD"/>
+<part name="R8" library="SparkFun-Resistors" deviceset="RESISTOR" device="0805-RES" value="10k"/>
+<part name="C7" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="100nF"/>
+<part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
+<part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4994,6 +5002,14 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <instance part="C5" gate="G$1" x="177.8" y="48.26" rot="R270"/>
 <instance part="BAT1" gate="G$1" x="58.42" y="53.34" rot="R270"/>
 <instance part="GND10" gate="1" x="58.42" y="45.72"/>
+<instance part="S3" gate="S" x="81.28" y="-15.24" rot="MR0"/>
+<instance part="R7" gate="G$1" x="88.9" y="-30.48" rot="MR90"/>
+<instance part="C6" gate="G$1" x="88.9" y="-20.32"/>
+<instance part="S4" gate="S" x="111.76" y="-15.24"/>
+<instance part="R8" gate="G$1" x="104.14" y="-30.48" rot="R90"/>
+<instance part="C7" gate="G$1" x="104.14" y="-20.32" rot="MR0"/>
+<instance part="SUPPLY7" gate="G$1" x="96.52" y="-7.62"/>
+<instance part="GND11" gate="1" x="96.52" y="-38.1"/>
 </instances>
 <busses>
 </busses>
@@ -5083,6 +5099,14 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <segment>
 <pinref part="BAT1" gate="G$1" pin="-"/>
 <pinref part="GND10" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="R7" gate="G$1" pin="1"/>
+<pinref part="R8" gate="G$1" pin="1"/>
+<wire x1="88.9" y1="-35.56" x2="96.52" y2="-35.56" width="0.1524" layer="91"/>
+<pinref part="GND11" gate="1" pin="GND"/>
+<wire x1="96.52" y1="-35.56" x2="104.14" y2="-35.56" width="0.1524" layer="91"/>
+<junction x="96.52" y="-35.56"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
@@ -5188,6 +5212,30 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <junction x="139.7" y="-12.7"/>
 <wire x1="139.7" y1="-12.7" x2="139.7" y2="-10.16" width="0.1524" layer="91"/>
 <pinref part="SUPPLY15" gate="G$1" pin="5V"/>
+</segment>
+<segment>
+<pinref part="C6" gate="G$1" pin="+"/>
+<pinref part="S3" gate="S" pin="2"/>
+<wire x1="86.36" y1="-17.78" x2="88.9" y2="-17.78" width="0.1524" layer="91"/>
+<pinref part="S3" gate="S" pin="1"/>
+<wire x1="86.36" y1="-15.24" x2="88.9" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="-15.24" x2="88.9" y2="-17.78" width="0.1524" layer="91"/>
+<junction x="88.9" y="-17.78"/>
+<wire x1="88.9" y1="-15.24" x2="88.9" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="88.9" y="-15.24"/>
+<pinref part="C7" gate="G$1" pin="+"/>
+<pinref part="S4" gate="S" pin="2"/>
+<wire x1="106.68" y1="-17.78" x2="104.14" y2="-17.78" width="0.1524" layer="91"/>
+<pinref part="S4" gate="S" pin="1"/>
+<wire x1="106.68" y1="-15.24" x2="104.14" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="104.14" y1="-15.24" x2="104.14" y2="-17.78" width="0.1524" layer="91"/>
+<junction x="104.14" y="-17.78"/>
+<wire x1="104.14" y1="-15.24" x2="104.14" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="104.14" y="-15.24"/>
+<wire x1="104.14" y1="-7.62" x2="96.52" y2="-7.62" width="0.1524" layer="91"/>
+<pinref part="SUPPLY7" gate="G$1" pin="5V"/>
+<wire x1="96.52" y1="-7.62" x2="88.9" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="96.52" y="-7.62"/>
 </segment>
 </net>
 <net name="ARDUINO_RX" class="0">
@@ -5555,6 +5603,44 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <pinref part="U$1" gate="G$1" pin="VBAT"/>
 <wire x1="40.64" y1="33.02" x2="43.18" y2="33.02" width="0.1524" layer="91"/>
 <label x="43.18" y="33.02" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$4" class="0">
+<segment>
+<pinref part="S3" gate="S" pin="4"/>
+<pinref part="S3" gate="S" pin="3"/>
+<wire x1="76.2" y1="-15.24" x2="76.2" y2="-17.78" width="0.1524" layer="91"/>
+<junction x="76.2" y="-17.78"/>
+<pinref part="R7" gate="G$1" pin="2"/>
+<pinref part="C6" gate="G$1" pin="-"/>
+<junction x="88.9" y="-25.4"/>
+<wire x1="88.9" y1="-25.4" x2="76.2" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="-25.4" x2="76.2" y2="-17.78" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="-38.1" x2="76.2" y2="-38.1" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="-38.1" x2="76.2" y2="-25.4" width="0.1524" layer="91"/>
+<junction x="76.2" y="-25.4"/>
+<pinref part="U$1" gate="G$1" pin="28/A17"/>
+<wire x1="40.64" y1="-15.24" x2="48.26" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="-15.24" x2="48.26" y2="-38.1" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$10" class="0">
+<segment>
+<pinref part="S4" gate="S" pin="4"/>
+<pinref part="S4" gate="S" pin="3"/>
+<wire x1="116.84" y1="-15.24" x2="116.84" y2="-17.78" width="0.1524" layer="91"/>
+<junction x="116.84" y="-17.78"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+<pinref part="C7" gate="G$1" pin="-"/>
+<junction x="104.14" y="-25.4"/>
+<wire x1="104.14" y1="-25.4" x2="116.84" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="-25.4" x2="116.84" y2="-17.78" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="-40.64" x2="116.84" y2="-25.4" width="0.1524" layer="91"/>
+<junction x="116.84" y="-25.4"/>
+<wire x1="45.72" y1="-40.64" x2="116.84" y2="-40.64" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="27/A16"/>
+<wire x1="40.64" y1="-17.78" x2="45.72" y2="-17.78" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="-17.78" x2="45.72" y2="-40.64" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
