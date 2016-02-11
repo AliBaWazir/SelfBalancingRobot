@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -4221,8 +4221,8 @@ SMT- SWCH-08247</description>
 <instance part="U$4" gate="G$1" x="175.26" y="-12.7"/>
 <instance part="C1" gate="G$1" x="139.7" y="-15.24" rot="MR0"/>
 <instance part="C2" gate="G$1" x="160.02" y="-35.56" rot="R180"/>
-<instance part="J1" gate="G$1" x="157.48" y="10.16" rot="MR270"/>
-<instance part="J2" gate="G$1" x="144.78" y="15.24" rot="MR270"/>
+<instance part="J1" gate="G$1" x="160.02" y="10.16" rot="MR270"/>
+<instance part="J2" gate="G$1" x="142.24" y="10.16" rot="R270"/>
 <instance part="LINEAR_ARRAY_SENSOR2" gate="G$1" x="-93.98" y="55.88"/>
 <instance part="GND7" gate="1" x="-71.12" y="60.96" rot="R90"/>
 <instance part="SUPPLY8" gate="G$1" x="-66.04" y="58.42"/>
@@ -4618,32 +4618,32 @@ SMT- SWCH-08247</description>
 <net name="N$5" class="0">
 <segment>
 <pinref part="U$4" gate="G$1" pin="R+"/>
-<wire x1="157.48" y1="0" x2="162.56" y2="0" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="0" x2="162.56" y2="0" width="0.1524" layer="91"/>
 <pinref part="J1" gate="G$1" pin="1"/>
-<wire x1="157.48" y1="2.54" x2="157.48" y2="0" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="2.54" x2="160.02" y2="0" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$6" class="0">
 <segment>
 <pinref part="U$4" gate="G$1" pin="R-"/>
-<wire x1="154.94" y1="-2.54" x2="162.56" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="157.48" y1="-2.54" x2="162.56" y2="-2.54" width="0.1524" layer="91"/>
 <pinref part="J1" gate="G$1" pin="2"/>
-<wire x1="154.94" y1="2.54" x2="154.94" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="157.48" y1="2.54" x2="157.48" y2="-2.54" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
 <pinref part="U$4" gate="G$1" pin="L-"/>
-<wire x1="162.56" y1="-5.08" x2="142.24" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="162.56" y1="-5.08" x2="144.78" y2="-5.08" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="2"/>
-<wire x1="142.24" y1="7.62" x2="142.24" y2="-5.08" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="2.54" x2="144.78" y2="-5.08" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$8" class="0">
 <segment>
-<wire x1="144.78" y1="7.62" x2="144.78" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="2.54" x2="142.24" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="U$4" gate="G$1" pin="L+"/>
-<wire x1="144.78" y1="-7.62" x2="162.56" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="-7.62" x2="162.56" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="1"/>
 </segment>
 </net>
