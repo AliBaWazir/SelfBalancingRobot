@@ -20,3 +20,4 @@ void setup(void);
 void application_main(int32_t);
 extern void discrete_PID_initialize(void);
 extern void rt_OneStep(void);
+void userLoop(void);

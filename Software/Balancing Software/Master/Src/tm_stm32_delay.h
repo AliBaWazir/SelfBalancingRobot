@@ -147,6 +147,7 @@ typedef struct _TM_DELAY_Timer_t {
  * @brief    Library variables
  * @{
  */
+extern __IO uint16_t runFlag;
 extern __IO uint32_t TM_uTime;
 extern __IO uint32_t TM_Time;
 extern __IO uint32_t TM_Time2;

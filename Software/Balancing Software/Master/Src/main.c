@@ -70,7 +70,7 @@ enum packet_type_e {
     PACKET_TYPE_MISC,
     PACKET_TYPE_COMPASS,
 };
-
+extern void userLoop(void);
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void Board_Init (void);
@@ -670,6 +670,7 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
+    userLoop();
     unsigned long sensor_timestamp;
     int new_data = 0;
 		
@@ -710,12 +711,14 @@ int main(void)
 		
 		if (hal.new_gyro && hal.dmp_on)
 		{
+            
 			short gyro[3], accel_short[3], sensors;
 			unsigned char more;
 			long accel[3], quat[4], temperature;
             //about to read fifo
 			
             
+           //__disable_irq();
             dmp_read_fifo(gyro, accel_short, quat, &sensor_timestamp, &sensors, &more);\
 //            for(int i = more; i > 0;i--){
 //                HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
@@ -724,9 +727,8 @@ int main(void)
 //                //HAL_Delay(1);
 //                
 //            }
-			if (!more)
-                
-				hal.new_gyro = 0;
+			if (!more)hal.new_gyro = 0;
+             //__enable_irq();
 			
 			if (sensors & INV_XYZ_GYRO)
 			{
@@ -754,6 +756,8 @@ int main(void)
 					inv_build_quat(quat, 0, sensor_timestamp);
 					new_data = 1;
 			}
+            
+            
 		}
         
 //		else if (hal.new_gyro)

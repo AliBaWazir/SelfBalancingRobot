@@ -7,6 +7,7 @@
 #define PID_PARAM_KP		10.0     	/* Proportional */
 #define PID_PARAM_KI		0.05		/* Integral */
 #define PID_PARAM_KD		0.9			/* Derivative */
+#define MINANGLE 200
 float temps[2];
 float pid_error;
 double output;
@@ -41,13 +42,13 @@ void setup(){
     //PID.Kp = PID_PARAM_KP;		/* Proporcional */
 	//PID.Ki = PID_PARAM_KI;		/* Integral */
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
-    controllerPositionP = 0;//.05;
+    controllerPositionP = 0.05;
     controllerPositionI = 0;
     controllerPositionD = 0;//.05;
     
-    controllerAngleP = 100;
-    controllerAngleI = 5;//0.2;
-    controllerAngleD = 40;//.5;
+    controllerAngleP = 60;
+    controllerAngleI = 50;//0.2;
+    controllerAngleD = 70;//.5;
     
     
     
@@ -58,9 +59,16 @@ void setup(){
 }
 //This function gets called by the MPU with angle Data
 
-
+void userLoop(){
+    if(runFlag >= 1){
+        runFlag = 0;
+        //runSpeed(); 
+        
+    }
+}
 
 void application_main(int32_t angle){
+    angle+= 40;
     counter++;
     //if(1){return;};
     //angle6 = angle5;
@@ -69,12 +77,25 @@ void application_main(int32_t angle){
     angle3 = angle2;
     angle2 = angle1;
     angle1 = angle;
-    //angle = (angle2+angle3+angle1)/3;
+    angle = ((angle2*0.3)+(angle3*0.2)+(angle1*0.5));
     if(HAL_GetTick()<5000)
     {
         
         dWrite(PORTD+12, HIGH);
+        
+        
         return;
+    }
+    
+    if(abs(angle) > MINANGLE){
+        angle = 0;
+        discrete_PID_terminate(); //kill PID since robot is lying down
+        setStepperCurrentPosition(0);
+        
+        return;
+    }
+    if(rtmGetErrorStatus(discrete_PID_M) != (NULL)){
+        discrete_PID_initialize();
     }
 	controllerInputAngle = -angle;
     controllerInputPosition = (real_T)stepperCurrentPosition();
@@ -91,9 +112,17 @@ void application_main(int32_t angle){
     
     acceleration = output;//(+ac3+ac2+ac1)/3.0;
     
-    if(output >0)stepperMove(-10000);
-    if(output <0)stepperMove(10000);
-    setStepperAccel(abs(output)*200);
+    if(output >0)stepperMove(-2000);
+    if(output <0)stepperMove(2000);
+    setStepperAccel(abs(output)*350);
+    
+    
+    
+    
+    
+    
+    
+    
     //newSpeed = acceleration/0.1;
     
     //setStepperSpeed(-newSpeed);
@@ -126,6 +155,6 @@ void application_main(int32_t angle){
     
 }
 void TM_DELAY_1msHandler(){
-   runSpeed(); 
+   //runSpeed(); 
 }
 

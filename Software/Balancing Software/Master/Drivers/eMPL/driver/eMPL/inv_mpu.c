@@ -1815,13 +1815,15 @@ int mpu_read_fifo_stream(unsigned short length, unsigned char *data,
 {
     unsigned char tmp[2];
     unsigned short fifo_count;
+    
     if (!st.chip_cfg.dmp_on)
         return -1;
     if (!st.chip_cfg.sensors)
         return -1;
-
+    
     if (i2c_read(st.hw->addr, st.reg->fifo_count_h, 2, tmp))
         return -1;
+    
     fifo_count = (tmp[0] << 8) | tmp[1];
     if (fifo_count < length) {
         more[0] = 0;
@@ -1839,9 +1841,10 @@ HAL_Delay(2000);
             return -2;
         }
     }
-
+    
     if (i2c_read(st.hw->addr, st.reg->fifo_r_w, length, data))
         return -1;
+    
     more[0] = fifo_count / length - 1;
     return 0;
 }

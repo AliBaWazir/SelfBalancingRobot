@@ -20,7 +20,9 @@
 #include "defines.h"
 
 /* Functions for delay */
+__IO uint16_t runFlag = 0;
 __IO uint16_t TM_Counter = 0;
+__IO uint16_t STEP_Counter = 0;
 __IO uint32_t TM_uTime = 0;
 __IO uint32_t TM_Time2 = 0;
 __IO uint32_t TM_Time = 0;
@@ -195,10 +197,18 @@ extern void rt_OneStep(void);
 
 /* Called from Systick handler */
 void HAL_IncTick(void) {
+  //  runSpeed(); 
 	TM_uTime+=20;
     
     //dWrite(PORTE+9, HIGH);
     //dWrite(PORTE+9, LOW);
+    STEP_Counter++;
+    if(STEP_Counter >= 7){
+       STEP_Counter= 0;
+        runFlag = 1;
+        runSpeed();
+    }
+    
 	if(TM_Counter <15){
 		
 		TM_Counter++;

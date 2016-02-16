@@ -51,6 +51,11 @@ void setStepperMaxSpeed(uint16_t maxSpeed){
         stepperR.setMaxSpeed(maxSpeed);
         stepperL.setMaxSpeed(maxSpeed);
 }
+void setStepperCurrentPosition(uint16_t position){
+        stepperR.setCurrentPosition(position);
+        stepperL.setCurrentPosition(position);
+}
+
 void setStepperAccel(uint16_t accel){
         stepperR.setAcceleration(accel);
         stepperL.setAcceleration(accel);

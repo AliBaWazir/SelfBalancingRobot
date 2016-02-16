@@ -12,13 +12,30 @@ void pinMode(uint8_t pin, uint8_t mode){
     TM_GPIO_Init(pinPort(pin), (uint16_t)gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 }
 void digitalWrite(uint8_t pin, uint8_t state){
-	//Delay(1);
+    if(pin == PORTA+2){
+        TM_GPIO_SetPinValue(GPIOA, GPIO_PIN_2, state);
+        return;
+    }
+    if(pin == PORTA+5){
+        TM_GPIO_SetPinValue(GPIOA, GPIO_PIN_5, state);
+        return;        
+    }
+    if(pin == PORTC+3){
+        TM_GPIO_SetPinValue(GPIOC, GPIO_PIN_3, state);
+        return;
+    }
+    if(pin == PORTC+4){
+        TM_GPIO_SetPinValue(GPIOC, GPIO_PIN_4, state);
+        return;
+    }
+    
 	if(state == HIGH) {
         TM_GPIO_SetPinHigh(pinPort(pin), gpioPin(pin));
     }
 	if(state == LOW) {
         TM_GPIO_SetPinLow(pinPort(pin), gpioPin(pin));
     }
+    
 }
 int digitalRead(uint8_t){
     return 1;
