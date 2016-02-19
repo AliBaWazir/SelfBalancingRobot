@@ -1,14 +1,5 @@
 
-#include <PID_v1.h>
 #include "arduino.h"
-/****************************************************************************************
- * PORTS ASSIGNMENTS
- ****************************************************************************************/
-const int clkPin          = 14;  // digial sampling pin of the clock
-const int exposurePin     = 15;  // digial sampling pin for the sampling
-const int togglePin       = 20;  // digial sampling pin for the toggling
-const int analogInputPin  = A2;  // Analog input pin for sensor's AOUT signal
-
 
 
 /****************************************************************************************
@@ -19,6 +10,8 @@ const int analogInputPin  = A2;  // Analog input pin for sensor's AOUT signal
 #define FRAME_BUFFER_LENGTH 128
 #define FRAME_BUFFER_MARGIN_LENGHT 10
 #define MAX_CONTRAST_LENGTH 8
+#define MAX_BLACK_LINES_PER_FRAME 3
+
 
 typedef enum {
   PIXEL_WHITE,
@@ -34,14 +27,18 @@ typedef struct {
 
 typedef struct {
   uint8_t black_lines_count;
-  uint8_t black_lines_positions[3];       // 3 is maximum black lines decoded
+  uint8_t black_lines_positions[MAX_BLACK_LINES_PER_FRAME];       // 3 is maximum black lines decoded
 }black_lines_info_t;
 
+/****************************************************************************************
+ * GLOBAL VARIABLES
+ ****************************************************************************************/
+extern black_lines_info_t   current_black_lines_info;
 
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
-bool linear_array_sensor_init();
-void linear_array_sensor_get_data();
+bool linear_sensor_array_driver_init();
+bool linear_sensor_array_driver_get_data();
 
 

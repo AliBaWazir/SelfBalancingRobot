@@ -1,22 +1,44 @@
-#include "linear_array_sensor_driver.h"
+#include "linear_sensor_array_driver.h"
 
+/****************************************************************************************
+ * HARDWARE PORTS ASSIGNMENTS
+ ****************************************************************************************/
+const int clkPin          = 14;  // digial sampling pin of the clock
+const int exposurePin     = 15;  // digial sampling pin for the sampling
+const int togglePin       = 20;  // digial sampling pin for the toggling
+const int analogInputPin  = A2;  // Analog input pin for sensor's AOUT signal
+
+/****************************************************************************************
+ * STATIC FUNCTION PROTOTYPES
+ ***************************************************************************************/
+static void debug_print_array (int *input_array, int length, int margin_offset);
+static void debug_print_decoded_frame_buffer_full_data (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length);
+static void debug_print_decoded_frame_buffer_edge_pixel_indexes (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length);
+static void debug_print_balck_lines_info();
+static void create_test_frame();
+static void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length, black_lines_info_t* extracted_info);
+static void decode_frame_buffer (int *frame_buffer, int frame_length);
+
+
+/****************************************************************************************
+ * GLOBAL VARIABLES
+ ***************************************************************************************/
+ black_lines_info_t current_black_lines_info;
 
 /****************************************************************************************
  * STATIC VARIABLES
  ***************************************************************************************/
 static int                  sensorValue;                                      // value read from the analogInputPin
 static int                  frame_buffer[128];                                // data of a single frame as received from the sensor
-static bool                 init_frame_decoded               = false;         // this boolean is set to true after the initial frame is decoded
-static black_lines_info_t   initial_black_lines_info         = {0, {0, 0, 0}};
 static int                  black_lines_count= 0;       // the count of the black lines is determined by the initial frame only
 static pixel_data_t         decoded_frame_buffer[FRAME_BUFFER_LENGTH];
-static black_lines_info_t   current_black_lines_info;
-
 static double               Setpoint, Input, Output;
+static bool                 driver_in_testing_mode           = true;          // this variable should be set to true only in the testing process to enable creating an internal frame
+
 
 
 /****************************************************************************************
- * DEBUG FUNCTIONS
+ * STATIC DEBUG AND TEST FUNCTIONS
  ***************************************************************************************/
 
 /*
@@ -27,9 +49,9 @@ static double               Setpoint, Input, Output;
  * @param margin_offset  an offset to from the start and end of the array where entries should be ignored. 
  *                       This value should be 0 if all entries of the array are to be displayed
  */
-void debug_print_array (int *input_array, int length, int margin_offset){
-    Serial.print("sensor = ");
-    for (int i=(margin_offset-1); i<(length-margin_offset); i++){
+static void debug_print_array (int *input_array, int length, int margin_offset){
+    Serial.print("read frame from sensor = ");
+    for (int i=(margin_offset); i<(length-margin_offset); i++){
        Serial.print(input_array[i]);
        Serial.print(",");
     }
@@ -37,7 +59,7 @@ void debug_print_array (int *input_array, int length, int margin_offset){
 }
 
 
-void debug_print_decoded_frame_buffer_full_data (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length){
+static void debug_print_decoded_frame_buffer_full_data (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length){
     Serial.println("");
     for (int i=0; i< frame_length; i++){
       Serial.print("[");
@@ -51,7 +73,7 @@ void debug_print_decoded_frame_buffer_full_data (pixel_data_t* full_decoded_fram
     }
 }
 
-void debug_print_decoded_frame_buffer_edge_pixel_indexes (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length){
+static void debug_print_decoded_frame_buffer_edge_pixel_indexes (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length){
     Serial.print("Edge pixels are: ");
     for (int i=0; i< frame_length; i++){
       if (full_decoded_frame_buffer[i].edge_pixel){
@@ -62,7 +84,7 @@ void debug_print_decoded_frame_buffer_edge_pixel_indexes (pixel_data_t* full_dec
     Serial.println("");
 }
 
-void debug_print_balck_lines_info(){
+static void debug_print_balck_lines_info(){
     if (current_black_lines_info.black_lines_count>0){
     Serial.print("Number of black lines = ");
     Serial.println(current_black_lines_info.black_lines_count);
@@ -76,46 +98,32 @@ void debug_print_balck_lines_info(){
 }
 
 
-void create_test_frame(){
-    int frame [128];
-    int i =0;
-    int constant = 0;
-    
-    for (i=0; i<128; i++){
-        if (i<40){
-            frame[i]= 50;
-
-        }else if(i>=40 && i<45){
-            frame [i]= constant+200*i ;
-
-        }else if (i>=45 && i<84){
-            frame [i]= 1050;
-        } else if (i>=84 && i<90){
-            frame [i]= 18050- 200*i;
-        } else if(i>=90){
-            frame [i]= 50;
-        }
-
-    }
+static void create_test_frame(){
+    int frame [128] = {1021,1021,1021,1020,1021,1021,1022,1019,1021,1021,1021,1021,1021,1020,1021,1022,1021,1021,1021,1021,1021,1021,1022,1021,700,600,500,400,20,150,100,100,100,100,20,100,100,100,50,70,200,300,400,500,600,700,1021,1021,1021,1021,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1022,1021,1020,1020,1021,1021,1021,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1020,1019,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1020,1021,1021,1022,1019,1021};
 
     debug_print_array(frame, 128, 0);
-    //decode_frame_buffer (frame, 128);
+    decode_frame_buffer (frame, 128);
+
+    //delay 10 m seconds
+    delay(10);
 }
+
+
 /****************************************************************************************
  * STATIC FUNCTIONS
  ***************************************************************************************/
 
-void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length, black_lines_info_t* extracted_info){
+static void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length, black_lines_info_t* extracted_black_lines_info){
   //memset the existing black lines info
-  memset (extracted_info, 0, sizeof(black_lines_info_t));
+  memset (extracted_black_lines_info, 0, sizeof(black_lines_info_t));
   
   for (int i= 0; i<frame_length; i++){
     if (full_decoded_frame_buffer[i].edge_pixel){
       //find the next edge pixel
       for (int j= i+1; j<frame_length; j++){
         if (full_decoded_frame_buffer[j].edge_pixel){
-          extracted_info->black_lines_positions[current_black_lines_info.black_lines_count]= (i + j)/2;
-          extracted_info->black_lines_count++;
+          extracted_black_lines_info->black_lines_positions[extracted_black_lines_info->black_lines_count]= (i + j)/2;
+          extracted_black_lines_info->black_lines_count++;
 
           //jump forward
           i=j;
@@ -138,7 +146,7 @@ void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer, uint8_
  * @param margin_offset  an offset to from the start and end of the array where entries should be ignored. 
  *                       This value should be 0 if all entries of the array are to be displayed
  */
-void decode_frame_buffer (int *frame_buffer, int frame_length){
+static void decode_frame_buffer (int *frame_buffer, int frame_length){
   bool most_right_black_edge_detected= false;
   bool most_left_black_edge_detected= false;
   memset (&decoded_frame_buffer, 0, sizeof(pixel_data_t)*FRAME_BUFFER_LENGTH);
@@ -229,11 +237,9 @@ void decode_frame_buffer (int *frame_buffer, int frame_length){
 
 
 /****************************************************************************************
- * ARDUINO MAIN FUNCTIONS
+ * GLOBAL FUNCTIONS
  ***************************************************************************************/
-bool linear_array_sensor_init() {
-  // initialize serial communications at 9600 bps:
-  Serial.begin(9600);
+bool linear_sensor_array_driver_init() {
 
   // set the input pins:
   pinMode(analogInputPin, INPUT);
@@ -242,12 +248,17 @@ bool linear_array_sensor_init() {
   pinMode(exposurePin, OUTPUT);
   pinMode(clkPin, OUTPUT);
   pinMode(togglePin,OUTPUT);
-
+  
   return true;
 }
 
-void linear_array_sensor_get_data() {
- 
+bool linear_sensor_array_driver_get_data() {
+  //Serial.print("INFO>> linear_sensor_array_driver_get_data: called");
+  if (driver_in_testing_mode){
+    create_test_frame();
+    return true;
+  }
+  
   digitalWrite(togglePin,LOW); 
   
   // set the clk LOW
@@ -293,12 +304,13 @@ void linear_array_sensor_get_data() {
   // print the frame_buffer to the serial monitor:
   debug_print_array(frame_buffer, FRAME_BUFFER_LENGTH, FRAME_BUFFER_MARGIN_LENGHT); //will ignore the first 16 bits
   
-  //decode the frame buffer
+  // decode the frame buffer. Results will be stored in the global variable current_black_lines_info
   decode_frame_buffer(frame_buffer, FRAME_BUFFER_LENGTH);
 
   //delay 10 m seconds
- 
   delay(10);
+
+  return true;
 }
 
 
