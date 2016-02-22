@@ -351,19 +351,23 @@
 <packages>
 <package name="BT_BOARD_FOOTPRINT">
 <description>Bluetooth Board V1.05 Footprint</description>
-<pad name="RX" x="-16.51" y="3.81" drill="0.9" diameter="1.778"/>
-<pad name="TX" x="-16.51" y="1.27" drill="0.9" diameter="1.778"/>
-<pad name="GND" x="-16.51" y="-1.27" drill="0.9" diameter="1.778"/>
-<text x="-15.24" y="3.556" size="0.6096" layer="21" font="vector">RX</text>
-<text x="-15.24" y="1.016" size="0.6096" layer="21" font="vector">TX</text>
-<text x="-15.24" y="-1.524" size="0.6096" layer="21" font="vector">GND</text>
-<pad name="VCC" x="-16.51" y="-3.81" drill="0.9" diameter="1.778"/>
-<text x="-15.24" y="-4.064" size="0.6096" layer="21" font="vector">VCC</text>
-<wire x1="-17.78" y1="6.985" x2="-17.78" y2="-6.985" width="0.127" layer="21"/>
-<wire x1="-17.78" y1="-6.985" x2="16.51" y2="-6.985" width="0.127" layer="21"/>
-<wire x1="16.51" y1="-6.985" x2="16.51" y2="6.985" width="0.127" layer="21"/>
-<wire x1="16.51" y1="6.985" x2="-17.78" y2="6.985" width="0.127" layer="21"/>
-<text x="-17.78" y="7.493" size="1.016" layer="25" font="vector" ratio="12">&gt;NAME</text>
+<pad name="RX" x="2.54" y="5.08" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="TX" x="2.54" y="7.62" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="GND" x="2.54" y="15.24" drill="1.016" diameter="1.778" shape="square"/>
+<text x="5.08" y="5.08" size="0.6096" layer="21" font="vector">RX</text>
+<text x="5.08" y="7.62" size="0.6096" layer="21" font="vector">TX</text>
+<text x="5.08" y="15.24" size="0.6096" layer="21" font="vector">GND</text>
+<pad name="VCC" x="2.54" y="10.16" drill="1.016" diameter="1.778" shape="octagon"/>
+<text x="5.08" y="10.16" size="0.6096" layer="21" font="vector">5.0</text>
+<wire x1="0" y1="17" x2="0" y2="0" width="0.127" layer="21"/>
+<wire x1="0" y1="0" x2="37" y2="0" width="0.127" layer="21"/>
+<wire x1="37" y1="0" x2="37" y2="17" width="0.127" layer="21"/>
+<wire x1="37" y1="17" x2="0" y2="17" width="0.127" layer="21"/>
+<text x="0" y="17.54" size="1.016" layer="25" font="vector" ratio="12">&gt;NAME</text>
+<pad name="KEY" x="2.54" y="2.54" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="3.3" x="2.54" y="12.7" drill="1.016" diameter="1.778" shape="octagon"/>
+<text x="5.08" y="12.7" size="0.6096" layer="21" font="vector">3.3</text>
+<text x="5.08" y="2.54" size="0.6096" layer="21" font="vector">KEY</text>
 </package>
 <package name="BT_BOARD_FOOTPRINT_STANDING">
 <pad name="RX" x="-3.81" y="3.81" drill="0.9" diameter="1.6764"/>
@@ -388,15 +392,17 @@
 <symbol name="BT_BOARD_SCHEMATIC">
 <description>Bluetooth Board V1.05 Schematic</description>
 <pin name="GND" x="-12.7" y="2.54" length="middle"/>
-<pin name="VCC" x="-12.7" y="7.62" length="middle"/>
-<pin name="TX" x="-12.7" y="-2.54" length="middle"/>
-<pin name="RX" x="-12.7" y="-7.62" length="middle"/>
-<wire x1="-7.62" y1="10.16" x2="-7.62" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="-7.62" y1="-10.16" x2="7.62" y2="-10.16" width="0.254" layer="94"/>
-<wire x1="7.62" y1="-10.16" x2="7.62" y2="10.16" width="0.254" layer="94"/>
+<pin name="5.0" x="-12.7" y="7.62" length="middle"/>
+<pin name="TX" x="-12.7" y="0" length="middle"/>
+<pin name="RX" x="-12.7" y="-2.54" length="middle"/>
+<wire x1="-7.62" y1="10.16" x2="-7.62" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-7.62" x2="7.62" y2="10.16" width="0.254" layer="94"/>
 <wire x1="7.62" y1="10.16" x2="-7.62" y2="10.16" width="0.254" layer="94"/>
 <text x="-7.62" y="10.922" size="1.778" layer="95" ratio="15">&gt;NAME</text>
-<text x="-7.62" y="-12.7" size="1.778" layer="96" ratio="15">&gt;VALUE</text>
+<text x="-7.62" y="-15.24" size="1.778" layer="96" ratio="15">&gt;VALUE</text>
+<pin name="3.3" x="-12.7" y="5.08" length="middle"/>
+<pin name="KEY" x="-12.7" y="-5.08" length="middle"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -408,10 +414,12 @@
 <devices>
 <device name="" package="BT_BOARD_FOOTPRINT">
 <connects>
+<connect gate="J_BT_BOARD" pin="3.3" pad="3.3"/>
+<connect gate="J_BT_BOARD" pin="5.0" pad="VCC"/>
 <connect gate="J_BT_BOARD" pin="GND" pad="GND"/>
+<connect gate="J_BT_BOARD" pin="KEY" pad="KEY"/>
 <connect gate="J_BT_BOARD" pin="RX" pad="RX"/>
 <connect gate="J_BT_BOARD" pin="TX" pad="TX"/>
-<connect gate="J_BT_BOARD" pin="VCC" pad="VCC"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -419,10 +427,10 @@
 </device>
 <device name="STANDING" package="BT_BOARD_FOOTPRINT_STANDING">
 <connects>
+<connect gate="J_BT_BOARD" pin="5.0" pad="VCC"/>
 <connect gate="J_BT_BOARD" pin="GND" pad="GND"/>
 <connect gate="J_BT_BOARD" pin="RX" pad="RX"/>
 <connect gate="J_BT_BOARD" pin="TX" pad="TX"/>
-<connect gate="J_BT_BOARD" pin="VCC" pad="VCC"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -437,18 +445,18 @@
 <packages>
 <package name="HC-SR04_FOOTPRINT">
 <description>Ultrasonic Sensor HC-SR04 Footprint</description>
-<pad name="ECHO" x="0" y="1.27" drill="0.9" diameter="1.778"/>
-<pad name="TRIG" x="0" y="-1.27" drill="0.9" diameter="1.778"/>
-<pad name="VCC" x="0" y="-3.81" drill="0.9" diameter="1.778"/>
-<pad name="GND" x="0" y="3.81" drill="0.9" diameter="1.778" shape="square"/>
+<pad name="ECHO" x="0" y="1.27" drill="1.016" diameter="1.778"/>
+<pad name="TRIG" x="0" y="-1.27" drill="1.016" diameter="1.778"/>
+<pad name="VCC" x="0" y="-3.81" drill="1.016" diameter="1.778"/>
+<pad name="GND" x="0" y="3.81" drill="1.016" diameter="1.778" shape="square"/>
 <wire x1="-1.27" y1="5.08" x2="-1.27" y2="-5.08" width="0.127" layer="21"/>
 <wire x1="-1.27" y1="-5.08" x2="1.27" y2="-5.08" width="0.127" layer="21"/>
 <wire x1="1.27" y1="-5.08" x2="1.27" y2="5.08" width="0.127" layer="21"/>
 <wire x1="1.27" y1="5.08" x2="-1.27" y2="5.08" width="0.127" layer="21"/>
-<text x="1.397" y="3.556" size="0.6096" layer="21">GND</text>
-<text x="1.397" y="1.016" size="0.6096" layer="21">Echo</text>
-<text x="1.397" y="-1.524" size="0.6096" layer="21">Trig</text>
-<text x="1.397" y="-4.064" size="0.6096" layer="21">VCC</text>
+<text x="2.54" y="3.81" size="1.016" layer="21">GND</text>
+<text x="2.54" y="1.27" size="1.016" layer="21">Echo</text>
+<text x="2.54" y="-1.27" size="1.016" layer="21">Trig</text>
+<text x="2.54" y="-3.81" size="1.016" layer="21">VCC</text>
 <text x="-2.032" y="-5.08" size="1.016" layer="25" ratio="12" rot="R90">&gt;NAME</text>
 </package>
 </packages>
@@ -2802,12 +2810,12 @@ Standard 5-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="13.5" y1="14" x2="13.5" y2="-14" width="0.127" layer="21"/>
 <wire x1="13.5" y1="-14" x2="-13.5" y2="-14" width="0.127" layer="21"/>
 <wire x1="-13.5" y1="-14" x2="-13.5" y2="14" width="0.127" layer="21"/>
-<text x="-11" y="-7" size="1.27" layer="25" rot="R90">IIC 128x64 OLED</text>
-<text x="6" y="-15" size="1.27" layer="49" rot="R180">Display Module</text>
-<pad name="VCC" x="-2.54" y="12.7" drill="0.8" shape="square"/>
-<pad name="SCL" x="0" y="12.7" drill="0.8" shape="square"/>
-<pad name="SDA" x="2.54" y="12.7" drill="0.8" shape="square"/>
-<pad name="GND" x="5.08" y="12.7" drill="0.8" shape="square"/>
+<text x="-6.35" y="-2.54" size="1.27" layer="25">IIC 128x64 OLED</text>
+<text x="-6.35" y="0" size="1.27" layer="49">Display Module</text>
+<pad name="VCC" x="-3.81" y="12.7" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="SCL" x="-1.27" y="12.7" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="SDA" x="1.27" y="12.7" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="GND" x="3.81" y="12.7" drill="1.016" diameter="1.778" shape="square"/>
 </package>
 </packages>
 <symbols>
@@ -2816,10 +2824,10 @@ Standard 5-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <wire x1="16.54" y1="-10.96" x2="-11.46" y2="-10.96" width="0.254" layer="94"/>
 <wire x1="16.54" y1="16.04" x2="-11.46" y2="16.04" width="0.254" layer="94"/>
 <wire x1="-11.46" y1="16.04" x2="-11.46" y2="-10.96" width="0.254" layer="94"/>
-<pin name="SCL" x="21.59" y="5.08" length="middle" rot="R180"/>
-<pin name="SDA" x="21.59" y="2.54" length="middle" rot="R180"/>
-<pin name="GND" x="21.59" y="0" length="middle" rot="R180"/>
-<pin name="VCC" x="21.59" y="7.62" length="middle" rot="R180"/>
+<pin name="SCL" x="21.54" y="5.048" length="middle" rot="R180"/>
+<pin name="SDA" x="21.54" y="2.572" length="middle" rot="R180"/>
+<pin name="GND" x="21.54" y="0.096" length="middle" rot="R180"/>
+<pin name="VCC" x="21.54" y="7.778" length="middle" rot="R180"/>
 <text x="-4.46" y="-13.46" size="1.778" layer="94">Display Module</text>
 <text x="-7.46" y="13.54" size="1.778" layer="95">IIC 128x64 OLED</text>
 </symbol>
@@ -2848,23 +2856,23 @@ Standard 5-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <library name="CLASS D AUDIO AMP">
 <packages>
 <package name="AUDIOAMP">
-<wire x1="-3.81" y1="13.97" x2="-3.81" y2="-13.97" width="0.127" layer="21"/>
-<wire x1="3.81" y1="-13.97" x2="3.81" y2="13.97" width="0.127" layer="21"/>
-<text x="3.81" y="-13.97" size="1.27" layer="25" rot="R90">PAM8403</text>
-<text x="6.35" y="-15.24" size="1.27" layer="49" rot="R180">Audio Amplifier</text>
-<pad name="L+" x="-2.54" y="7.62" drill="0.8" shape="square"/>
-<pad name="R-" x="-2.54" y="10.16" drill="0.8" shape="square"/>
-<pad name="L-" x="-2.54" y="5.08" drill="0.8" shape="square"/>
-<pad name="GND0" x="-2.54" y="2.54" drill="0.8" shape="square"/>
+<wire x1="-3.81" y1="7.62" x2="-3.81" y2="-7.62" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="-7.62" x2="3.81" y2="-7.62" width="0.127" layer="21"/>
+<wire x1="3.81" y1="-7.62" x2="3.81" y2="7.62" width="0.127" layer="21"/>
+<wire x1="3.81" y1="7.62" x2="-3.81" y2="7.62" width="0.127" layer="21"/>
+<pad name="R+" x="-2.54" y="6.35" drill="0.8" shape="square"/>
+<pad name="R-" x="-2.54" y="5.08" drill="0.8" shape="square"/>
+<pad name="L-" x="-2.54" y="3.81" drill="0.8" shape="square"/>
+<pad name="L+" x="-2.54" y="2.54" drill="0.8" shape="square"/>
+<pad name="GND0" x="-2.54" y="1.27" drill="0.8" shape="square"/>
 <pad name="+5V" x="-2.54" y="0" drill="0.8" shape="square"/>
-<pad name="SW" x="-2.54" y="-2.54" drill="0.8" shape="square"/>
-<pad name="GND1" x="-2.54" y="-5.08" drill="0.8" shape="square"/>
-<pad name="LN" x="-2.54" y="-7.62" drill="0.8" shape="square"/>
-<pad name="GND2" x="-2.54" y="-10.16" drill="0.8" shape="square"/>
-<pad name="R+" x="-2.54" y="12.7" drill="0.8" shape="square"/>
-<pad name="RN" x="-2.54" y="-12.7" drill="0.8" shape="square"/>
-<wire x1="-3.81" y1="-13.97" x2="3.81" y2="-13.97" width="0.127" layer="21"/>
-<wire x1="-3.81" y1="13.97" x2="3.81" y2="13.97" width="0.127" layer="21"/>
+<pad name="SW" x="-2.54" y="-1.27" drill="0.8" shape="square"/>
+<pad name="GND1" x="-2.54" y="-2.54" drill="0.8" shape="square"/>
+<pad name="LN" x="-2.54" y="-3.81" drill="0.8" shape="square"/>
+<pad name="GND2" x="-2.54" y="-5.08" drill="0.8" shape="square"/>
+<pad name="RN" x="-2.54" y="-6.35" drill="0.8" shape="square"/>
+<text x="3.81" y="-7.62" size="1.27" layer="25" rot="R90">PAM8403</text>
+<text x="5.08" y="-7.62" size="1.27" layer="49" rot="R90">Audio Amplifier</text>
 </package>
 </packages>
 <symbols>
@@ -5027,12 +5035,12 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="GND"/>
-<wire x1="-2.54" y1="66.04" x2="-6.35" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="66.04" x2="-6.4" y2="66.136" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="U$3" gate="G$1" pin="GND"/>
-<wire x1="43.18" y1="66.04" x2="39.37" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="66.04" x2="39.32" y2="66.136" width="0.1524" layer="91"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 </segment>
 <segment>
@@ -5127,12 +5135,12 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="VCC"/>
-<wire x1="-2.54" y1="73.66" x2="-6.35" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="73.66" x2="-6.4" y2="73.818" width="0.1524" layer="91"/>
 <pinref part="SUPPLY5" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
 <pinref part="U$3" gate="G$1" pin="VCC"/>
-<wire x1="43.18" y1="73.66" x2="39.37" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="73.66" x2="39.32" y2="73.818" width="0.1524" layer="91"/>
 <pinref part="SUPPLY6" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
@@ -5332,7 +5340,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="SDA"/>
-<wire x1="-2.54" y1="68.58" x2="-6.35" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="68.58" x2="-6.4" y2="68.612" width="0.1524" layer="91"/>
 <label x="-5.08" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -5351,7 +5359,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="SCL"/>
-<wire x1="-2.54" y1="71.12" x2="-6.35" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="-2.54" y1="71.12" x2="-6.4" y2="71.088" width="0.1524" layer="91"/>
 <label x="-5.08" y="71.12" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -5363,7 +5371,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <net name="SDA1" class="0">
 <segment>
 <pinref part="U$3" gate="G$1" pin="SDA"/>
-<wire x1="43.18" y1="68.58" x2="39.37" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="68.58" x2="39.32" y2="68.612" width="0.1524" layer="91"/>
 <label x="40.64" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -5377,7 +5385,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <net name="SCL1" class="0">
 <segment>
 <pinref part="U$3" gate="G$1" pin="SCL"/>
-<wire x1="43.18" y1="71.12" x2="39.37" y2="71.12" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="71.12" x2="39.32" y2="71.088" width="0.1524" layer="91"/>
 <label x="40.64" y="71.12" size="1.778" layer="95"/>
 </segment>
 <segment>

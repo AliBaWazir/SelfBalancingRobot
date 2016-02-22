@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.4">
+<eagle version="7.2.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -59,18 +59,18 @@
 <packages>
 <package name="HC-SR04_FOOTPRINT">
 <description>Ultrasonic Sensor HC-SR04 Footprint</description>
-<pad name="ECHO" x="0" y="1.27" drill="0.9" diameter="1.778"/>
-<pad name="TRIG" x="0" y="-1.27" drill="0.9" diameter="1.778"/>
-<pad name="VCC" x="0" y="-3.81" drill="0.9" diameter="1.778"/>
-<pad name="GND" x="0" y="3.81" drill="0.9" diameter="1.778" shape="square"/>
+<pad name="ECHO" x="0" y="1.27" drill="1.016" diameter="1.778"/>
+<pad name="TRIG" x="0" y="-1.27" drill="1.016" diameter="1.778"/>
+<pad name="VCC" x="0" y="-3.81" drill="1.016" diameter="1.778"/>
+<pad name="GND" x="0" y="3.81" drill="1.016" diameter="1.778" shape="square"/>
 <wire x1="-1.27" y1="5.08" x2="-1.27" y2="-5.08" width="0.127" layer="21"/>
 <wire x1="-1.27" y1="-5.08" x2="1.27" y2="-5.08" width="0.127" layer="21"/>
 <wire x1="1.27" y1="-5.08" x2="1.27" y2="5.08" width="0.127" layer="21"/>
 <wire x1="1.27" y1="5.08" x2="-1.27" y2="5.08" width="0.127" layer="21"/>
-<text x="1.397" y="3.556" size="0.6096" layer="21">GND</text>
-<text x="1.397" y="1.016" size="0.6096" layer="21">Echo</text>
-<text x="1.397" y="-1.524" size="0.6096" layer="21">Trig</text>
-<text x="1.397" y="-4.064" size="0.6096" layer="21">VCC</text>
+<text x="2.54" y="3.81" size="1.016" layer="21">GND</text>
+<text x="2.54" y="1.27" size="1.016" layer="21">Echo</text>
+<text x="2.54" y="-1.27" size="1.016" layer="21">Trig</text>
+<text x="2.54" y="-3.81" size="1.016" layer="21">VCC</text>
 <text x="-2.032" y="-5.08" size="1.016" layer="25" ratio="12" rot="R90">&gt;NAME</text>
 </package>
 </packages>
