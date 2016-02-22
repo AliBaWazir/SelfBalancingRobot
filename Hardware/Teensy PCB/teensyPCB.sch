@@ -4935,7 +4935,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <parts>
 <part name="U$1" library="Teensy_3_and_LC_Series_Boards_v1.1" deviceset="TEENSY_3.1_ALL_PINS_AND_PADS" device=""/>
 <part name="J_BT_BOARD_1" library="Bluetooth_HC-05" deviceset="BLUETOOTH_BOARD" device=""/>
-<part name="J_ULTRASONIC_1" library="HC-SR04" deviceset="HC-SR04" device=""/>
+<part name="USONIC2" library="HC-SR04" deviceset="HC-SR04" device=""/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="U2" library="SparkFun-Connectors" deviceset="USD-SOCKET" device="NEW"/>
@@ -4953,14 +4953,13 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND9" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="C1" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="47uF"/>
-<part name="C2" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="10uF"/>
 <part name="J1" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
 <part name="J2" library="SparkFun-Connectors" deviceset="M02" device="PTH"/>
-<part name="LINEAR_ARRAY_SENSOR2" library="SparkFun-Connectors" deviceset="M05" device="LOCK"/>
+<part name="LIN_ARRAY" library="SparkFun-Connectors" deviceset="M05" device="LOCK"/>
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY8" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="J_ULTRASONIC_2" library="HC-SR04" deviceset="HC-SR04" device=""/>
+<part name="USONIC1" library="HC-SR04" deviceset="HC-SR04" device=""/>
 <part name="SUPPLY9" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="SUPPLY10" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="U$5" library="DigiPot" deviceset="DIGIPOT" device=""/>
@@ -4973,7 +4972,6 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <part name="SUPPLY14" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY15" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
-<part name="C5" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="10uF"/>
 <part name="BAT1" library="SparkFun-Electromechanical" deviceset="BATTERY" device="20PTH"/>
 <part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="S3" library="SparkFun-Retired" deviceset="TAC_SWITCH" device="SMD" value="LEFT"/>
@@ -4987,6 +4985,14 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <part name="C4" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="1.0uF"/>
 <part name="C6" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="1.0uF"/>
 <part name="C7" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="1.0uF"/>
+<part name="C2" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="10uF"/>
+<part name="C8" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="10uF"/>
+<part name="C5" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="47uF"/>
+<part name="C9" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="1uF"/>
+<part name="SUPPLY11" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="SUPPLY12" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="GND12" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND14" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4995,7 +5001,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <instances>
 <instance part="U$1" gate="G$1" x="17.78" y="10.16"/>
 <instance part="J_BT_BOARD_1" gate="J_BT_BOARD" x="72.39" y="80.01" rot="R180"/>
-<instance part="J_ULTRASONIC_1" gate="J_ULTRASONIC" x="-83.82" y="2.54"/>
+<instance part="USONIC2" gate="J_ULTRASONIC" x="-83.82" y="2.54"/>
 <instance part="SUPPLY1" gate="G$1" x="43.18" y="35.56"/>
 <instance part="GND1" gate="1" x="43.18" y="27.94"/>
 <instance part="U2" gate="G$1" x="-58.42" y="-22.86"/>
@@ -5013,14 +5019,13 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <instance part="GND6" gate="1" x="45.72" y="66.04" rot="R90"/>
 <instance part="GND9" gate="1" x="144.78" y="-25.4"/>
 <instance part="C1" gate="G$1" x="139.7" y="-15.24" rot="MR0"/>
-<instance part="C2" gate="G$1" x="160.02" y="-30.48" rot="R180"/>
 <instance part="J1" gate="G$1" x="160.02" y="10.16" rot="MR270"/>
 <instance part="J2" gate="G$1" x="142.24" y="10.16" rot="R270"/>
-<instance part="LINEAR_ARRAY_SENSOR2" gate="G$1" x="-93.98" y="55.88"/>
+<instance part="LIN_ARRAY" gate="G$1" x="-93.98" y="55.88"/>
 <instance part="GND7" gate="1" x="-71.12" y="60.96" rot="R90"/>
 <instance part="SUPPLY8" gate="G$1" x="-66.04" y="58.42"/>
 <instance part="GND8" gate="1" x="-106.68" y="10.16" rot="R270"/>
-<instance part="J_ULTRASONIC_2" gate="J_ULTRASONIC" x="-96.52" y="30.48"/>
+<instance part="USONIC1" gate="J_ULTRASONIC" x="-96.52" y="30.48"/>
 <instance part="SUPPLY9" gate="G$1" x="-106.68" y="-5.08"/>
 <instance part="SUPPLY10" gate="G$1" x="-124.46" y="22.86"/>
 <instance part="U$5" gate="G$1" x="157.48" y="40.64"/>
@@ -5033,7 +5038,6 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <instance part="SUPPLY14" gate="G$1" x="81.28" y="38.1"/>
 <instance part="GND2" gate="1" x="81.28" y="7.62"/>
 <instance part="SUPPLY15" gate="G$1" x="139.7" y="-10.16"/>
-<instance part="C5" gate="G$1" x="177.8" y="48.26" rot="R270"/>
 <instance part="BAT1" gate="G$1" x="58.42" y="53.34" rot="R270"/>
 <instance part="GND10" gate="1" x="58.42" y="45.72"/>
 <instance part="S3" gate="S" x="81.28" y="-15.24" rot="MR0"/>
@@ -5047,6 +5051,14 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <instance part="C4" gate="G$1" x="104.14" y="-22.86"/>
 <instance part="C6" gate="G$1" x="73.66" y="22.86"/>
 <instance part="C7" gate="G$1" x="88.9" y="22.86"/>
+<instance part="C2" gate="G$1" x="160.02" y="-30.48"/>
+<instance part="C8" gate="G$1" x="177.8" y="48.26" rot="R90"/>
+<instance part="C5" gate="G$1" x="-91.44" y="-25.4" rot="MR0"/>
+<instance part="C9" gate="G$1" x="-111.76" y="-27.94"/>
+<instance part="SUPPLY11" gate="G$1" x="-91.44" y="-20.32"/>
+<instance part="SUPPLY12" gate="G$1" x="-111.76" y="-20.32"/>
+<instance part="GND12" gate="1" x="-91.44" y="-35.56"/>
+<instance part="GND14" gate="1" x="-111.76" y="-35.56"/>
 </instances>
 <busses>
 </busses>
@@ -5085,7 +5097,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <pinref part="U$4" gate="G$1" pin="AGND"/>
 </segment>
 <segment>
-<pinref part="LINEAR_ARRAY_SENSOR2" gate="G$1" pin="5"/>
+<pinref part="LIN_ARRAY" gate="G$1" pin="5"/>
 <label x="-83.82" y="60.96" size="1.778" layer="95"/>
 <wire x1="-86.36" y1="60.96" x2="-73.66" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
@@ -5093,10 +5105,10 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <segment>
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="-96.52" y1="10.16" x2="-104.14" y2="10.16" width="0.1524" layer="91"/>
-<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="GND"/>
+<pinref part="USONIC2" gate="J_ULTRASONIC" pin="GND"/>
 </segment>
 <segment>
-<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="GND"/>
+<pinref part="USONIC1" gate="J_ULTRASONIC" pin="GND"/>
 <wire x1="-109.22" y1="38.1" x2="-127" y2="38.1" width="0.1524" layer="91"/>
 <label x="-124.46" y="38.1" size="1.778" layer="95"/>
 </segment>
@@ -5141,6 +5153,16 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <wire x1="96.52" y1="-35.56" x2="104.14" y2="-35.56" width="0.1524" layer="91"/>
 <junction x="96.52" y="-35.56"/>
 </segment>
+<segment>
+<pinref part="C5" gate="G$1" pin="-"/>
+<pinref part="GND12" gate="1" pin="GND"/>
+<wire x1="-91.44" y1="-33.02" x2="-91.44" y2="-30.48" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C9" gate="G$1" pin="2"/>
+<pinref part="GND14" gate="1" pin="GND"/>
+<wire x1="-111.76" y1="-33.02" x2="-111.76" y2="-30.48" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="3.3V" class="0">
 <segment>
@@ -5169,10 +5191,20 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <pinref part="SUPPLY6" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
-<pinref part="LINEAR_ARRAY_SENSOR2" gate="G$1" pin="4"/>
+<pinref part="LIN_ARRAY" gate="G$1" pin="4"/>
 <wire x1="-86.36" y1="58.42" x2="-66.04" y2="58.42" width="0.1524" layer="91"/>
 <label x="-83.82" y="58.42" size="1.778" layer="95"/>
 <pinref part="SUPPLY8" gate="G$1" pin="3.3V"/>
+</segment>
+<segment>
+<pinref part="C5" gate="G$1" pin="+"/>
+<pinref part="SUPPLY11" gate="G$1" pin="3.3V"/>
+<wire x1="-91.44" y1="-20.32" x2="-91.44" y2="-22.86" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="SUPPLY12" gate="G$1" pin="3.3V"/>
+<wire x1="-111.76" y1="-20.32" x2="-111.76" y2="-22.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="5V" class="0">
@@ -5182,7 +5214,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <wire x1="-48.26" y1="33.02" x2="-55.88" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="5V"/>
+<pinref part="USONIC2" gate="J_ULTRASONIC" pin="5V"/>
 <wire x1="-96.52" y1="-5.08" x2="-106.68" y2="-5.08" width="0.1524" layer="91"/>
 <label x="-104.14" y="-5.08" size="1.778" layer="95"/>
 <pinref part="SUPPLY9" gate="G$1" pin="5V"/>
@@ -5190,7 +5222,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <segment>
 <wire x1="-109.22" y1="22.86" x2="-124.46" y2="22.86" width="0.1524" layer="91"/>
 <label x="-124.46" y="22.86" size="1.778" layer="95"/>
-<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="5V"/>
+<pinref part="USONIC1" gate="J_ULTRASONIC" pin="5V"/>
 <pinref part="SUPPLY10" gate="G$1" pin="5V"/>
 </segment>
 <segment>
@@ -5399,13 +5431,13 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 </net>
 <net name="N$1" class="0">
 <segment>
-<pinref part="C2" gate="G$1" pin="-"/>
 <wire x1="170.18" y1="-20.32" x2="160.02" y2="-20.32" width="0.1524" layer="91"/>
 <wire x1="160.02" y1="-20.32" x2="160.02" y2="-25.4" width="0.1524" layer="91"/>
 <wire x1="170.18" y1="-25.4" x2="160.02" y2="-25.4" width="0.1524" layer="91"/>
-<junction x="160.02" y="-25.4"/>
 <pinref part="U$4" gate="G$1" pin="LN"/>
 <pinref part="U$4" gate="G$1" pin="RN"/>
+<pinref part="C2" gate="G$1" pin="1"/>
+<junction x="160.02" y="-25.4"/>
 </segment>
 </net>
 <net name="DAC" class="0">
@@ -5415,9 +5447,9 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <pinref part="U$1" gate="G$1" pin="A14/DAC"/>
 </segment>
 <segment>
-<pinref part="C5" gate="G$1" pin="+"/>
 <wire x1="180.34" y1="48.26" x2="182.88" y2="48.26" width="0.1524" layer="91"/>
 <label x="182.88" y="48.26" size="1.778" layer="95"/>
+<pinref part="C8" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -5459,7 +5491,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <label x="-12.7" y="2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="LINEAR_ARRAY_SENSOR2" gate="G$1" pin="3"/>
+<pinref part="LIN_ARRAY" gate="G$1" pin="3"/>
 <wire x1="-86.36" y1="55.88" x2="-71.12" y2="55.88" width="0.1524" layer="91"/>
 <label x="-83.82" y="55.88" size="1.778" layer="95"/>
 </segment>
@@ -5471,7 +5503,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <label x="-12.7" y="0" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="LINEAR_ARRAY_SENSOR2" gate="G$1" pin="2"/>
+<pinref part="LIN_ARRAY" gate="G$1" pin="2"/>
 <wire x1="-86.36" y1="53.34" x2="-71.12" y2="53.34" width="0.1524" layer="91"/>
 <label x="-83.82" y="53.34" size="1.778" layer="95"/>
 </segment>
@@ -5483,14 +5515,14 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <label x="-12.7" y="-2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="LINEAR_ARRAY_SENSOR2" gate="G$1" pin="1"/>
+<pinref part="LIN_ARRAY" gate="G$1" pin="1"/>
 <wire x1="-86.36" y1="50.8" x2="-71.12" y2="50.8" width="0.1524" layer="91"/>
 <label x="-83.82" y="50.8" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="ECHO" class="0">
 <segment>
-<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="ECHO"/>
+<pinref part="USONIC2" gate="J_ULTRASONIC" pin="ECHO"/>
 <wire x1="-96.52" y1="5.08" x2="-106.68" y2="5.08" width="0.1524" layer="91"/>
 <label x="-106.68" y="5.08" size="1.778" layer="95"/>
 </segment>
@@ -5502,7 +5534,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 </net>
 <net name="TRIG" class="0">
 <segment>
-<pinref part="J_ULTRASONIC_1" gate="J_ULTRASONIC" pin="TRIG"/>
+<pinref part="USONIC2" gate="J_ULTRASONIC" pin="TRIG"/>
 <wire x1="-96.52" y1="0" x2="-106.68" y2="0" width="0.1524" layer="91"/>
 <label x="-106.68" y="0" size="1.778" layer="95"/>
 </segment>
@@ -5515,7 +5547,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <net name="ECHO2" class="0">
 <segment>
 <label x="-134.62" y="33.02" size="1.778" layer="95"/>
-<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="ECHO"/>
+<pinref part="USONIC1" gate="J_ULTRASONIC" pin="ECHO"/>
 <wire x1="-109.22" y1="33.02" x2="-134.62" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -5527,7 +5559,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <net name="TRIG2" class="0">
 <segment>
 <label x="-134.62" y="27.94" size="1.778" layer="95"/>
-<pinref part="J_ULTRASONIC_2" gate="J_ULTRASONIC" pin="TRIG"/>
+<pinref part="USONIC1" gate="J_ULTRASONIC" pin="TRIG"/>
 <wire x1="-109.22" y1="27.94" x2="-134.62" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -5543,9 +5575,9 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <label x="137.16" y="48.26" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="C2" gate="G$1" pin="+"/>
 <wire x1="160.02" y1="-33.02" x2="160.02" y2="-40.64" width="0.1524" layer="91"/>
 <label x="160.02" y="-40.64" size="1.778" layer="95"/>
+<pinref part="C2" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="SW" class="0">
@@ -5593,7 +5625,7 @@ Various common sizes : AA, AAA, 18650 (PRT-12895), 20mm coin cell and 12mm coin 
 <segment>
 <pinref part="U$5" gate="G$1" pin="A"/>
 <wire x1="170.18" y1="48.26" x2="172.72" y2="48.26" width="0.1524" layer="91"/>
-<pinref part="C5" gate="G$1" pin="-"/>
+<pinref part="C8" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="VBAT" class="0">
