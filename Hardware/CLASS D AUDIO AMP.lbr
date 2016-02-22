@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -72,23 +72,30 @@
 <library>
 <packages>
 <package name="AUDIOAMP">
-<wire x1="-3.81" y1="7.62" x2="-3.81" y2="-7.62" width="0.127" layer="21"/>
-<wire x1="-3.81" y1="-7.62" x2="3.81" y2="-7.62" width="0.127" layer="21"/>
-<wire x1="3.81" y1="-7.62" x2="3.81" y2="7.62" width="0.127" layer="21"/>
-<wire x1="3.81" y1="7.62" x2="-3.81" y2="7.62" width="0.127" layer="21"/>
-<pad name="R+" x="-2.54" y="6.35" drill="0.8" shape="square"/>
-<pad name="R-" x="-2.54" y="5.08" drill="0.8" shape="square"/>
-<pad name="L-" x="-2.54" y="3.81" drill="0.8" shape="square"/>
-<pad name="L+" x="-2.54" y="2.54" drill="0.8" shape="square"/>
-<pad name="GND0" x="-2.54" y="1.27" drill="0.8" shape="square"/>
-<pad name="+5V" x="-2.54" y="0" drill="0.8" shape="square"/>
-<pad name="SW" x="-2.54" y="-1.27" drill="0.8" shape="square"/>
-<pad name="GND1" x="-2.54" y="-2.54" drill="0.8" shape="square"/>
-<pad name="LN" x="-2.54" y="-3.81" drill="0.8" shape="square"/>
-<pad name="GND2" x="-2.54" y="-5.08" drill="0.8" shape="square"/>
-<pad name="RN" x="-2.54" y="-6.35" drill="0.8" shape="square"/>
-<text x="3.81" y="-7.62" size="1.27" layer="25" rot="R90">PAM8403</text>
-<text x="5.08" y="-7.62" size="1.27" layer="49" rot="R90">Audio Amplifier</text>
+<wire x1="0" y1="22" x2="0" y2="0" width="0.127" layer="21"/>
+<wire x1="0" y1="0" x2="18" y2="0" width="0.127" layer="21"/>
+<wire x1="18" y1="0" x2="18" y2="22" width="0.127" layer="21"/>
+<wire x1="18" y1="22" x2="0" y2="22" width="0.127" layer="21"/>
+<pad name="R+" x="16.51" y="20.32" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="R-" x="13.97" y="20.32" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="L-" x="1.27" y="20.32" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="L+" x="3.81" y="20.32" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="GND" x="16.51" y="1.27" drill="1.016" diameter="1.778" shape="square"/>
+<pad name="+5V" x="13.97" y="1.27" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="LN" x="1.27" y="1.27" drill="1.016" diameter="1.778" shape="octagon"/>
+<pad name="RN" x="6.35" y="1.27" drill="1.016" diameter="1.778" shape="octagon"/>
+<text x="2.54" y="12.7" size="1.27" layer="25">PAM8403</text>
+<text x="2.54" y="10.16" size="1.27" layer="49">Audio Amplifier</text>
+<pad name="AGND" x="3.81" y="1.27" drill="1.016" diameter="1.778" shape="square"/>
+<text x="0.635" y="17.145" size="1.27" layer="21">L-</text>
+<text x="3.175" y="17.145" size="1.27" layer="21">L+</text>
+<text x="12.7" y="17.145" size="1.27" layer="21">R-</text>
+<text x="15.24" y="17.145" size="1.27" layer="21">R+</text>
+<text x="1.905" y="2.54" size="1.27" layer="21" rot="R90">L</text>
+<text x="4.445" y="2.54" size="1.27" layer="21" rot="R90">AGND</text>
+<text x="6.985" y="2.54" size="1.27" layer="21" rot="R90">R</text>
+<text x="14.605" y="2.54" size="1.27" layer="21" rot="R90">+5</text>
+<text x="17.145" y="2.54" size="1.27" layer="21" rot="R90">GND</text>
 </package>
 </packages>
 <symbols>
@@ -101,15 +108,13 @@
 <pin name="R-" x="-12.7" y="10.16" length="middle"/>
 <pin name="L-" x="-12.7" y="7.62" length="middle"/>
 <pin name="L+" x="-12.7" y="5.08" length="middle"/>
-<pin name="GND0" x="-12.7" y="2.54" length="middle"/>
-<pin name="+5V" x="-12.7" y="0" length="middle"/>
-<pin name="SW" x="-12.7" y="-2.54" length="middle"/>
-<pin name="GND1" x="-12.7" y="-5.08" length="middle"/>
+<pin name="+5V" x="-12.7" y="0" length="middle" direction="pwr"/>
 <pin name="LN" x="-12.7" y="-7.62" length="middle"/>
-<pin name="GND2" x="-12.7" y="-10.16" length="middle"/>
 <pin name="RN" x="-12.7" y="-12.7" length="middle"/>
 <text x="-7.62" y="-17.78" size="1.778" layer="94">Audio Amplifier</text>
-<text x="-2.54" y="-15.24" size="1.778" layer="95">PAM8403</text>
+<text x="-7.62" y="-20.32" size="1.778" layer="95">PAM8403</text>
+<pin name="AGND" x="-12.7" y="-10.16" length="middle"/>
+<pin name="GND" x="-12.7" y="-2.54" length="middle" direction="pwr"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -118,19 +123,17 @@
 <gate name="G$1" symbol="AUDIOAMP" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="AUDIOAMP">
+<device name="EBAY_VERSION" package="AUDIOAMP">
 <connects>
 <connect gate="G$1" pin="+5V" pad="+5V"/>
-<connect gate="G$1" pin="GND0" pad="GND0"/>
-<connect gate="G$1" pin="GND1" pad="GND1"/>
-<connect gate="G$1" pin="GND2" pad="GND2"/>
+<connect gate="G$1" pin="AGND" pad="AGND"/>
+<connect gate="G$1" pin="GND" pad="GND"/>
 <connect gate="G$1" pin="L+" pad="L+"/>
 <connect gate="G$1" pin="L-" pad="L-"/>
 <connect gate="G$1" pin="LN" pad="LN"/>
 <connect gate="G$1" pin="R+" pad="R+"/>
 <connect gate="G$1" pin="R-" pad="R-"/>
 <connect gate="G$1" pin="RN" pad="RN"/>
-<connect gate="G$1" pin="SW" pad="SW"/>
 </connects>
 <technologies>
 <technology name=""/>
