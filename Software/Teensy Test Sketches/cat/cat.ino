@@ -205,7 +205,11 @@ const unsigned char PROGMEM CAT[] = {
 #define BOWSERH  37
 #define BOWSERW  40
 #define DELAYBOWSER 100
-void setup()   {                
+void setup()   { 
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  digitalWrite(4, HIGH);
+  digitalWrite(5, LOW);  
   Serial.begin(9600);
 
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
