@@ -46,9 +46,9 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
-
+//#include "stm32_hal_legacy.h"
 /* Exported types ------------------------------------------------------------*/
-
+#include <stdio.h>
 /** 
   * @brief  HAL Status structures definition  
   */  
@@ -185,7 +185,7 @@ typedef enum
    "__attribute__((section(".RamFunc")))".
 */
 #define __RAM_FUNC HAL_StatusTypeDef  __attribute__((section(".RamFunc")))
-
+#define UNUSED(x) ((void)(x))
 #endif
 
 

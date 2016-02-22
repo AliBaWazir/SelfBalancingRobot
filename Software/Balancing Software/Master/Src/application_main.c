@@ -1,5 +1,5 @@
 #include "application_main.h"
-
+#include "tm_stm32_usart.h"
 #define ANGLE_CURRENT		temps[1]	/* ANGLE we actually have */
 #define ANGLE_WANT			temps[0]	/* ANGLE we want to have */
 
@@ -35,6 +35,11 @@ void setup(){
     TM_DELAY_Init();
     initSteppers();
     
+    TM_USART_Init(USART2, TM_USART_PinsPack_2, 115200);
+	
+	/* Put test string */
+	TM_USART_Puts(USART2, "Hello world\n");
+    
     setStepperAccel(1);
     ANGLE_WANT = 0;
     output = 0;
@@ -68,7 +73,14 @@ void userLoop(){
 }
 
 void application_main(int32_t angle){
+    
+    
     angle+= 40;
+    int aInt = angle;
+    char str[5];
+    sprintf(str, "%d", aInt);
+    TM_USART_Puts(USART2, str);
+    TM_USART_Puts(USART2,"\n");
     counter++;
     //if(1){return;};
     //angle6 = angle5;

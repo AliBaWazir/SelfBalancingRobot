@@ -8,9 +8,9 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-
+#include "stm32fxxx_hal.h"
 #include "main.h"
-
+#include "tm_stm32_usart.h"
 
 
 volatile uint32_t hal_timestamp = 0;

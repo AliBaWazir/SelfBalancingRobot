@@ -14,7 +14,7 @@
         <TargetCommonOption>
           <Device>STM32F407VGTx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F4xx_DFP.2.5.0</PackID>
+          <PackID>Keil.STM32F4xx_DFP.2.7.0</PackID>
           <PackURL>http://www.keil.com/pack</PackURL>
           <Cpu>IROM(0x08000000,0x100000) IRAM(0x20000000,0x20000) IRAM2(0x10000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -626,6 +626,31 @@
               <FileName>application_main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Src\application_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Src\tm_stm32_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Src\tm_stm32_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Src\stm32f4xx_hal_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Src\stm32f4xx_hal_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32_hal_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Src\stm32_hal_legacy.h</FilePath>
             </File>
           </Files>
         </Group>
