@@ -33,7 +33,7 @@ static int                  frame_buffer[128];                                //
 static int                  black_lines_count= 0;       // the count of the black lines is determined by the initial frame only
 static pixel_data_t         decoded_frame_buffer[FRAME_BUFFER_LENGTH];
 static double               Setpoint, Input, Output;
-static bool                 driver_in_testing_mode           = true;          // this variable should be set to true only in the testing process to enable creating an internal frame
+static bool                 driver_in_testing_mode           = false;          // this variable should be set to true only in the testing process to enable creating an internal frame
 
 
 

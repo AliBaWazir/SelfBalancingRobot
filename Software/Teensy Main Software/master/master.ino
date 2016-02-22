@@ -46,7 +46,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("master: loop is called!");
+  //Serial.println("master: loop is called!");
 
   switch (robot_state){
       case startup_mode:
