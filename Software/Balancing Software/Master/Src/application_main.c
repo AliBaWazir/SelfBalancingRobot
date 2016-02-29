@@ -7,7 +7,7 @@
 #define PID_PARAM_KP		10.0     	/* Proportional */
 #define PID_PARAM_KI		0.05		/* Integral */
 #define PID_PARAM_KD		0.9			/* Derivative */
-#define MINANGLE 200
+#define MINANGLE 10000
 float temps[2];
 float pid_error;
 double output;
@@ -47,13 +47,13 @@ void setup(){
     //PID.Kp = PID_PARAM_KP;		/* Proporcional */
 	//PID.Ki = PID_PARAM_KI;		/* Integral */
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
-    controllerPositionP = 0.05;
+    controllerPositionP = 500;//.05;
     controllerPositionI = 0;
-    controllerPositionD = 0;//.05;
-    
-    controllerAngleP = 60;
-    controllerAngleI = 50;//0.2;
-    controllerAngleD = 70;//.5;
+    controllerPositionD = 1;//.05;
+    double scaleFactor = 0.5;
+    controllerAngleP = 1.2*scaleFactor;
+    controllerAngleI = 0.01;//.1*scaleFactor;//0.2;
+    controllerAngleD = 0.15;//.5*scaleFactor;//.5;
     
     
     
@@ -75,26 +75,31 @@ void userLoop(){
 void application_main(int32_t angle){
     
     
-    angle+= 40;
-    int aInt = angle;
-    char str[5];
-    sprintf(str, "%d", aInt);
-    TM_USART_Puts(USART2, str);
-    TM_USART_Puts(USART2,"\n");
+    angle+= 10;
+    angle = angle*abs(angle)/100;
+    
+    
     counter++;
     //if(1){return;};
-    //angle6 = angle5;
-    //angle5 = angle4;
-    //angle4 = angle3;
+    angle6 = angle5;
+    angle5 = angle4;
+    angle4 = angle3;
     angle3 = angle2;
     angle2 = angle1;
     angle1 = angle;
-    angle = ((angle2*0.3)+(angle3*0.2)+(angle1*0.5));
-    if(HAL_GetTick()<5000)
+    angle = ((angle1*0.3)+(angle2*0.2)+(angle3*0.2)+(angle4*0.2)+(angle5*0.1)+(angle6*0.1));
+    
+    int aInt = angle;
+    char str[5];
+    
+    sprintf(str, "%d", aInt);
+    //TM_USART_Puts(USART2, "Angle: ");
+    TM_USART_Puts(USART2, str);
+    if(HAL_GetTick()<40000)
     {
         
         dWrite(PORTD+12, HIGH);
-        
+        TM_USART_Puts(USART2,"\n");
         
         return;
     }
@@ -103,7 +108,9 @@ void application_main(int32_t angle){
         angle = 0;
         discrete_PID_terminate(); //kill PID since robot is lying down
         setStepperCurrentPosition(0);
-        
+
+        TM_USART_Puts(USART2,"^F!\n");
+  
         return;
     }
     if(rtmGetErrorStatus(discrete_PID_M) != (NULL)){
@@ -117,16 +124,35 @@ void application_main(int32_t angle){
     
     output = controllerOutput;
     
-    //ac4 = ac3;
+    ac4 = ac3;
     ac3 = ac2;
     ac2 = ac1;
     ac1 = output;
     
-    acceleration = output;//(+ac3+ac2+ac1)/3.0;
+    acceleration = (+ac3+ac2+ac1)/3.0;//output;//(+ac3+ac2+ac1)/3.0;
+   
+    TM_USART_Puts(USART2,"^");
+    char str2[5];
+    sprintf(str2, "%d", (int)acceleration);
+    //TM_USART_Puts(USART2, "   Output: ");
+    TM_USART_Puts(USART2, str2);
+    //TM_USART_Puts(USART2,"^");
+        //TM_USART_Puts(USART2,"Run");
+    TM_USART_Puts(USART2,"\n");
+    //TM_USART_Puts(USART2,"\n");
+    /*
+    newSpeed = acceleration*50;
     
-    if(output >0)stepperMove(-2000);
-    if(output <0)stepperMove(2000);
-    setStepperAccel(abs(output)*350);
+    setStepperSpeed(-newSpeed);
+    oldSpeed = newSpeed;
+    if(newSpeed > MAXSPEED&& newSpeed > 0)newSpeed = MAXSPEED;
+    if(newSpeed > -MAXSPEED&& newSpeed < 0)newSpeed = -MAXSPEED;
+    
+    */
+   
+    if(output >0)stepperMove(-20000);
+    if(output <0)stepperMove(20000);
+    setStepperAccel(abs(output)*300);
     
     
     
@@ -135,12 +161,7 @@ void application_main(int32_t angle){
     
     
     
-    //newSpeed = acceleration/0.1;
     
-    //setStepperSpeed(-newSpeed);
-    //oldSpeed = newSpeed;
-    //if(newSpeed > MAXSPEED&& newSpeed > 0)newSpeed = MAXSPEED;
-    //if(newSpeed > -MAXSPEED&& newSpeed < 0)newSpeed = -MAXSPEED;
 	/*
     ANGLE_CURRENT = angle/10;
     if(abs(ANGLE_CURRENT) > 7){
