@@ -79,7 +79,7 @@ extern "C" {
 /* Set default values if not defined by user */
 #if !defined(RCC_OSCILLATORTYPE) || !defined(RCC_PLLM) || !defined(RCC_PLLN) || !defined(RCC_PLLP) || !defined(RCC_PLLQ) 
 #define RCC_OSCILLATORTYPE    RCC_OSCILLATORTYPE_HSE
-#define RCC_PLLM              8
+#define RCC_PLLM              16
 #define RCC_PLLN              360
 #define RCC_PLLP              2
 #define RCC_PLLQ              7

@@ -15,7 +15,7 @@
 #include "stm32fxxx_hal.h"
 /* Include my libraries here */
 #include "defines.h"
-#include "tm_stm32_disco.h"
+
 #include "tm_stm32_delay.h"
 	
 int main(void) {
@@ -26,20 +26,30 @@ int main(void) {
 	HAL_Init();
 	
 	/* Init leds */
-	TM_DISCO_LedInit();
+	//TM_DISCO_LedInit();
+    TM_GPIO_Init(GPIOC, GPIO_Pin_12, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+    TM_GPIO_Init(GPIOC, GPIO_Pin_13, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+    TM_GPIO_Init(GPIOC, GPIO_Pin_14, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+    TM_GPIO_Init(GPIOC, GPIO_Pin_15, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 	
 	/* Init button */
-	TM_DISCO_ButtonInit();
+	//TM_DISCO_ButtonInit();
 
 	/* Init delay */
 	TM_DELAY_Init();
 	
 	while (1) {
 		/* Toggle leds */
-		TM_DISCO_LedToggle(LED_ALL);
+		//TM_DISCO_LedToggle(LED_ALL);
+        TM_GPIO_TogglePinValue(GPIOC, GPIO_Pin_12);
 		
 		/* Delay 500ms */
-		Delayms(500);
+		Delayms(200);
+        TM_GPIO_TogglePinValue(GPIOC, GPIO_Pin_13);
+        Delayms(200);
+        TM_GPIO_TogglePinValue(GPIOC, GPIO_Pin_14);
+        Delayms(200);
+        TM_GPIO_TogglePinValue(GPIOC, GPIO_Pin_15);
 	}
 }
 
