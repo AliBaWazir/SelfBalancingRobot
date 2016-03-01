@@ -30,10 +30,9 @@
 
 
 
-
+#define PCBVERSION
 #define STM32F4xx
-#define STM32F4_DISCOVERY
-#define DISCO_USE_FUNCTIONS
+
 
 /* Put your global defines for all libraries here used in your project */
 
@@ -46,6 +45,7 @@
 
 #define PORTPINS 16
 
+
 #define PORTA PORTPINS*0
 #define PORTB PORTPINS*1
 #define PORTC PORTPINS*2
@@ -55,7 +55,34 @@
 #define PORTG PORTPINS*6
 #define PORTH PORTPINS*7
 
-#define DEBUGFIFO
+#ifdef PCBVERSION
+
+
+//right = stepper 1
+//left = stepper 2
+#define STEPPER_RIGHT_STEP_PIN PORTA+4
+#define STEPPER_RIGHT_DIR_PIN PORTA+5
+
+#define STEPPER_RIGHT_M0_PIN PORTA+1
+#define STEPPER_RIGHT_M1_PIN PORTA+2
+
+
+#define STEPPER_LEFT_STEP_PIN PORTC+4
+#define STEPPER_LEFT_DIR_PIN PORTC+5
+
+#define STEPPER_LEFT_M0_PIN PORTC+1
+#define STEPPER_LEFT_M1_PIN PORTC+2
+
+
+#endif
+
+
+#ifdef DISCOVERSION
+#define STM32F4_DISCOVERY
+#define DISCO_USE_FUNCTIONS
+
+
+
 
 #define STEPPER_RIGHT_STEP_PIN PORTA+2
 #define STEPPER_RIGHT_DIR_PIN PORTA+5
@@ -69,6 +96,9 @@
 #define STEPPER_LEFT_M0_PIN PORTD+10
 #define STEPPER_LEFT_M1_PIN PORTD+9
 
+#endif
+
+#define DEBUGFIFO
 
 #define MICROSTEPS_1    (0x01)
 #define MICROSTEPS_2    (0x02)
@@ -105,7 +135,7 @@
 
 #define PEDO_READ_MS    (1000)
 #define TEMP_READ_MS    (500)
-#define DATA_TX_MS      (1)//was 20
+#define DATA_TX_MS      (20)//was 20
 #define COMPASS_READ_MS (5)
 
 #endif

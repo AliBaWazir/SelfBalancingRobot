@@ -849,7 +849,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM;
   RCC_OscInitStruct.PLL.PLLN = 336;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;
@@ -866,6 +866,21 @@ void SystemClock_Config(void)
 }
 
 /* I2C1 init function */
+#ifdef DISCOVERSION
+void MX_IRQ_Init (void)
+{
+	GPIO_InitTypeDef GPIO_IS;
+	
+	__GPIOB_CLK_ENABLE();
+
+	GPIO_IS.Pin = GPIO_PIN_4;
+	GPIO_IS.Mode = GPIO_MODE_IT_RISING;
+	GPIO_IS.Speed = GPIO_SPEED_MEDIUM;
+	HAL_GPIO_Init(GPIOB, &GPIO_IS);
+	
+  HAL_NVIC_SetPriority (EXTI4_IRQn, 1, 0);
+  HAL_NVIC_EnableIRQ (EXTI4_IRQn);
+}
 void MX_I2C1_Init(void)
 {
 
@@ -881,14 +896,6 @@ void MX_I2C1_Init(void)
   HAL_I2C_Init(&hi2c1);
 
 }
-
-/** Configure pins as 
-        * Analog 
-        * Input 
-        * Output
-        * EVENT_OUT
-        * EXTI
-*/
 void MX_GPIO_Init(void)
 {
 	GPIO_InitTypeDef GPIO_IS;
@@ -910,15 +917,15 @@ void MX_GPIO_Init(void)
     
 
 }
-
-
+#endif
+#ifdef PCBVERSION
 void MX_IRQ_Init (void)
 {
 	GPIO_InitTypeDef GPIO_IS;
 	
 	__GPIOB_CLK_ENABLE();
 
-	GPIO_IS.Pin = GPIO_PIN_4;
+	GPIO_IS.Pin = GPIO_PIN_5;
 	GPIO_IS.Mode = GPIO_MODE_IT_RISING;
 	GPIO_IS.Speed = GPIO_SPEED_MEDIUM;
 	HAL_GPIO_Init(GPIOB, &GPIO_IS);
@@ -926,6 +933,54 @@ void MX_IRQ_Init (void)
   HAL_NVIC_SetPriority (EXTI4_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ (EXTI4_IRQn);
 }
+void MX_GPIO_Init(void)
+{
+	GPIO_InitTypeDef GPIO_IS;
+
+  /* GPIO Ports Clock Enable */
+    __GPIOA_CLK_ENABLE();
+    __GPIOB_CLK_ENABLE();
+    __GPIOC_CLK_ENABLE();
+    __GPIOD_CLK_ENABLE();
+	
+    /*
+    GPIO_IS.Pin = GPIO_PIN_12|GPIO_PIN_4;
+    GPIO_IS.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_IS.Pull = GPIO_NOPULL;
+    GPIO_IS.Speed = GPIO_SPEED_FAST;
+    HAL_GPIO_Init(GPIOD, &GPIO_IS);
+    
+    */
+    
+
+}
+void MX_I2C1_Init(void)
+{
+
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.ClockSpeed = 400000;
+  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_16_9;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLED;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLED;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLED;
+  HAL_I2C_Init(&hi2c1);
+
+}
+#endif
+/** Configure pins as 
+        * Analog 
+        * Input 
+        * Output
+        * EVENT_OUT
+        * EXTI
+*/
+
+
+
+
 
 
 void Error_Handler (void)
