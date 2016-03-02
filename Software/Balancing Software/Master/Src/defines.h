@@ -41,7 +41,7 @@
 
 #define INPUT 0x0
 #define OUTPUT 0x1
-#define USB_VCP
+//#define USB_VCP
 
 #define PORTPINS 16
 
@@ -66,12 +66,21 @@
 #define STEPPER_RIGHT_M0_PIN PORTA+1
 #define STEPPER_RIGHT_M1_PIN PORTA+2
 
+#define STEPPER_RIGHT_EN PORTA
+#define STEPPER_RIGHT_SLP PORTA+3
+
 
 #define STEPPER_LEFT_STEP_PIN PORTC+4
 #define STEPPER_LEFT_DIR_PIN PORTC+5
 
 #define STEPPER_LEFT_M0_PIN PORTC+1
 #define STEPPER_LEFT_M1_PIN PORTC+2
+
+#define STEPPER_LEFT_EN PORTC
+#define STEPPER_LEFT_SLP PORTC+3
+
+
+
 
 
 #endif
@@ -98,7 +107,7 @@
 
 #endif
 
-#define DEBUGFIFO
+//#define DEBUGFIFO
 
 #define MICROSTEPS_1    (0x01)
 #define MICROSTEPS_2    (0x02)

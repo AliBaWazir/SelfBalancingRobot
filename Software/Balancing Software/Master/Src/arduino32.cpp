@@ -12,20 +12,20 @@ void pinMode(uint8_t pin, uint8_t mode){
     TM_GPIO_Init(pinPort(pin), (uint16_t)gpioPin(pin), mode ? TM_GPIO_Mode_OUT : TM_GPIO_Mode_IN , TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
 }
 void digitalWrite(uint8_t pin, uint8_t state){
-    if(pin == PORTA+2){
-        TM_GPIO_SetPinValue(GPIOA, GPIO_PIN_2, state);
+    if(pin == STEPPER_RIGHT_STEP_PIN){
+        TM_GPIO_SetPinValue(GPIOA, GPIO_PIN_4, state);
         return;
     }
-    if(pin == PORTA+5){
-        TM_GPIO_SetPinValue(GPIOA, GPIO_PIN_5, state);
+    if(pin == STEPPER_LEFT_STEP_PIN){
+        TM_GPIO_SetPinValue(GPIOC, GPIO_PIN_4, state);
         return;        
     }
-    if(pin == PORTC+3){
-        TM_GPIO_SetPinValue(GPIOC, GPIO_PIN_3, state);
+    if(pin == STEPPER_LEFT_DIR_PIN){
+        TM_GPIO_SetPinValue(GPIOC, GPIO_PIN_5, state);
         return;
     }
-    if(pin == PORTC+4){
-        TM_GPIO_SetPinValue(GPIOC, GPIO_PIN_4, state);
+    if(pin == STEPPER_RIGHT_DIR_PIN){
+        TM_GPIO_SetPinValue(GPIOA, GPIO_PIN_5, state);
         return;
     }
     

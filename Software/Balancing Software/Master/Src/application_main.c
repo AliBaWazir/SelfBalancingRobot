@@ -1,5 +1,6 @@
 #include "application_main.h"
 #include "tm_stm32_usart.h"
+
 #define ANGLE_CURRENT		temps[1]	/* ANGLE we actually have */
 #define ANGLE_WANT			temps[0]	/* ANGLE we want to have */
 
@@ -34,11 +35,11 @@ void setup(){
     //TM_RCC_InitSystem();
     TM_DELAY_Init();
     initSteppers();
-    
-    TM_USART_Init(USART2, TM_USART_PinsPack_2, 115200);
+    initTimerInterrupt();
+    TM_USART_Init(USART3, TM_USART_PinsPack_2, 115200);
 	
 	/* Put test string */
-	TM_USART_Puts(USART2, "Hello world\n");
+	TM_USART_Puts(USART3, "Hello world\n");
     
     setStepperAccel(1);
     ANGLE_WANT = 0;
@@ -47,13 +48,13 @@ void setup(){
     //PID.Kp = PID_PARAM_KP;		/* Proporcional */
 	//PID.Ki = PID_PARAM_KI;		/* Integral */
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
-    controllerPositionP = 500;//.05;
+    controllerPositionP = 0;//;500;//.05;
     controllerPositionI = 0;
-    controllerPositionD = 1;//.05;
-    double scaleFactor = 0.5;
+    controllerPositionD = 0;//1;//.05;
+    double scaleFactor = 0.1;
     controllerAngleP = 1.2*scaleFactor;
-    controllerAngleI = 0.01;//.1*scaleFactor;//0.2;
-    controllerAngleD = 0.15;//.5*scaleFactor;//.5;
+    controllerAngleI = 0;//0.01;//.1*scaleFactor;//0.2;
+    controllerAngleD = 0;//0.15;//.5*scaleFactor;//.5;
     
     
     
@@ -76,11 +77,12 @@ void application_main(int32_t angle){
     
     
     angle+= 10;
-    angle = angle*abs(angle)/100;
+    //angle = angle*abs(angle)/100;
     
     
     counter++;
     //if(1){return;};
+    /*
     angle6 = angle5;
     angle5 = angle4;
     angle4 = angle3;
@@ -88,18 +90,18 @@ void application_main(int32_t angle){
     angle2 = angle1;
     angle1 = angle;
     angle = ((angle1*0.3)+(angle2*0.2)+(angle3*0.2)+(angle4*0.2)+(angle5*0.1)+(angle6*0.1));
-    
+    */
     int aInt = angle;
     char str[5];
     
     sprintf(str, "%d", aInt);
-    //TM_USART_Puts(USART2, "Angle: ");
-    TM_USART_Puts(USART2, str);
-    if(HAL_GetTick()<40000)
+    //TM_USART_Puts(USART3, "Angle: ");
+    TM_USART_Puts(USART3, str);
+    if(HAL_GetTick()<10000)
     {
         
         dWrite(PORTD+12, HIGH);
-        TM_USART_Puts(USART2,"\n");
+        TM_USART_Puts(USART3,"\n");
         
         return;
     }
@@ -109,7 +111,7 @@ void application_main(int32_t angle){
         discrete_PID_terminate(); //kill PID since robot is lying down
         setStepperCurrentPosition(0);
 
-        TM_USART_Puts(USART2,"^F!\n");
+        TM_USART_Puts(USART3,"^F!\n");
   
         return;
     }
@@ -123,23 +125,24 @@ void application_main(int32_t angle){
 	__enable_irq();
     
     output = controllerOutput;
-    
+    /*
     ac4 = ac3;
     ac3 = ac2;
     ac2 = ac1;
     ac1 = output;
     
     acceleration = (+ac3+ac2+ac1)/3.0;//output;//(+ac3+ac2+ac1)/3.0;
-   
-    TM_USART_Puts(USART2,"^");
+   */
+    acceleration = output;
+    TM_USART_Puts(USART3,"^");
     char str2[5];
     sprintf(str2, "%d", (int)acceleration);
-    //TM_USART_Puts(USART2, "   Output: ");
-    TM_USART_Puts(USART2, str2);
-    //TM_USART_Puts(USART2,"^");
-        //TM_USART_Puts(USART2,"Run");
-    TM_USART_Puts(USART2,"\n");
-    //TM_USART_Puts(USART2,"\n");
+    //TM_USART_Puts(USART3, "   Output: ");
+    TM_USART_Puts(USART3, str2);
+    //TM_USART_Puts(USART3,"^");
+        //TM_USART_Puts(USART3,"Run");
+    TM_USART_Puts(USART3,"\n");
+    //TM_USART_Puts(USART3,"\n");
     /*
     newSpeed = acceleration*50;
     
@@ -190,4 +193,35 @@ void application_main(int32_t angle){
 void TM_DELAY_1msHandler(){
    //runSpeed(); 
 }
+
+TIM_HandleTypeDef TIM_Handle;
+void initTimerInterrupt(void)
+{
+    __TIM4_CLK_ENABLE();
+    TIM_Handle.Init.Prescaler = 0;
+    TIM_Handle.Init.CounterMode = TIM_COUNTERMODE_UP;
+    TIM_Handle.Init.Period = 13439;
+    TIM_Handle.Instance = TIM4;   //Same timer whose clocks we enabled
+    HAL_TIM_Base_Init(&TIM_Handle);     // Init timer
+    HAL_TIM_Base_Start_IT(&TIM_Handle); // start timer interrupts
+    HAL_NVIC_SetPriority(TIM4_IRQn, 5, 15);
+    HAL_NVIC_EnableIRQ(TIM4_IRQn);
+
+}
+void TIM4_IRQHandler(void)
+{
+    if (__HAL_TIM_GET_FLAG(&TIM_Handle, TIM_FLAG_UPDATE) != RESET)      //In case other interrupts are also running
+    {
+        if (__HAL_TIM_GET_ITSTATUS(&TIM_Handle, TIM_IT_UPDATE) != RESET)
+        {
+            __HAL_TIM_CLEAR_FLAG(&TIM_Handle, TIM_FLAG_UPDATE);
+            /*put your code here */
+            
+            runSpeed();
+            
+            
+        }
+    }
+}
+
 

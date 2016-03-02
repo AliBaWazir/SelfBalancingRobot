@@ -64,15 +64,15 @@ void SysTick_Handler(void)
 }
 
 
-void EXTI4_IRQHandler (void)
+void EXTI9_5_IRQHandler (void)
 {
-	if (__HAL_GPIO_EXTI_GET_IT (GPIO_PIN_4))
+	if (__HAL_GPIO_EXTI_GET_IT (GPIO_Pin_5))
 	{
 		hal.new_gyro = 1;
         
         
 		
-		__HAL_GPIO_EXTI_CLEAR_IT (GPIO_PIN_4);
+		__HAL_GPIO_EXTI_CLEAR_IT (GPIO_Pin_5);
 	}
 }
 

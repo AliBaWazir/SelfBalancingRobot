@@ -198,18 +198,19 @@ extern void rt_OneStep(void);
 /* Called from Systick handler */
 void HAL_IncTick(void) {
   //  runSpeed(); 
-	TM_uTime+=20;
+	TM_uTime+=100;
     
     //dWrite(PORTE+9, HIGH);
     //dWrite(PORTE+9, LOW);
+    /*
     STEP_Counter++;
     if(STEP_Counter >= 7){
        STEP_Counter= 0;
         runFlag = 1;
         runSpeed();
     }
-    
-	if(TM_Counter <15){
+    */
+	if(TM_Counter <10){
 		
 		TM_Counter++;
         

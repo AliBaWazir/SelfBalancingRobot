@@ -9,8 +9,19 @@ void initSteppers(void){
     stepperL.setMinPulseWidth(0);
     
     //enable steppers
-    pinMode(PORTD+11, OUTPUT);
-    digitalWrite(PORTD+11, HIGH);
+    pinMode(STEPPER_RIGHT_EN, OUTPUT);
+    digitalWrite(STEPPER_RIGHT_EN, LOW);
+    
+    pinMode(STEPPER_RIGHT_SLP, OUTPUT);
+    digitalWrite(STEPPER_RIGHT_SLP, HIGH);
+    
+
+    
+    pinMode(STEPPER_LEFT_EN, OUTPUT);
+    digitalWrite(STEPPER_LEFT_EN, LOW);
+    
+    pinMode(STEPPER_LEFT_SLP, OUTPUT);
+    digitalWrite(STEPPER_LEFT_SLP, HIGH);
     
     setSteppingMode(MICROSTEPS_8);
 
@@ -20,12 +31,10 @@ void initSteppers(void){
     pinMode(STEPPER_LEFT_STEP_PIN, OUTPUT);
     pinMode(PORTD+15, OUTPUT);
     
-    pinMode(PORTE+9, OUTPUT);
     setStepperMaxSpeed(MAXSPEED);
     setStepperAccel(MAXACCEL);
     
-    
-    pinMode(PORTD+12, OUTPUT);//led
+    //stepperMoveTo(1000);
     
 
     

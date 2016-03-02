@@ -718,7 +718,7 @@ int main(void)
             //about to read fifo
 			
             
-           //__disable_irq();
+           
             dmp_read_fifo(gyro, accel_short, quat, &sensor_timestamp, &sensors, &more);\
 //            for(int i = more; i > 0;i--){
 //                HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4, GPIO_PIN_SET);
@@ -727,8 +727,9 @@ int main(void)
 //                //HAL_Delay(1);
 //                
 //            }
+            
 			if (!more)hal.new_gyro = 0;
-             //__enable_irq();
+             
 			
 			if (sensors & INV_XYZ_GYRO)
 			{
@@ -919,19 +920,19 @@ void MX_GPIO_Init(void)
 }
 #endif
 #ifdef PCBVERSION
-void MX_IRQ_Init (void)
-{
+void MX_IRQ_Init (void){
+    __GPIOB_CLK_DISABLE();
 	GPIO_InitTypeDef GPIO_IS;
 	
 	__GPIOB_CLK_ENABLE();
 
-	GPIO_IS.Pin = GPIO_PIN_5;
+	GPIO_IS.Pin = GPIO_Pin_5;
 	GPIO_IS.Mode = GPIO_MODE_IT_RISING;
 	GPIO_IS.Speed = GPIO_SPEED_MEDIUM;
 	HAL_GPIO_Init(GPIOB, &GPIO_IS);
 	
-  HAL_NVIC_SetPriority (EXTI4_IRQn, 1, 0);
-  HAL_NVIC_EnableIRQ (EXTI4_IRQn);
+    HAL_NVIC_SetPriority (EXTI9_5_IRQn , 1, 0);
+    HAL_NVIC_EnableIRQ (EXTI9_5_IRQn);
 }
 void MX_GPIO_Init(void)
 {
@@ -966,6 +967,7 @@ void MX_I2C1_Init(void)
   hi2c1.Init.OwnAddress2 = 0;
   hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLED;
   hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLED;
+  //HAL_I2C_DeInit(&hi2c1);
   HAL_I2C_Init(&hi2c1);
 
 }

@@ -15,7 +15,9 @@
 
 #include "tm_stm32_delay.h"
 #include "stm32fxxx_hal.h"
+#ifndef PCBVERSION
 #include "tm_stm32_disco.h"
+#endif
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include "invensense.h"
