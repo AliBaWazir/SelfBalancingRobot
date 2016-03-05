@@ -1,4 +1,10 @@
+#ifndef LINE_FOLLOWING_MODE_h
+#define LINE_FOLLOWING_MODE_h
+
 #include "linear_sensor_array_driver.h"
+#include "ultrasonic_sensor_driver.h"
+#include "display_driver.h"
+
 
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
@@ -23,5 +29,8 @@ typedef void (*direct_robot_callback_f)(movement_direction_e movement_direction,
 err_follow_line_e follow_line(void);
 
 
+
+
+#endif
 
 

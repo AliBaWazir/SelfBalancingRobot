@@ -15,7 +15,7 @@ static bool                 robot_is_centred                 = false;         //
  ***************************************************************************************/
 static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_info, direct_robot_callback_f callback){
     int centre_line_offset = 0;
-    int centre_line_posistion = 0;
+    int centre_line_position = 0;
     
     if (black_lines_info->black_lines_count <= 0){
         return;
@@ -23,18 +23,23 @@ static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
 
     if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==1){
         // follow one line and keep the black line at the center
-        centre_line_posistion = black_lines_info->black_lines_positions[0];
-        Serial.print("INFO>> direct_robot_given_black_lines_info: will follow ONE line and will center the robot at index ");
-        Serial.println(centre_line_posistion);
+        centre_line_position = black_lines_info->black_lines_positions[0];
+
         // calculate the differrence from the black line posistion to the center 64
-        centre_line_offset = centre_line_posistion - DEFAULT_CENTRE_LINE;  // if offset is positive ==> line to the right ==> move robot to the right
+        centre_line_offset = centre_line_position - DEFAULT_CENTRE_LINE;  // if offset is positive ==> line to the right ==> move robot to the right
         if (centre_line_offset == 0){
             // black line is centered
             robot_is_centred = true;
+            // robot is not processing any command
+            busy_processing_moving_command = false;
+            //TODO: pass a stop command to the ARM processor to stop turning the motor
+            
             return;
         } else if (centre_line_offset > 0){
             robot_is_centred = false;
             // black line is in the right side of the default centre ==> move robot to the right
+            Serial.print("INFO>> direct_robot_given_black_lines_info: will follow ONE line and will center the robot at index ");
+            Serial.println(centre_line_position);
             callback(MOVE_TO_RIGHT, abs(centre_line_offset));
         } else if (centre_line_offset < 0){
             robot_is_centred = false;
@@ -94,10 +99,6 @@ void process_direct_robot_command(movement_direction_e movement_direction, int m
     
   }
 
-  if (robot_is_centred){
-      // robot is now centred
-      busy_processing_moving_command = false;
-  }
 }
 /****************************************************************************************
  * PUBLIC FUNCTIONS
