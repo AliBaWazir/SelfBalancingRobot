@@ -7343,6 +7343,7 @@ Source: http://www.osram.convergy.de/</description>
 <segment>
 <wire x1="53.34" y1="7.62" x2="40.64" y2="7.62" width="0.1524" layer="91"/>
 <label x="43.18" y="7.62" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="A12"/>
 </segment>
 </net>
 <net name="LED10" class="0">
@@ -7355,6 +7356,7 @@ Source: http://www.osram.convergy.de/</description>
 <segment>
 <wire x1="53.34" y1="5.08" x2="40.64" y2="5.08" width="0.1524" layer="91"/>
 <label x="43.18" y="5.08" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="A11"/>
 </segment>
 </net>
 <net name="LED11" class="0">
