@@ -7000,7 +7000,7 @@ Source: http://www.osram.convergy.de/</description>
 <pinref part="C2" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="N$9" class="0">
+<net name="BUTTON1" class="0">
 <segment>
 <pinref part="S1" gate="S" pin="4"/>
 <pinref part="S1" gate="S" pin="3"/>
@@ -7009,15 +7009,19 @@ Source: http://www.osram.convergy.de/</description>
 <pinref part="R5" gate="G$1" pin="2"/>
 <wire x1="73.66" y1="20.32" x2="60.96" y2="20.32" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="20.32" x2="60.96" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="A12"/>
-<wire x1="40.64" y1="7.62" x2="60.96" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="7.62" x2="60.96" y2="20.32" width="0.1524" layer="91"/>
 <junction x="60.96" y="20.32"/>
 <pinref part="C6" gate="G$1" pin="2"/>
 <junction x="73.66" y="20.32"/>
+<label x="60.96" y="7.62" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="33/T"/>
+<wire x1="40.64" y1="-2.54" x2="53.34" y2="-2.54" width="0.1524" layer="91"/>
+<label x="43.18" y="-2.54" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$2" class="0">
+<net name="BUTTON2" class="0">
 <segment>
 <pinref part="S2" gate="S" pin="4"/>
 <pinref part="S2" gate="S" pin="3"/>
@@ -7028,10 +7032,14 @@ Source: http://www.osram.convergy.de/</description>
 <wire x1="101.6" y1="20.32" x2="101.6" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="5.08" x2="101.6" y2="20.32" width="0.1524" layer="91"/>
 <junction x="101.6" y="20.32"/>
-<pinref part="U$1" gate="G$1" pin="A11"/>
-<wire x1="40.64" y1="5.08" x2="101.6" y2="5.08" width="0.1524" layer="91"/>
 <pinref part="C7" gate="G$1" pin="2"/>
 <junction x="88.9" y="20.32"/>
+<label x="101.6" y="5.08" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="U$1" gate="G$1" pin="32/T/PWM"/>
+<wire x1="40.64" y1="-5.08" x2="53.34" y2="-5.08" width="0.1524" layer="91"/>
+<label x="43.18" y="-5.08" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -7053,7 +7061,7 @@ Source: http://www.osram.convergy.de/</description>
 <label x="43.18" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$4" class="0">
+<net name="BUTTON3" class="0">
 <segment>
 <pinref part="S3" gate="S" pin="4"/>
 <pinref part="S3" gate="S" pin="3"/>
@@ -7070,7 +7078,7 @@ Source: http://www.osram.convergy.de/</description>
 <junction x="60.96" y="-15.24"/>
 </segment>
 </net>
-<net name="N$10" class="0">
+<net name="BUTTON4" class="0">
 <segment>
 <pinref part="S4" gate="S" pin="4"/>
 <pinref part="S4" gate="S" pin="3"/>
@@ -7333,9 +7341,9 @@ Source: http://www.osram.convergy.de/</description>
 <label x="60.96" y="-73.66" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="53.34" y1="-2.54" x2="40.64" y2="-2.54" width="0.1524" layer="91"/>
-<label x="43.18" y="-2.54" size="1.778" layer="95"/>
-<pinref part="U$1" gate="G$1" pin="33/T"/>
+<wire x1="53.34" y1="7.62" x2="40.64" y2="7.62" width="0.1524" layer="91"/>
+<label x="43.18" y="7.62" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="A12"/>
 </segment>
 </net>
 <net name="LED10" class="0">
@@ -7346,9 +7354,9 @@ Source: http://www.osram.convergy.de/</description>
 <label x="60.96" y="-68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="53.34" y1="-5.08" x2="40.64" y2="-5.08" width="0.1524" layer="91"/>
-<label x="43.18" y="-5.08" size="1.778" layer="95"/>
-<pinref part="U$1" gate="G$1" pin="32/T/PWM"/>
+<wire x1="53.34" y1="5.08" x2="40.64" y2="5.08" width="0.1524" layer="91"/>
+<label x="43.18" y="5.08" size="1.778" layer="95"/>
+<pinref part="U$1" gate="G$1" pin="A11"/>
 </segment>
 </net>
 <net name="LED11" class="0">
