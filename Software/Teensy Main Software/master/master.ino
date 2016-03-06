@@ -19,9 +19,7 @@
  * SATIC VARIABLES
  ****************************************************************************************/
 static state_e robot_state;
-static bool linear_sensor_array_driver_initialized = false;
-static bool ultrasonic_sensor_driver_initialized   = false;
-static bool lcd_display_driver_initialized         = false;
+static bool line_following_mode_drivers_initialized = false;
 
 
 
@@ -35,20 +33,12 @@ void setup() {
   Serial.begin(9600);
 
   // initialize all drivers
-  if (linear_sensor_array_driver_init()){
-    linear_sensor_array_driver_initialized = true;
+  if (line_following_mode_drivers_init()){
+      line_following_mode_drivers_initialized = true;
+  } else{
+      Serial.println("ERROR>> setup: line_following_mode_drivers_init failed");
   }
-  if (ultrasonic_sensor_driver_init()){
-    ultrasonic_sensor_driver_initialized = true;
-  }
-  if (lcd_display_driver_init()){
-    lcd_display_driver_initialized = true;
-  }  
-  //PLEASE INITIALIZE ALL OTHER DRIVERS HERE:
 
-  
-  // set the robot mode
-  robot_state= debug_mode;
 
   Serial.println("INFO>> master: Setup is complete!");
 }
@@ -56,6 +46,10 @@ void setup() {
 void loop() {
   //Serial.println("master: loop is called!");
 
+  //check the current robot mode
+  // set the robot mode
+  robot_state= line_following_mode;
+  
   switch (robot_state){
       case startup_mode:
       ;
@@ -66,20 +60,29 @@ void loop() {
       break;
 
       case line_following_mode:
-      if (linear_sensor_array_driver_initialized && ultrasonic_sensor_driver_initialized){
-          if (follow_line()== BLACK_LINES_DETECTION_FAILURE){
-              Serial.println("ERROR>> master: no black lines were detected successfully. Please reposition the roboot and start over");
-              //TODO: add a quit handler function
+      if (line_following_mode_drivers_initialized){
+          line_following_error_e line_following_error = LINE_FOLLOWING_OK;
+
+          line_following_error = line_following_mode_run();
+          if (line_following_error!= LINE_FOLLOWING_OK){
+
+              if(line_following_error==LINE_FOLLOWING_ERROR_OBSTACLE){
+                  Serial.println("ERROR>> loop: an obstacle is detected in front of robot");
+                  //TODO: play audio track once you get this error
+              } else if(line_following_error==LINE_FOLLOWING_ERROR_LINE_DECTETION){
+                  Serial.println("ERROR>> loop: black line detection failure");
+                  //TODO: play audio track once you get this error
+              }
+              
           }
       } else{
-          Serial.println("ERROR>> master: one of the required drivers is not initialized yet");
+          Serial.println("ERROR>> master: one required drivers is not initialized yet");
       }
       break;
 
 
       case debug_mode:
-          lcd_display_driver_display_bitmap(NULL);
-          delay(5000);
+      
       break;
 
       default:

@@ -33,12 +33,13 @@ typedef struct {
 /****************************************************************************************
  * GLOBAL VARIABLES
  ****************************************************************************************/
-extern black_lines_info_t   current_black_lines_info;
+
 
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
 bool linear_sensor_array_driver_init();
-bool linear_sensor_array_driver_get_data();
+black_lines_info_t* linear_sensor_array_driver_get_data();
+int* linear_sensor_array_driver_get_current_frame();
 
 

@@ -16,8 +16,9 @@
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
-bool lcd_display_driver_init();
-bool lcd_display_driver_display_bitmap(uint8_t *bitmap);
+bool display_driver_init();
+bool display_driver_display_bitmap(uint8_t *bitmap);
+void display_driver_display_frame(int* frame_data);
 
 
 #endif

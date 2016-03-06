@@ -54,8 +54,11 @@ Adafruit_SSD1306 display(OLED_RESET);
 /****************************************************************************************
  * STATIC VARIABLES
  ****************************************************************************************/
-static bool display_driver_debug_mode= true;         // This boolean should be true only in the testing and debugging process
-//static const unsigned char PROGMEM logo16_glcd_bmp[] =
+static bool display_driver_initialized             = false;
+static bool driver_in_testing_mode                 = false;         // This boolean should be true only in the testing and debugging process
+
+static uint8_t PROGMEM frame_bitmap[128];
+
 
 static const unsigned char PROGMEM Bowser_1[] = {
 0x01, 0x00, 0x98, 0x00, 0x00, 0x02, 0x81, 0x54, 0x00, 0x00, 0x02, 0x8B, 0x73, 0x20, 0x00, 0x04,
@@ -380,79 +383,142 @@ static void testscrolltext(void) {
 /****************************************************************************************
  * STATIC FUNCTIONS
  ***************************************************************************************/
+static bool display_driver_construct_bitmap_from_frame(int* source_frame){
+    bool ret = true;
+    int  compressed_frame[128]; // has range of values from 64 to 0;
+    int  tmp_byte = 0x00;
+
+    for (int v=0; v< 128; v++){
+        compressed_frame[v]= source_frame[v]/16;
+    }
+
+    for (int i=64; i>0; i--){          // loop over raws
+        for (int j= 0; j<16; j++){     // loop over columns in groups of 8
+            tmp_byte = 0x00;
+            for (int x= 0; x<8; x++){
+                if (compressed_frame[8*j+x]>=i){
+                    if (x==0){
+                        tmp_byte |=0x80; 
+                    } else if (x==1){
+                        tmp_byte |=0x40;
+                    } else if (x==2){
+                        tmp_byte |=0x20;
+                    } else if (x==3){
+                        tmp_byte |=0x10;
+                    } else if (x==4){
+                        tmp_byte |=0x08;
+                    } else if (x==5){
+                        tmp_byte |=0x04;
+                    } else if (x==6){
+                        tmp_byte |=0x02;
+                    } else if (x==7){
+                        tmp_byte |=0x01;
+                    }
+                }
+            }
+
+            //store tmp in bitmap
+            frame_bitmap[(64-i)*16+j]= tmp_byte;        
+            
+        }
+    }
 
 
+    return ret;
+}
 
+static void display_driver_test(){
+    
+    for (int i=0; i<100; i++){
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_1,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_2,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_3,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_4,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_5,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_6,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+    }
+              
+}
 /****************************************************************************************
  * PUBLIC FUNCTIONS
  ***************************************************************************************/
-bool lcd_display_driver_init(){
+bool display_driver_init(){
     bool ret = true;
 
-    // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
-    // init done
+    if(!display_driver_initialized){
+        // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
+        display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
+        // init done
   
-    // Show image buffer on the display hardware.
-    // Since the buffer is intialized with an Adafruit splashscreen
-    // internally, this will display the splashscreen.
-    display.display();
-    delay(2000);
+        // Show image buffer on the display hardware.
+        // Since the buffer is intialized with an Adafruit splashscreen
+        // internally, this will display the splashscreen.
+        display.display();
+        delay(2000);
+
+        display_driver_initialized = true;
+    }
     
     return ret;
 }
 
-bool lcd_display_driver_display_bitmap(uint8_t *bitmap){
+
+bool display_driver_display_bitmap(uint8_t *bitmap){
     bool ret = true;
 
-    if (!display_driver_debug_mode && bitmap == NULL){
-        Serial.println("ERROR>> lcd_display_driver_display_bitmap: bitmap is NULL");
+    if (!driver_in_testing_mode && bitmap == NULL){
+        Serial.println("ERROR>> display_driver_display_bitmap: bitmap is NULL");
         return false;
     }
     
     display.clearDisplay();
+    display.drawBitmap(0, 0, bitmap,  128,  64, WHITE);
+    display.display();
 
-    if (display_driver_debug_mode){
-        for (int i=0; i<100; i++){
-            display.clearDisplay();
-            display.drawBitmap(0, 0, Bowser_1,  BOWSERW,  BOWSERH, WHITE);
-            display.display();
-            delay(100);
-            
-            display.clearDisplay();
-            display.drawBitmap(0, 0, Bowser_2,  BOWSERW,  BOWSERH, WHITE);
-            display.display();
-            delay(100);
-            
-            display.clearDisplay();
-            display.drawBitmap(0, 0, Bowser_3,  BOWSERW,  BOWSERH, WHITE);
-            display.display();
-            delay(100);
-            
-            display.clearDisplay();
-            display.drawBitmap(0, 0, Bowser_4,  BOWSERW,  BOWSERH, WHITE);
-            display.display();
-            delay(100);
-            
-            display.clearDisplay();
-            display.drawBitmap(0, 0, Bowser_5,  BOWSERW,  BOWSERH, WHITE);
-            display.display();
-            delay(100);
-            
-            display.clearDisplay();
-            display.drawBitmap(0, 0, Bowser_6,  BOWSERW,  BOWSERH, WHITE);
-            display.display();
-            delay(100);
-            
-        }
-              
-    } else{
-        display.drawBitmap(0, 0, bitmap,  128,  64, WHITE);
-        display.display();
-    }
-  
-   
-    
     return ret;
+}
+
+void display_driver_display_frame(int* frame_data){
+    
+    if (frame_data == NULL){
+        Serial.println("ERROR>> display_driver_display_frame: frame_data is NULL");
+        return;
+    }
+
+    // clear any existing data in the frame_bitmap
+    memset(frame_bitmap, 0, 128);
+
+    // construct bitmap from the provided frame data
+    display_driver_construct_bitmap_from_frame(frame_data);
+
+    //display the custruct bit map
+    if (! display_driver_display_bitmap(frame_bitmap)){
+        Serial.println("ERROR>> display_driver_display_frame: failed to display bit map");
+    }
+    
 }
 

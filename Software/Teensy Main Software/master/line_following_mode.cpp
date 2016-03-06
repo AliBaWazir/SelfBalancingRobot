@@ -1,6 +1,13 @@
 #include "line_following_mode.h"
+#include "ultrasonic_sensor_driver.h"
+#include "display_driver.h"
 //#include <PID_v1.h>
 
+/****************************************************************************************
+ * STATIC FUNCTION PROTOTYPES
+ ***************************************************************************************/
+static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_info);
+static void process_direct_robot_command(turning_direction_e turning_direction, int movement_magnitude);
 
 /****************************************************************************************
  * STATIC VARIABLES
@@ -13,7 +20,7 @@ static bool                 robot_is_centred                 = false;         //
 /****************************************************************************************
  * STATIC FUNCTIONS
  ***************************************************************************************/
-static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_info, direct_robot_callback_f callback){
+static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_info){
     int centre_line_offset = 0;
     int centre_line_position = 0;
     
@@ -40,11 +47,11 @@ static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
             // black line is in the right side of the default centre ==> move robot to the right
             Serial.print("INFO>> direct_robot_given_black_lines_info: will follow ONE line and will center the robot at index ");
             Serial.println(centre_line_position);
-            callback(MOVE_TO_RIGHT, abs(centre_line_offset));
+            process_direct_robot_command(TURN_RIGHT, abs(centre_line_offset));
         } else if (centre_line_offset < 0){
             robot_is_centred = false;
             // black line is in the left side of the default centre ==> move robot to the left
-            callback(MOVE_TO_LEFT, abs(centre_line_offset));
+            process_direct_robot_command(TURN_LEFT, abs(centre_line_offset));
         } else{
             Serial.print("ERROR>> direct_robot_given_black_lines_info: centre_line_offset is invaild ");
         }
@@ -62,7 +69,7 @@ static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
   
 }
 
-void process_direct_robot_command(movement_direction_e movement_direction, int movement_magnitude){
+static void process_direct_robot_command(turning_direction_e turning_direction, int movement_magnitude){
 
   //Serial.println("INFO>> process_direct_robot_command: called!!");
 
@@ -80,13 +87,13 @@ void process_direct_robot_command(movement_direction_e movement_direction, int m
   // set the busy_processing_moving_command to true
   busy_processing_moving_command = true;
 
-  switch (movement_direction){
-      case MOVE_TO_RIGHT:
+  switch (turning_direction){
+      case TURN_RIGHT:
           //motor_step(left_motor, movement_magnitude*constant);
           Serial.println("INFO>> process_direct_robot_command: truring the motor to the right");
       break;
 
-      case MOVE_TO_LEFT:
+      case TURN_LEFT:
           //motor_step(right_motor, movement_magnitude*constant);
           Serial.println("INFO>> process_direct_robot_command: truring the motor to the left");
           
@@ -100,42 +107,83 @@ void process_direct_robot_command(movement_direction_e movement_direction, int m
   }
 
 }
+
+
 /****************************************************************************************
  * PUBLIC FUNCTIONS
  ***************************************************************************************/
-err_follow_line_e follow_line(void){
-    err_follow_line_e err_follow_line = BLACK_LINES_DETECTION_OK;
+bool line_following_mode_drivers_init(){
+
+  if (!linear_sensor_array_driver_init()){
+      Serial.println("ERROR>> line_following_mode_drivers_init: linear_sensor_array_driver_init failed");
+      return false;
+  }
+  if (!ultrasonic_sensor_driver_init()){
+      Serial.println("ERROR>> line_following_mode_drivers_init: ultrasonic_sensor_driver_init failed");
+      return false;
+  }
+  if (!display_driver_init()){
+      Serial.println("ERROR>> line_following_mode_drivers_init: display_driver_init failed");
+      return false;
+  }  
+  //PLEASE INITIALIZE ALL OTHER DRIVERS HERE:
+
+  return true;
+}
+
+
+line_following_error_e line_following_mode_run(){
+  
+    line_following_error_e    line_following_error       = LINE_FOLLOWING_OK;
+    black_lines_info_t       *current_black_lines_info   = NULL;
+    int                      *current_frame              = NULL;
+
+    //check for any obstcales in front ultrasonic sensor
+    if(!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
+        line_following_error = LINE_FOLLOWING_ERROR_OBSTACLE;
+    }
     
-    if (linear_sensor_array_driver_get_data()){
+    current_black_lines_info = linear_sensor_array_driver_get_data();
+    if (current_black_lines_info != NULL){
+        
+        // display the current frame data in the LCD diplays
+        current_frame = linear_sensor_array_driver_get_current_frame();
+        if(current_frame != NULL){
+            display_driver_display_frame(current_frame);
+        }
+        
         // check if the initial frame has black lines detected successfully
         if (!initial_frame_decoded){
-            if (current_black_lines_info.black_lines_count <= 0){
-                Serial.println("ERROR>> line_following_mode: no black lines are detected in the initial frame");
-                err_follow_line = BLACK_LINES_DETECTION_FAILURE;
-            } else if (current_black_lines_info.black_lines_count > 0 && current_black_lines_info.black_lines_count < MAX_BLACK_LINES_PER_FRAME){
+            if (current_black_lines_info->black_lines_count <= 0){
+                Serial.println("ERROR>> line_following_mode_run: no black lines are detected in the initial frame");
+                line_following_error = LINE_FOLLOWING_ERROR_LINE_DECTETION;
+            } else if (current_black_lines_info->black_lines_count > 0 && current_black_lines_info->black_lines_count < MAX_BLACK_LINES_PER_FRAME){
                 
                 // clone the values of the current frame to the initial frame
-                initial_frame_black_lines_info.black_lines_count = current_black_lines_info.black_lines_count;
+                initial_frame_black_lines_info.black_lines_count = current_black_lines_info->black_lines_count;
                 for (int i=0; i< MAX_BLACK_LINES_PER_FRAME; i++){
-                    initial_frame_black_lines_info.black_lines_positions[i]= current_black_lines_info.black_lines_positions[i];
+                    initial_frame_black_lines_info.black_lines_positions[i]= current_black_lines_info->black_lines_positions[i];
                 }
                 
                 initial_frame_decoded = true;
                 
             } else{
-                Serial.println("ERROR>> line_following_mode: number of black lines detected exceeds the limit");
-                err_follow_line = BLACK_LINES_DETECTION_FAILURE;
+                Serial.println("ERROR>> line_following_mode_run: number of black lines detected exceeds the limit");
+                line_following_error = LINE_FOLLOWING_ERROR_LINE_DECTETION;
             }
         }
 
-        if (err_follow_line == BLACK_LINES_DETECTION_OK){
+        if (line_following_error == LINE_FOLLOWING_OK){
             // direct the robot based on the last decoded data found in the global variable current_black_lines_info
-            direct_robot_given_black_lines_info(&current_black_lines_info, process_direct_robot_command);
+            direct_robot_given_black_lines_info(current_black_lines_info);
         }
 
+    } else{
+          Serial.println("ERROR>> line_following_mode_run: current_black_lines_info is NULL");
+          line_following_error = LINE_FOLLOWING_ERROR_LINE_DECTETION;
     }
 
-    return err_follow_line;
+    return line_following_error;
 }
 
 

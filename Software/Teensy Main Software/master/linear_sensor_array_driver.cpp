@@ -5,8 +5,10 @@
  ****************************************************************************************/
 const int clkPin          = 14;  // digial sampling pin of the clock
 const int exposurePin     = 15;  // digial sampling pin for the sampling
-const int togglePin       = 20;  // digial sampling pin for the toggling
 const int analogInputPin  = A2;  // Analog input pin for sensor's AOUT signal
+
+const int togglePin       = 20;  // digial sampling pin for the toggling used to generate pulses when edge points detected
+
 
 /****************************************************************************************
  * STATIC FUNCTION PROTOTYPES
@@ -15,25 +17,26 @@ static void debug_print_array (int *input_array, int length, int margin_offset);
 static void debug_print_decoded_frame_buffer_full_data (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length);
 static void debug_print_decoded_frame_buffer_edge_pixel_indexes (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length);
 static void debug_print_balck_lines_info();
-static void create_test_frame();
+static void create_test_frame(int *dest_frame);
 static void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length, black_lines_info_t* extracted_info);
 static void decode_frame_buffer (int *frame_buffer, int frame_length);
-
 
 /****************************************************************************************
  * GLOBAL VARIABLES
  ***************************************************************************************/
- black_lines_info_t current_black_lines_info;
+
 
 /****************************************************************************************
  * STATIC VARIABLES
  ***************************************************************************************/
-static int                  sensorValue;                                      // value read from the analogInputPin
+static int                  sensor_value;                                      // value read from the analogInputPin
 static int                  frame_buffer[128];                                // data of a single frame as received from the sensor
 static int                  black_lines_count= 0;       // the count of the black lines is determined by the initial frame only
 static pixel_data_t         decoded_frame_buffer[FRAME_BUFFER_LENGTH];
-static double               Setpoint, Input, Output;
-static bool                 driver_in_testing_mode           = false;          // this variable should be set to true only in the testing process to enable creating an internal frame
+static black_lines_info_t   current_black_lines_info;
+
+static bool                 linear_sensor_array_driver_initialized = false;
+static bool                 driver_in_testing_mode                 = false;          // this variable should be set to true only in the testing process to enable creating an internal frame
 
 
 
@@ -98,14 +101,11 @@ static void debug_print_balck_lines_info(){
 }
 
 
-static void create_test_frame(){
-    int frame [128] = {1021,1021,1021,1020,1021,1021,1022,1019,1021,1021,1021,1021,1021,1020,1021,1022,1021,1021,1021,1021,1021,1021,1022,1021,700,600,500,400,20,150,100,100,100,100,20,100,100,100,50,70,200,300,400,500,600,700,1021,1021,1021,1021,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1022,1021,1020,1020,1021,1021,1021,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1020,1019,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1020,1021,1021,1022,1019,1021};
-
-    debug_print_array(frame, 128, 0);
-    decode_frame_buffer (frame, 128);
-
-    //delay 10 m seconds
-    delay(10);
+static void create_test_frame(int *dest_frame){
+    int   testing_frame [128] = {1021,1021,1021,1020,1021,1021,1022,1019,1021,10,20,10,30,1020,1021,1022,1021,1021,1021,1021,1021,1021,1022,1021,700,600,500,400,20,150,100,100,100,100,20,100,100,100,50,70,200,300,400,500,600,700,1021,1021,1021,1021,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1022,1021,1020,1020,1021,1021,1021,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1020,1019,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1020,1021,1021,1022,1019,1021};
+    for (int i= 0; i<128; i++){
+        dest_frame[i] = testing_frame[i];
+    }
 }
 
 
@@ -149,6 +149,7 @@ static void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer,
 static void decode_frame_buffer (int *frame_buffer, int frame_length){
   bool most_right_black_edge_detected= false;
   bool most_left_black_edge_detected= false;
+  
   memset (&decoded_frame_buffer, 0, sizeof(pixel_data_t)*FRAME_BUFFER_LENGTH);
   
   for (int i= 0; i<FRAME_BUFFER_LENGTH; i++){
@@ -240,78 +241,92 @@ static void decode_frame_buffer (int *frame_buffer, int frame_length){
  * GLOBAL FUNCTIONS
  ***************************************************************************************/
 bool linear_sensor_array_driver_init() {
-
-  // set the input pins:
-  pinMode(analogInputPin, INPUT);
   
-  // set the output pins:
-  pinMode(exposurePin, OUTPUT);
-  pinMode(clkPin, OUTPUT);
-  pinMode(togglePin,OUTPUT);
+  if(!linear_sensor_array_driver_initialized){
+      // set the input pins:
+      pinMode(analogInputPin, INPUT);
+  
+      // set the output pins:
+      pinMode(exposurePin, OUTPUT);
+      pinMode(clkPin, OUTPUT);
+      pinMode(togglePin,OUTPUT);
+
+      //set flag to true to avoid multiple initializations
+      linear_sensor_array_driver_initialized = true;
+  }
   
   return true;
 }
 
-bool linear_sensor_array_driver_get_data() {
+black_lines_info_t* linear_sensor_array_driver_get_data() {
+
+  bool ret = true;
+  
   //Serial.print("INFO>> linear_sensor_array_driver_get_data: called");
   if (driver_in_testing_mode){
-    create_test_frame();
-    return true;
-  }
+    create_test_frame(frame_buffer);
+        
+  } else{
+      digitalWrite(togglePin,LOW); 
   
-  digitalWrite(togglePin,LOW); 
+      // set the clk LOW
+      digitalWrite(clkPin, LOW);
+      delayMicroseconds(50);
   
-  // set the clk LOW
-  digitalWrite(clkPin, LOW);
-  delayMicroseconds(50);
-  
-  // set the exposurePin HIGH
-  digitalWrite(exposurePin, HIGH);
-  delayMicroseconds(50);
+      // set the exposurePin HIGH
+      digitalWrite(exposurePin, HIGH);
+      delayMicroseconds(50);
 
-  // set the clkPin HIGH
-  digitalWrite(clkPin, HIGH);
-  delayMicroseconds(1);
+      // set the clkPin HIGH
+      digitalWrite(clkPin, HIGH);
+      delayMicroseconds(1);
   
-  // set the exposurePin HIGH to start magnetizing the pixels in the sensor.
-  // the expusure should last ~1 micro seconds
-  digitalWrite(exposurePin, HIGH);
-  delayMicroseconds(1);
+      // set the exposurePin HIGH to start magnetizing the pixels in the sensor.
+      // the expusure should last ~1 micro seconds
+      digitalWrite(exposurePin, HIGH);
+      delayMicroseconds(1);
 
-  // set the exposurePin LOW
-  digitalWrite(exposurePin, LOW);
+      // set the exposurePin LOW
+      digitalWrite(exposurePin, LOW);
 
-  // do the cloking 128times to sample the values of the 128 array of pixels
-  for (int i=0; i<128; i++){
-    // set the clk HIGH with a half period of 50 micro seconds
-    digitalWrite(clkPin, HIGH);
-    delayMicroseconds(50);
+      // do the cloking 128times to sample the values of the 128 array of pixels
+      for (int i=0; i<128; i++){
+        // set the clk HIGH with a half period of 50 micro seconds
+        digitalWrite(clkPin, HIGH);
+        delayMicroseconds(50);
     
-    // read the analogInputPin value:
-    sensorValue = analogRead(analogInputPin);
-    if (decoded_frame_buffer[i].edge_pixel){
-      digitalWrite(togglePin,HIGH); 
-    }
+        // read the analogInputPin value:
+        sensor_value = analogRead(analogInputPin);
+        if (decoded_frame_buffer[i].edge_pixel){
+            digitalWrite(togglePin,HIGH); 
+        }
 
-    // sotore the analogInputPin value into the array:
-    frame_buffer[i]= sensorValue;
+        // sotore the analogInputPin value into the array:
+        frame_buffer[i]= sensor_value;
 
-    // set the clk LOW
-    digitalWrite(clkPin, LOW);
-    delayMicroseconds(50);
+        // set the clk LOW
+        digitalWrite(clkPin, LOW);
+        delayMicroseconds(50);
+      }
+
   }
 
   // print the frame_buffer to the serial monitor:
-  debug_print_array(frame_buffer, FRAME_BUFFER_LENGTH, FRAME_BUFFER_MARGIN_LENGHT); //will ignore the first 16 bits
+  debug_print_array(frame_buffer, FRAME_BUFFER_LENGTH, FRAME_BUFFER_MARGIN_LENGHT);
   
   // decode the frame buffer. Results will be stored in the global variable current_black_lines_info
   decode_frame_buffer(frame_buffer, FRAME_BUFFER_LENGTH);
 
   //delay 10 m seconds
   delay(10);
+  
 
-  return true;
+  return  &current_black_lines_info;
 }
 
+
+int* linear_sensor_array_driver_get_current_frame(){
+    return frame_buffer;
+}
 
 
