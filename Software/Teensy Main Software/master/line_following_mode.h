@@ -7,10 +7,10 @@
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
  ****************************************************************************************/
-#define DEFAULT_CENTRE_LINE 64;
-
+ 
 typedef enum{
   LINE_FOLLOWING_OK,
+  LINE_FOLLOWING_PROCESSING,
   LINE_FOLLOWING_ERROR_OBSTACLE,
   LINE_FOLLOWING_ERROR_LINE_DECTETION
 }line_following_error_e;

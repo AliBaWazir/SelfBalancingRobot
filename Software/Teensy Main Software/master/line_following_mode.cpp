@@ -1,7 +1,15 @@
 #include "line_following_mode.h"
 #include "ultrasonic_sensor_driver.h"
 #include "display_driver.h"
+#include "motor_driver.h"
+
 //#include <PID_v1.h>
+
+/****************************************************************************************
+ * DEFINES AND TYPE DEFINITIONS
+ ****************************************************************************************/
+#define DEFAULT_CENTRE_LINE  64;
+#define STEPPER_CONSTANT     10;            //this constant is determined from the testing results
 
 /****************************************************************************************
  * STATIC FUNCTION PROTOTYPES
@@ -16,6 +24,7 @@ static bool                 initial_frame_decoded            = false;         //
 static black_lines_info_t   initial_frame_black_lines_info;
 static bool                 busy_processing_moving_command   = false;         // this boolean is set to true while the robot is moving to the right or left
 static bool                 robot_is_centred                 = false;         // this boolean is set to true once the robot is centred at the default centre
+static int                  initial_frame_discarded_count    =0;              // this boolean determines the count of discarded initial frames
 
 /****************************************************************************************
  * STATIC FUNCTIONS
@@ -59,11 +68,11 @@ static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
       
     }else if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==2){
         // follow two lines and keep the white space at the center
-        Serial.print("INFO>> direct_robot_given_black_lines_info: will follow TWO lines");
+        Serial.println("INFO>> direct_robot_given_black_lines_info: will follow TWO lines");
 
     } else if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==3){
         // follow one line and keep the black line at the center
-        Serial.print("INFO>> direct_robot_given_black_lines_info: will follow THREE lines");
+        Serial.println("INFO>> direct_robot_given_black_lines_info: will follow THREE lines");
       
     }
   
@@ -89,13 +98,17 @@ static void process_direct_robot_command(turning_direction_e turning_direction, 
 
   switch (turning_direction){
       case TURN_RIGHT:
-          //motor_step(left_motor, movement_magnitude*constant);
           Serial.println("INFO>> process_direct_robot_command: truring the motor to the right");
+          ///if (!motor_driver_move_stepper(SELECTED_MOTOR_LEFT, STEPPER_CONSTANT*movement_magnitude, 10)){
+              //Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
+          ///}
       break;
 
       case TURN_LEFT:
-          //motor_step(right_motor, movement_magnitude*constant);
           Serial.println("INFO>> process_direct_robot_command: truring the motor to the left");
+          ///if (!motor_driver_move_stepper(SELECTED_MOTOR_RIGHT, movement_magnitude*STEPPER_CONSTANT, 10)){
+             /// Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
+         /// }
           
       break;
 
@@ -136,10 +149,14 @@ line_following_error_e line_following_mode_run(){
   
     line_following_error_e    line_following_error       = LINE_FOLLOWING_OK;
     black_lines_info_t       *current_black_lines_info   = NULL;
-    int                      *current_frame              = NULL;
+    const int                *current_frame              = NULL;
 
     //check for any obstcales in front ultrasonic sensor
     if(!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
+        //stop both stepper motors
+        if (!motor_driver_move_stepper(SELECTED_MOTOR_BOTH, 0, 0)){
+            Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
+        }
         line_following_error = LINE_FOLLOWING_ERROR_OBSTACLE;
     }
     
@@ -152,8 +169,15 @@ line_following_error_e line_following_mode_run(){
             display_driver_display_frame(current_frame);
         }
         
-        // check if the initial frame has black lines detected successfully
+        // check if the initial THIRD frame has black lines detected successfully. (i.e. ignore the first and second frames as they are not properly read)
         if (!initial_frame_decoded){
+
+            //discard the initial two frames
+            if(initial_frame_discarded_count <2){
+                initial_frame_discarded_count++;
+                return LINE_FOLLOWING_PROCESSING;
+            }
+
             if (current_black_lines_info->black_lines_count <= 0){
                 Serial.println("ERROR>> line_following_mode_run: no black lines are detected in the initial frame");
                 line_following_error = LINE_FOLLOWING_ERROR_LINE_DECTETION;

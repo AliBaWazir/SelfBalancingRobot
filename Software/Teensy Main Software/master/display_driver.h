@@ -18,7 +18,7 @@
  ****************************************************************************************/
 bool display_driver_init();
 bool display_driver_display_bitmap(uint8_t *bitmap);
-void display_driver_display_frame(int* frame_data);
+void display_driver_display_frame(const int* frame_data);
 
 
 #endif

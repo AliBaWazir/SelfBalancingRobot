@@ -143,8 +143,6 @@ static void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer,
  * 
  * @param input_array    the array to be printed
  * @param length         the length of array to be printed
- * @param margin_offset  an offset to from the start and end of the array where entries should be ignored. 
- *                       This value should be 0 if all entries of the array are to be displayed
  */
 static void decode_frame_buffer (int *frame_buffer, int frame_length){
   bool most_right_black_edge_detected= false;
@@ -259,14 +257,13 @@ bool linear_sensor_array_driver_init() {
 }
 
 black_lines_info_t* linear_sensor_array_driver_get_data() {
-
-  bool ret = true;
   
   //Serial.print("INFO>> linear_sensor_array_driver_get_data: called");
   if (driver_in_testing_mode){
     create_test_frame(frame_buffer);
         
   } else{
+      memset(frame_buffer, 0, 128);
       digitalWrite(togglePin,LOW); 
   
       // set the clk LOW

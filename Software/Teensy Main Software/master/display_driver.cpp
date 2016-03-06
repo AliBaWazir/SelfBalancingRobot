@@ -383,7 +383,7 @@ static void testscrolltext(void) {
 /****************************************************************************************
  * STATIC FUNCTIONS
  ***************************************************************************************/
-static bool display_driver_construct_bitmap_from_frame(int* source_frame){
+static bool display_driver_construct_bitmap_from_frame(const int* source_frame){
     bool ret = true;
     int  compressed_frame[128]; // has range of values from 64 to 0;
     int  tmp_byte = 0x00;
@@ -396,7 +396,7 @@ static bool display_driver_construct_bitmap_from_frame(int* source_frame){
         for (int j= 0; j<16; j++){     // loop over columns in groups of 8
             tmp_byte = 0x00;
             for (int x= 0; x<8; x++){
-                if (compressed_frame[8*j+x]>=i){
+                if (compressed_frame[8*j+x]>=i){ //==
                     if (x==0){
                         tmp_byte |=0x80; 
                     } else if (x==1){
@@ -502,7 +502,7 @@ bool display_driver_display_bitmap(uint8_t *bitmap){
     return ret;
 }
 
-void display_driver_display_frame(int* frame_data){
+void display_driver_display_frame(const int* frame_data){
     
     if (frame_data == NULL){
         Serial.println("ERROR>> display_driver_display_frame: frame_data is NULL");

@@ -32,7 +32,7 @@ static int minimumRange  = 0; // Minimum range needed
 static long duration, distance; // Duration used to calculate distance
 
 static bool ultrasonic_sensor_driver_initialized   = false;
-static bool driver_in_testing_mode                 = true;
+static bool driver_in_testing_mode                 = false;
 
 
 /****************************************************************************************
