@@ -34,7 +34,7 @@ uint32_t counter = 0;
 void setup(){
     //TM_RCC_InitSystem();
     TM_DELAY_Init();
-    initSteppers();
+    //initSteppers();
     initTimerInterrupt();
     TM_USART_Init(USART3, TM_USART_PinsPack_2, 115200);
 	
@@ -91,13 +91,15 @@ void application_main(int32_t angle){
     angle1 = angle;
     angle = ((angle1*0.3)+(angle2*0.2)+(angle3*0.2)+(angle4*0.2)+(angle5*0.1)+(angle6*0.1));
     */
+    /*
     int aInt = angle;
     char str[5];
     
     sprintf(str, "%d", aInt);
     //TM_USART_Puts(USART3, "Angle: ");
     TM_USART_Puts(USART3, str);
-    if(HAL_GetTick()<10000)
+    */
+    if(HAL_GetTick()<1000)
     {
         
         dWrite(PORTD+12, HIGH);
@@ -134,24 +136,20 @@ void application_main(int32_t angle){
     acceleration = (+ac3+ac2+ac1)/3.0;//output;//(+ac3+ac2+ac1)/3.0;
    */
     acceleration = output;
+    
+    /*
     TM_USART_Puts(USART3,"^");
     char str2[5];
     sprintf(str2, "%d", (int)acceleration);
-    //TM_USART_Puts(USART3, "   Output: ");
-    TM_USART_Puts(USART3, str2);
-    //TM_USART_Puts(USART3,"^");
-        //TM_USART_Puts(USART3,"Run");
-    TM_USART_Puts(USART3,"\n");
-    //TM_USART_Puts(USART3,"\n");
-    /*
-    newSpeed = acceleration*50;
     
-    setStepperSpeed(-newSpeed);
-    oldSpeed = newSpeed;
-    if(newSpeed > MAXSPEED&& newSpeed > 0)newSpeed = MAXSPEED;
-    if(newSpeed > -MAXSPEED&& newSpeed < 0)newSpeed = -MAXSPEED;
+    
+    
+    TM_USART_Puts(USART3, str2);
+    
+    TM_USART_Puts(USART3,"\n");
     
     */
+    
    
     if(output >0)stepperMove(-20000);
     if(output <0)stepperMove(20000);
