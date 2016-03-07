@@ -93,7 +93,7 @@ static void read_from_mpl(void)
 		* test app to visually represent a 3D quaternion, it's sent each time
 		* the MPL has new data.
 		*/
-		//eMPL_send_quat(data);
+		eMPL_send_quat(data);
         //eMPL_send_data(PACKET_DATA_EULER, data);
         //eMPL_send_data(PACKET_DATA_ROT, data);
         

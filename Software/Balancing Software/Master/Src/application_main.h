@@ -23,3 +23,4 @@ extern void discrete_PID_initialize(void);
 extern void rt_OneStep(void);
 void userLoop(void);
 void initTimerInterrupt(void);
+void initLED(void);

@@ -44,6 +44,14 @@ void stepperMove(int16_t offset){
     stepperL.move(offset);
     
 }
+void stepperDisable(void){
+    digitalWrite(STEPPER_RIGHT_SLP, LOW);
+    digitalWrite(STEPPER_LEFT_SLP, LOW);
+}
+void stepperEnable(void){
+    digitalWrite(STEPPER_RIGHT_SLP, HIGH);
+    digitalWrite(STEPPER_LEFT_SLP, HIGH);
+}
 void stepperRun(void){
     stepperR.run();
     stepperL.run();

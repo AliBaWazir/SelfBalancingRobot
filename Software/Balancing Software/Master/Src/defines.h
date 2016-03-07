@@ -79,8 +79,12 @@
 #define STEPPER_LEFT_EN PORTC
 #define STEPPER_LEFT_SLP PORTC+3
 
-
-
+#define LED1 GPIO_PIN_12
+#define LED2 GPIO_PIN_13
+#define LED3 GPIO_PIN_14
+#define LED4 GPIO_PIN_15
+#define LEDALL LED1 | LED2 | LED3 | LED4
+#define LEDPORT GPIOC
 
 
 #endif

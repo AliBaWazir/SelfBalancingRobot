@@ -1,9 +1,11 @@
 #include "application_main.h"
 #include "tm_stm32_usart.h"
+#include "tm_stm32_button.h"
 
 #define ANGLE_CURRENT		temps[1]	/* ANGLE we actually have */
 #define ANGLE_WANT			temps[0]	/* ANGLE we want to have */
-
+#define BUTTONLEFTPIN       GPIO_PIN_0
+#define BUTTONRIGHTPIN      GPIO_PIN_1
 
 #define PID_PARAM_KP		10.0     	/* Proportional */
 #define PID_PARAM_KI		0.05		/* Integral */
@@ -30,16 +32,36 @@ real_T angleSetpoint = 0;
 real_T angle1, angle2, angle3, angle4, angle5, angle6;
 real_T ac1, ac2, ac3, ac4;
 uint32_t counter = 0;
+
+TM_BUTTON_t* leftButton;
+TM_BUTTON_t* rightButton;
+uint8_t leftButtonState = 0;
+uint8_t rightButtonState = 0;
+uint8_t state = 0;
 // This is where it happens
+static void leftButton_Callback(TM_BUTTON_t* ButtonPtr, TM_BUTTON_PressType_t PressType);
+static void rightButton_Callback(TM_BUTTON_t* ButtonPtr, TM_BUTTON_PressType_t PressType);
 void setup(){
+    initLED();
+    //TM_GPIO_TogglePinValue(LEDPORT, LEDALL);
+    
+    leftButton = TM_BUTTON_Init(GPIOB, 
+                              BUTTONLEFTPIN, 
+                              leftButtonState,
+                              leftButton_Callback);
+    rightButton = TM_BUTTON_Init(GPIOB, 
+                              BUTTONRIGHTPIN, 
+                              rightButtonState,
+                              rightButton_Callback);
+    //TM_BUTTON_SetPressTime(MyButton, 30, 2000);
     //TM_RCC_InitSystem();
     TM_DELAY_Init();
-    //initSteppers();
+    initSteppers();
     initTimerInterrupt();
     TM_USART_Init(USART3, TM_USART_PinsPack_2, 115200);
 	
 	/* Put test string */
-	TM_USART_Puts(USART3, "Hello world\n");
+	TM_USART_Puts(USART3, "FOXTROT\n");
     
     setStepperAccel(1);
     ANGLE_WANT = 0;
@@ -51,7 +73,7 @@ void setup(){
     controllerPositionP = 0;//;500;//.05;
     controllerPositionI = 0;
     controllerPositionD = 0;//1;//.05;
-    double scaleFactor = 0.1;
+    double scaleFactor = 1;
     controllerAngleP = 1.2*scaleFactor;
     controllerAngleI = 0;//0.01;//.1*scaleFactor;//0.2;
     controllerAngleD = 0;//0.15;//.5*scaleFactor;//.5;
@@ -74,9 +96,9 @@ void userLoop(){
 }
 
 void application_main(int32_t angle){
+    TM_BUTTON_Update();
     
-    
-    angle+= 10;
+    angle-= 200;
     //angle = angle*abs(angle)/100;
     
     
@@ -91,16 +113,17 @@ void application_main(int32_t angle){
     angle1 = angle;
     angle = ((angle1*0.3)+(angle2*0.2)+(angle3*0.2)+(angle4*0.2)+(angle5*0.1)+(angle6*0.1));
     */
-    /*
+    
     int aInt = angle;
     char str[5];
     
     sprintf(str, "%d", aInt);
     //TM_USART_Puts(USART3, "Angle: ");
     TM_USART_Puts(USART3, str);
-    */
-    if(HAL_GetTick()<1000)
+    
+    if(HAL_GetTick()<1000 )
     {
+        
         
         dWrite(PORTD+12, HIGH);
         TM_USART_Puts(USART3,"\n");
@@ -108,15 +131,16 @@ void application_main(int32_t angle){
         return;
     }
     
-    if(abs(angle) > MINANGLE){
+    if(abs(angle) > MINANGLE || state){
         angle = 0;
         discrete_PID_terminate(); //kill PID since robot is lying down
         setStepperCurrentPosition(0);
-
+        stepperDisable();
         TM_USART_Puts(USART3,"^F!\n");
   
         return;
     }
+    stepperEnable();
     if(rtmGetErrorStatus(discrete_PID_M) != (NULL)){
         discrete_PID_initialize();
     }
@@ -145,10 +169,10 @@ void application_main(int32_t angle){
     
     
     TM_USART_Puts(USART3, str2);
-    
+    */
     TM_USART_Puts(USART3,"\n");
     
-    */
+    
     
    
     if(output >0)stepperMove(-20000);
@@ -221,5 +245,33 @@ void TIM4_IRQHandler(void)
         }
     }
 }
+static void leftButton_Callback(TM_BUTTON_t* ButtonPtr, TM_BUTTON_PressType_t PressType) {
+    /* Normal press detected */
+    if (PressType == TM_BUTTON_PressType_Normal) {
+        /* Set LEDS ON */
+        TM_GPIO_SetPinHigh(LEDPORT, LEDALL);
+        state = 0;
+    } else if (PressType == TM_BUTTON_PressType_Long) {
+        /* Set LEDS OFF */
 
+    }
+}
+static void rightButton_Callback(TM_BUTTON_t* ButtonPtr, TM_BUTTON_PressType_t PressType) {
+    /* Normal press detected */
+    if (PressType == TM_BUTTON_PressType_Normal) {
+        /* Set LEDS ON */
+        TM_GPIO_SetPinLow(LEDPORT, LEDALL);
+        state = 1;
+        
+    } else if (PressType == TM_BUTTON_PressType_Long) {
+        /* Set LEDS OFF */
+
+    }
+}
+void initLED(void){
+    TM_GPIO_Init(LEDPORT, LED1, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+    TM_GPIO_Init(LEDPORT, LED2, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+    TM_GPIO_Init(LEDPORT, LED3, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+    TM_GPIO_Init(LEDPORT, LED4, TM_GPIO_Mode_OUT, TM_GPIO_OType_PP, TM_GPIO_PuPd_NOPULL, TM_GPIO_Speed_High);
+}
 

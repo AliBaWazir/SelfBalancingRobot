@@ -24,3 +24,5 @@ EXTERNC void stepperRun(void);
 EXTERNC int32_t stepperCurrentPosition(void);
 EXTERNC void stepperMove(int16_t);
 EXTERNC void setStepperCurrentPosition(uint16_t);
+EXTERNC void stepperDisable(void);
+EXTERNC void stepperEnable(void);

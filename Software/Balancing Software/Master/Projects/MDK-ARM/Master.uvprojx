@@ -652,6 +652,11 @@
               <FileType>5</FileType>
               <FilePath>..\..\Src\stm32_hal_legacy.h</FilePath>
             </File>
+            <File>
+              <FileName>tm_stm32_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Src\tm_stm32_button.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
