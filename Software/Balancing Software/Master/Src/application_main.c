@@ -70,13 +70,13 @@ void setup(){
     //PID.Kp = PID_PARAM_KP;		/* Proporcional */
 	//PID.Ki = PID_PARAM_KI;		/* Integral */
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
-    controllerPositionP = 0;//;500;//.05;
+    controllerPositionP = 40;//;500;//.05;
     controllerPositionI = 0;
     controllerPositionD = 0;//1;//.05;
-    double scaleFactor = 1;
-    controllerAngleP = 1.2*scaleFactor;
-    controllerAngleI = 0;//0.01;//.1*scaleFactor;//0.2;
-    controllerAngleD = 0;//0.15;//.5*scaleFactor;//.5;
+    double scaleFactor = 4;
+    controllerAngleP = 1.4*scaleFactor;
+    controllerAngleI = 0.5;//0.01;//.1*scaleFactor;//0.2;
+    controllerAngleD = 5.4;//0.15;//.5*scaleFactor;//.5;
     
     
     
@@ -121,7 +121,7 @@ void application_main(int32_t angle){
     //TM_USART_Puts(USART3, "Angle: ");
     TM_USART_Puts(USART3, str);
     
-    if(HAL_GetTick()<1000 )
+    if(HAL_GetTick()<5000 )
     {
         
         
@@ -175,9 +175,9 @@ void application_main(int32_t angle){
     
     
    
-    if(output >0)stepperMove(-20000);
-    if(output <0)stepperMove(20000);
-    setStepperAccel(abs(output)*300);
+    if(output >0)stepperMove(-2000);
+    if(output <0)stepperMove(2000);
+    setStepperAccel(abs(output)*400);
     
     
     

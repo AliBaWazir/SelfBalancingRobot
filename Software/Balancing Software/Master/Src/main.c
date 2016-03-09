@@ -936,7 +936,7 @@ void MX_IRQ_Init (void){
 }
 void MX_GPIO_Init(void)
 {
-	GPIO_InitTypeDef GPIO_IS;
+	//GPIO_InitTypeDef GPIO_IS;
 
   /* GPIO Ports Clock Enable */
     __GPIOA_CLK_ENABLE();
