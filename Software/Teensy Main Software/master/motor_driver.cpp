@@ -34,7 +34,7 @@
 /****************************************************************************************
  * PUBLIC FUNCTIONS
  ****************************************************************************************/
-bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int steps_count, int speed){
+bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int steps_count, int stepper_speed){
     bool ret = true;
 
     return ret;

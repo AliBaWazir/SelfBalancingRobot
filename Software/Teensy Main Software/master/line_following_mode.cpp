@@ -8,8 +8,7 @@
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
  ****************************************************************************************/
-#define DEFAULT_CENTRE_LINE  64;
-#define STEPPER_CONSTANT     10;            //this constant is determined from the testing results
+#define DEFAULT_CENTRE_LINE  64
 
 /****************************************************************************************
  * STATIC FUNCTION PROTOTYPES
@@ -80,6 +79,9 @@ static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
 
 static void process_direct_robot_command(turning_direction_e turning_direction, int movement_magnitude){
 
+  int movement_distance;
+  int movement_velocity;
+  
   //Serial.println("INFO>> process_direct_robot_command: called!!");
 
   if (movement_magnitude <= 0){
@@ -95,20 +97,25 @@ static void process_direct_robot_command(turning_direction_e turning_direction, 
 
   // set the busy_processing_moving_command to true
   busy_processing_moving_command = true;
+  
+  //determine the desired movement distance and velocity
+  movement_distance = movement_magnitude*STEPPER_CONSTANT;
+  movement_velocity = DEFAULT_STEPPER_VELOCITY;
+  
 
   switch (turning_direction){
       case TURN_RIGHT:
           Serial.println("INFO>> process_direct_robot_command: truring the motor to the right");
-          ///if (!motor_driver_move_stepper(SELECTED_MOTOR_LEFT, STEPPER_CONSTANT*movement_magnitude, 10)){
-              //Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
-          ///}
+          if (!motor_driver_move_stepper(SELECTED_MOTOR_LEFT, movement_distance, movement_velocity)){
+              Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
+          }
       break;
 
       case TURN_LEFT:
           Serial.println("INFO>> process_direct_robot_command: truring the motor to the left");
-          ///if (!motor_driver_move_stepper(SELECTED_MOTOR_RIGHT, movement_magnitude*STEPPER_CONSTANT, 10)){
-             /// Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
-         /// }
+          if (!motor_driver_move_stepper(SELECTED_MOTOR_RIGHT, movement_distance, movement_velocity)){
+              Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
+          }
           
       break;
 

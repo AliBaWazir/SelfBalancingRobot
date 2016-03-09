@@ -27,7 +27,7 @@ const int LEDPin                = 13; // Onboard LED
 /****************************************************************************************
  * STATIC VARIABLES
  ****************************************************************************************/
-static int maximumRange  = 200; // Maximum range needed
+static int maximumRange  = 30; // Maximum range needed
 static int minimumRange  = 0; // Minimum range needed
 static long duration, distance; // Duration used to calculate distance
 
@@ -73,6 +73,10 @@ bool ultrasonic_sensor_driver_init(){
     return ret;
 }
 
+
+
+
+/*
 //This function returns false if an obstacle is detected by the ultrasonic sensor in the requested direction
 bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e active_direction){
     bool ret = true;
@@ -83,7 +87,7 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
     
     if (active_direction == ULTRASONIC_SENSOR_ACTIVE_FRONT){
         /* The following trigPin/echoPin cycle is used to determine the
-        distance of the nearest object by bouncing soundwaves off of it. */ 
+        distance of the nearest object by bouncing soundwaves off of it. 
         digitalWrite(trigPin_front_sensor, LOW); 
         delayMicroseconds(2); 
         digitalWrite(trigPin_front_sensor, HIGH);
@@ -91,29 +95,33 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
  
         digitalWrite(trigPin_front_sensor, LOW);
         duration = pulseIn(echoPin_front_sensor, HIGH);
- 
+        Serial.print("duration = ");
+        Serial.println(duration);
+
         //Calculate the distance (in cm) based on the speed of sound.
+        
         distance = duration/58.2;
         Serial.print("distance for front sensor = ");
         Serial.println(distance);
  
         if (distance >= maximumRange || distance <= minimumRange){
             /* Send a negative number to computer and Turn LED ON 
-            to indicate "out of range" */
+            to indicate "out of range" 
             Serial.println("-1");
             digitalWrite(LEDPin, HIGH); 
             //Backword();
-            ret= false;  
+            
         } else {
             /* Send the distance to the computer using Serial protocol, and
-            turn LED OFF to indicate successful reading. */
+            turn LED OFF to indicate successful reading. 
             //Serial.println(distance);
             digitalWrite(LEDPin, LOW); 
-            //Farward();  
+            //Farward(); 
+            ret= false;   
         }
     } else if(active_direction == ULTRASONIC_SENSOR_ACTIVE_BACK){
         /* The following trigPin/echoPin cycle is used to determine the
-        distance of the nearest object by bouncing soundwaves off of it. */ 
+        distance of the nearest object by bouncing soundwaves off of it. 
         digitalWrite(trigPin_back_sensor, LOW); 
         delayMicroseconds(2); 
         digitalWrite(trigPin_back_sensor, HIGH);
@@ -130,17 +138,17 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
  
         if (distance >= maximumRange || distance <= minimumRange){
             /* Send a negative number to computer and Turn LED ON 
-            to indicate "out of range" */
+            to indicate "out of range" 
             Serial.println("-1");
             digitalWrite(LEDPin, HIGH); 
             //Farward();
-            ret= false;    
         } else {
             /* Send the distance to the computer using Serial protocol, and
-            turn LED OFF to indicate successful reading. */
+            turn LED OFF to indicate successful reading. 
             //Serial.println(distance);
             digitalWrite(LEDPin, LOW); 
             //Backword();
+            ret= false;
         }
     } else{
         Serial.println("ERROR>> ultrasonic_sensor_check_clear_path: active_direction has undefined value");           
@@ -152,5 +160,75 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
     return ret;
 }
 
+*/
 
+bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e active_direction){
+    bool ret = true;
+    unsigned long echo       = 0;
+    unsigned long distance   = 0;
 
+    Serial.println("INFO>> ultrasonic_sensor_check_clear_path: is called");
+    if(driver_in_testing_mode){
+        return true;
+    }
+    
+    if (active_direction == ULTRASONIC_SENSOR_ACTIVE_FRONT){
+        digitalWrite(trigPin_front_sensor, LOW); 
+        delayMicroseconds(2); 
+        digitalWrite(trigPin_front_sensor, HIGH);
+        delayMicroseconds(5); 
+        digitalWrite(trigPin_front_sensor, LOW);
+
+        pinMode(echoPin_front_sensor, INPUT);        
+        //digitalWrite(echoPin_front_sensor, HIGH); //turn on pull-up resistor
+        
+        echo = pulseIn(echoPin_front_sensor, HIGH, 10); //listen to echo which has a pulse of 10us
+        Serial.print("echo = ");
+        Serial.println(echo);
+
+        //Calculate the distance (in cm) based on the speed of echo.
+        
+        distance = echo/58.138;
+        Serial.print("distance for front sensor = ");
+        Serial.println(distance);
+ 
+        if (distance >= maximumRange || distance <= minimumRange){
+            /* Send a negative number to computer to indicate "out of range"*/
+            digitalWrite(LEDPin, HIGH);            
+        } else {
+            /* turn LED OFF to indicate successful reading. */
+            digitalWrite(LEDPin, LOW); 
+            ret= false;   
+        } 
+    }else if (active_direction == ULTRASONIC_SENSOR_ACTIVE_BACK){
+        digitalWrite(trigPin_back_sensor, LOW); 
+        delayMicroseconds(2); 
+        digitalWrite(trigPin_back_sensor, HIGH);
+        delayMicroseconds(5); 
+        digitalWrite(trigPin_back_sensor, LOW);
+
+        pinMode(echoPin_back_sensor, INPUT);        
+        //digitalWrite(echoPin_back_sensor, HIGH); //turn on pull-up resistor
+        
+        echo = pulseIn(echoPin_back_sensor, HIGH, 10); //listen to echo which has a pulse of 10us
+        Serial.print("echo = ");
+        Serial.println(echo);
+
+        //Calculate the distance (in cm) based on the speed of echo.
+        
+        distance = echo/58.138;
+        Serial.print("distance for back sensor = ");
+        Serial.println(distance);
+ 
+        if (distance >= maximumRange || distance <= minimumRange){
+            /* Send a negative number to computer to indicate "out of range"*/
+            digitalWrite(LEDPin, HIGH);            
+        } else {
+            /* turn LED OFF to indicate successful reading. */
+            digitalWrite(LEDPin, LOW); 
+            ret= false;   
+        }
+    }
+
+    return ret;
+}
