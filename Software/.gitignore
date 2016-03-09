@@ -13,4 +13,4 @@
 */**/*.htm
 */**/*.lnp
 */**/*.zip
-*/**/*.JLinkLog.txt
+*/**/JLinkLog.txt
