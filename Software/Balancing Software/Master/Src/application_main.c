@@ -70,13 +70,13 @@ void setup(){
     //PID.Kp = PID_PARAM_KP;		/* Proporcional */
 	//PID.Ki = PID_PARAM_KI;		/* Integral */
 	//PID.Kd = PID_PARAM_KD;		/* Derivative */
-    controllerPositionP = 40;//;500;//.05;
+    controllerPositionP = 10;//;500;//.05;
     controllerPositionI = 0;
-    controllerPositionD = 0;//1;//.05;
-    double scaleFactor = 4;
-    controllerAngleP = 1.4*scaleFactor;
-    controllerAngleI = 0.5;//0.01;//.1*scaleFactor;//0.2;
-    controllerAngleD = 5.4;//0.15;//.5*scaleFactor;//.5;
+    controllerPositionD = 2;//1;//.05;
+    double scaleFactor = 125;
+    controllerAngleP = 5*scaleFactor;
+    controllerAngleI = 0.05*scaleFactor;//0.01;//.1*scaleFactor;//0.2;
+    controllerAngleD = 12*scaleFactor;//0.15;//.5*scaleFactor;//.5;
     
     
     
@@ -98,8 +98,8 @@ void userLoop(){
 void application_main(int32_t angle){
     TM_BUTTON_Update();
     
-    angle-= 200;
-    //angle = angle*abs(angle)/100;
+    
+    //angle = angle*abs(angle)/80;
     
     
     counter++;
@@ -121,7 +121,7 @@ void application_main(int32_t angle){
     //TM_USART_Puts(USART3, "Angle: ");
     TM_USART_Puts(USART3, str);
     
-    if(HAL_GetTick()<5000 )
+    if(HAL_GetTick()<10000 )
     {
         
         
@@ -145,7 +145,7 @@ void application_main(int32_t angle){
         discrete_PID_initialize();
     }
 	controllerInputAngle = -angle;
-    controllerInputPosition = (real_T)stepperCurrentPosition();
+    controllerInputPosition = (real_T)stepperCurrentPosition()/100;
 	__disable_irq();
 	rt_OneStep();
 	__enable_irq();
@@ -161,7 +161,7 @@ void application_main(int32_t angle){
    */
     acceleration = output;
     
-    /*
+    
     TM_USART_Puts(USART3,"^");
     char str2[5];
     sprintf(str2, "%d", (int)acceleration);
@@ -169,7 +169,7 @@ void application_main(int32_t angle){
     
     
     TM_USART_Puts(USART3, str2);
-    */
+    
     TM_USART_Puts(USART3,"\n");
     
     
@@ -177,10 +177,10 @@ void application_main(int32_t angle){
    
     if(output >0)stepperMove(-2000);
     if(output <0)stepperMove(2000);
-    setStepperAccel(abs(output)*400);
+    setStepperAccel((float)abs(output));
     
     
-    
+    //setStepperSpeed(acceleration*100);
     
     
     
@@ -239,7 +239,7 @@ void TIM4_IRQHandler(void)
             __HAL_TIM_CLEAR_FLAG(&TIM_Handle, TIM_FLAG_UPDATE);
             /*put your code here */
             
-            runSpeed();
+            stepperRun();
             
             
         }

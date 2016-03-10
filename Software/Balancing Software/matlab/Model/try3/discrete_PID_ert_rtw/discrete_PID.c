@@ -5,7 +5,7 @@
  *
  * Model version                  : 1.8
  * Simulink Coder version         : 8.8 (R2015a) 09-Feb-2015
- * C/C++ source code generated on : Mon Feb 01 06:07:24 2016
+ * C/C++ source code generated on : Wed Mar 09 05:37:09 2016
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -17,16 +17,16 @@
 
 /* Block parameters (auto storage) */
 P_discrete_PID_T discrete_PID_P = {
-  -100.0,                              /* Mask Parameter: Position_LowerSaturationLimit
+  -1000.0,                             /* Mask Parameter: Position_LowerSaturationLimit
                                         * Referenced by: '<S2>/Saturate'
                                         */
-  -100.0,                              /* Mask Parameter: Angle_LowerSaturationLimit
+  -15000.0,                            /* Mask Parameter: Angle_LowerSaturationLimit
                                         * Referenced by: '<S1>/Saturate'
                                         */
-  100.0,                               /* Mask Parameter: Position_UpperSaturationLimit
+  1000.0,                              /* Mask Parameter: Position_UpperSaturationLimit
                                         * Referenced by: '<S2>/Saturate'
                                         */
-  100.0,                               /* Mask Parameter: Angle_UpperSaturationLimit
+  15000.0,                             /* Mask Parameter: Angle_UpperSaturationLimit
                                         * Referenced by: '<S1>/Saturate'
                                         */
   0.01,                                /* Computed Parameter: Filter_gainval

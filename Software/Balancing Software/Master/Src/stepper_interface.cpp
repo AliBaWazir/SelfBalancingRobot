@@ -39,7 +39,7 @@ void initSteppers(void){
 
     
 }
-void stepperMove(int16_t offset){
+void stepperMove(int32_t offset){
     stepperR.move(offset);
     stepperL.move(offset);
     
@@ -60,20 +60,20 @@ int32_t stepperCurrentPosition(void){
     return stepperL.currentPosition();
     
 }
-void stepperMoveTo(int16_t position){
+void stepperMoveTo(int32_t position){
         stepperR.moveTo(position);
         stepperL.moveTo(position);
 }
-void setStepperMaxSpeed(uint16_t maxSpeed){
+void setStepperMaxSpeed(float maxSpeed){
         stepperR.setMaxSpeed(maxSpeed);
         stepperL.setMaxSpeed(maxSpeed);
 }
-void setStepperCurrentPosition(uint16_t position){
+void setStepperCurrentPosition(uint32_t position){
         stepperR.setCurrentPosition(position);
         stepperL.setCurrentPosition(position);
 }
 
-void setStepperAccel(uint16_t accel){
+void setStepperAccel(float accel){
         stepperR.setAcceleration(accel);
         stepperL.setAcceleration(accel);
 }
@@ -147,7 +147,8 @@ void setSteppingMode(uint8_t mode){
 
 void stepperProgram(void){
     //setStepperSpeed(F);
-    runSpeed();
+    stepperR.run();
+    stepperL.run();
 
 }
 

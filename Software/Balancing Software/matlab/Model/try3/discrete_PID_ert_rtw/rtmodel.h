@@ -1,5 +1,5 @@
 /*
- * File: ert_main.c
+ * File: rtmodel.h
  *
  * Code generated for Simulink model 'discrete_PID'.
  *
@@ -13,28 +13,15 @@
  * Validation result: Not run
  */
 
+#ifndef RTW_HEADER_rtmodel_h_
+#define RTW_HEADER_rtmodel_h_
 #include "discrete_PID.h"
-#include "rtwtypes.h"
 
-volatile int IsrOverrun = 0;
-static boolean_T OverrunFlag = 0;
-void rt_OneStep(void)
-{
-  /* Check for overrun. Protect OverrunFlag against preemption */
-  if (OverrunFlag++) {
-    IsrOverrun = 1;
-    OverrunFlag--;
-    return;
-  }
-
-  __enable_irq();
-  discrete_PID_step();
-
-  /* Get model outputs here */
-  __disable_irq();
-  OverrunFlag--;
-}
-
+/* Macros generated for backwards compatibility  */
+#ifndef rtmGetStopRequested
+# define rtmGetStopRequested(rtm)      ((void*) 0)
+#endif
+#endif                                 /* RTW_HEADER_rtmodel_h_ */
 
 /*
  * File trailer for generated code.
