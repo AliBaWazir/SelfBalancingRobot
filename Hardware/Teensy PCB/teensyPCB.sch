@@ -6162,7 +6162,7 @@ Source: http://www.osram.convergy.de/</description>
 <classes>
 <class number="0" name="default" width="0.254" drill="0">
 </class>
-<class number="1" name="Power" width="0.4064" drill="0">
+<class number="1" name="Power" width="0.3048" drill="0">
 </class>
 </classes>
 <parts>
@@ -6171,7 +6171,7 @@ Source: http://www.osram.convergy.de/</description>
 <part name="USONIC2" library="HC-SR04" deviceset="HC-SR04" device=""/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="GND1" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="U2" library="SparkFun-Connectors" deviceset="USD-SOCKET" device="NEW"/>
+<part name="MICRO_SD" library="SparkFun-Connectors" deviceset="USD-SOCKET" device="NEW"/>
 <part name="TOBALANCE" library="SparkFun-Connectors" deviceset="M06" device="POLAR_LOCK"/>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="5V" device=""/>
 <part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
@@ -6217,7 +6217,6 @@ Source: http://www.osram.convergy.de/</description>
 <part name="C6" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="1.0uF"/>
 <part name="C7" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="1.0uF"/>
 <part name="C2" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="10uF"/>
-<part name="C8" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="10uF"/>
 <part name="C5" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="47uF"/>
 <part name="C9" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="" value="1uF"/>
 <part name="SUPPLY11" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
@@ -6271,6 +6270,7 @@ Source: http://www.osram.convergy.de/</description>
 <part name="LED13" library="adafruit" deviceset="LED" device="CHIP-LED0805"/>
 <part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="SUPPLY14" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
+<part name="C10" library="SparkFun-Capacitors" deviceset="CAP_POL" device="3528" value="10uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -6282,7 +6282,7 @@ Source: http://www.osram.convergy.de/</description>
 <instance part="USONIC2" gate="J_ULTRASONIC" x="-83.82" y="2.54"/>
 <instance part="SUPPLY1" gate="G$1" x="43.18" y="35.56"/>
 <instance part="GND1" gate="1" x="43.18" y="27.94"/>
-<instance part="U2" gate="G$1" x="-58.42" y="-22.86"/>
+<instance part="MICRO_SD" gate="G$1" x="-58.42" y="-22.86"/>
 <instance part="TOBALANCE" gate="G$1" x="-60.96" y="25.4"/>
 <instance part="SUPPLY2" gate="G$1" x="-48.26" y="33.02"/>
 <instance part="SUPPLY3" gate="G$1" x="-45.72" y="30.48"/>
@@ -6328,7 +6328,6 @@ Source: http://www.osram.convergy.de/</description>
 <instance part="C6" gate="G$1" x="73.66" y="22.86"/>
 <instance part="C7" gate="G$1" x="88.9" y="22.86"/>
 <instance part="C2" gate="G$1" x="160.02" y="-30.48"/>
-<instance part="C8" gate="G$1" x="177.8" y="48.26" rot="R90"/>
 <instance part="C5" gate="G$1" x="-91.44" y="-25.4" rot="MR0"/>
 <instance part="C9" gate="G$1" x="-111.76" y="-27.94"/>
 <instance part="SUPPLY11" gate="G$1" x="-91.44" y="-20.32"/>
@@ -6382,6 +6381,7 @@ Source: http://www.osram.convergy.de/</description>
 <instance part="LED13" gate="G$1" x="139.7" y="-104.14"/>
 <instance part="SUPPLY7" gate="G$1" x="81.28" y="38.1"/>
 <instance part="SUPPLY14" gate="G$1" x="81.28" y="-2.54"/>
+<instance part="C10" gate="G$1" x="175.26" y="48.26" rot="MR270"/>
 </instances>
 <busses>
 </busses>
@@ -6393,7 +6393,7 @@ Source: http://www.osram.convergy.de/</description>
 <wire x1="-40.64" y1="27.94" x2="-55.88" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="GND"/>
+<pinref part="MICRO_SD" gate="G$1" pin="GND"/>
 <pinref part="GND4" gate="1" pin="GND"/>
 <wire x1="-66.04" y1="-22.86" x2="-73.66" y2="-22.86" width="0.1524" layer="91"/>
 </segment>
@@ -6482,11 +6482,11 @@ Source: http://www.osram.convergy.de/</description>
 <wire x1="-111.76" y1="-33.02" x2="-111.76" y2="-30.48" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="SHIELD@1"/>
+<pinref part="MICRO_SD" gate="G$1" pin="SHIELD@1"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 <wire x1="-66.04" y1="-33.02" x2="-71.12" y2="-33.02" width="0.1524" layer="91"/>
 <wire x1="-71.12" y1="-33.02" x2="-71.12" y2="-38.1" width="0.1524" layer="91"/>
-<pinref part="U2" gate="G$1" pin="SHIELD@3"/>
+<pinref part="MICRO_SD" gate="G$1" pin="SHIELD@3"/>
 <wire x1="-71.12" y1="-38.1" x2="-71.12" y2="-43.18" width="0.1524" layer="91"/>
 <wire x1="-66.04" y1="-38.1" x2="-71.12" y2="-38.1" width="0.1524" layer="91"/>
 <junction x="-71.12" y="-38.1"/>
@@ -6585,7 +6585,7 @@ Source: http://www.osram.convergy.de/</description>
 <wire x1="-45.72" y1="30.48" x2="-55.88" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="VCC"/>
+<pinref part="MICRO_SD" gate="G$1" pin="VCC"/>
 <pinref part="SUPPLY4" gate="G$1" pin="3.3V"/>
 <wire x1="-66.04" y1="-17.78" x2="-73.66" y2="-17.78" width="0.1524" layer="91"/>
 </segment>
@@ -6745,7 +6745,7 @@ Source: http://www.osram.convergy.de/</description>
 </net>
 <net name="SCK" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="SCK"/>
+<pinref part="MICRO_SD" gate="G$1" pin="SCK"/>
 <wire x1="-66.04" y1="-20.32" x2="-71.12" y2="-20.32" width="0.1524" layer="91"/>
 <label x="-71.12" y="-20.32" size="1.778" layer="95"/>
 </segment>
@@ -6757,7 +6757,7 @@ Source: http://www.osram.convergy.de/</description>
 </net>
 <net name="MISO" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="DO"/>
+<pinref part="MICRO_SD" gate="G$1" pin="DO"/>
 <wire x1="-66.04" y1="-25.4" x2="-71.12" y2="-25.4" width="0.1524" layer="91"/>
 <label x="-71.12" y="-25.4" size="1.778" layer="95"/>
 </segment>
@@ -6769,7 +6769,7 @@ Source: http://www.osram.convergy.de/</description>
 </net>
 <net name="MOSI" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="DI"/>
+<pinref part="MICRO_SD" gate="G$1" pin="DI"/>
 <wire x1="-66.04" y1="-15.24" x2="-71.12" y2="-15.24" width="0.1524" layer="91"/>
 <label x="-71.12" y="-15.24" size="1.778" layer="95"/>
 </segment>
@@ -6786,7 +6786,7 @@ Source: http://www.osram.convergy.de/</description>
 <label x="-12.7" y="12.7" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="CS"/>
+<pinref part="MICRO_SD" gate="G$1" pin="CS"/>
 <wire x1="-66.04" y1="-12.7" x2="-71.12" y2="-12.7" width="0.1524" layer="91"/>
 <label x="-71.12" y="-12.7" size="1.778" layer="95"/>
 </segment>
@@ -6869,7 +6869,7 @@ Source: http://www.osram.convergy.de/</description>
 <segment>
 <wire x1="180.34" y1="48.26" x2="182.88" y2="48.26" width="0.1524" layer="91"/>
 <label x="182.88" y="48.26" size="1.778" layer="95"/>
-<pinref part="C8" gate="G$1" pin="2"/>
+<pinref part="C10" gate="G$1" pin="-"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -7042,13 +7042,6 @@ Source: http://www.osram.convergy.de/</description>
 <label x="43.18" y="-5.08" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$3" class="0">
-<segment>
-<pinref part="U$5" gate="G$1" pin="A"/>
-<wire x1="170.18" y1="48.26" x2="172.72" y2="48.26" width="0.1524" layer="91"/>
-<pinref part="C8" gate="G$1" pin="1"/>
-</segment>
-</net>
 <net name="VBAT" class="0">
 <segment>
 <pinref part="BAT1" gate="G$1" pin="+"/>
@@ -7099,9 +7092,9 @@ Source: http://www.osram.convergy.de/</description>
 </net>
 <net name="CARD_DETECT" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="SHIELD@2"/>
+<pinref part="MICRO_SD" gate="G$1" pin="SHIELD@2"/>
 <wire x1="-66.04" y1="-35.56" x2="-76.2" y2="-35.56" width="0.1524" layer="91"/>
-<pinref part="U2" gate="G$1" pin="SHIELD@4"/>
+<pinref part="MICRO_SD" gate="G$1" pin="SHIELD@4"/>
 <wire x1="-66.04" y1="-40.64" x2="-76.2" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="-76.2" y1="-40.64" x2="-76.2" y2="-35.56" width="0.1524" layer="91"/>
 <wire x1="-76.2" y1="-35.56" x2="-83.82" y2="-35.56" width="0.1524" layer="91"/>
@@ -7403,6 +7396,13 @@ Source: http://www.osram.convergy.de/</description>
 <wire x1="53.34" y1="-22.86" x2="40.64" y2="-22.86" width="0.1524" layer="91"/>
 <label x="43.18" y="-22.86" size="1.778" layer="95"/>
 <pinref part="U$1" gate="G$1" pin="25/T/PWM"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="U$5" gate="G$1" pin="A"/>
+<pinref part="C10" gate="G$1" pin="+"/>
+<wire x1="172.72" y1="48.26" x2="170.18" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
