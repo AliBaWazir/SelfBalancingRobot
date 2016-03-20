@@ -150,10 +150,10 @@ void eMPL_send_quat(long *quat)
 	out[16] = (char)(quat[FOUR] >> 8);
 	out[17] = (char)quat[FOUR];
     */
-    quat1 = (double)quat[ONE]/0xEFFFFFFF;
-    quat2 = (double)quat[TWO]/0xEFFFFFFF;
-    quat3 = (double)quat[THREE]/0xEFFFFFFF;
-    quat4 = (double)quat[FOUR]/0xEFFFFFFF;
+    quat1 = (double)quat[ONE]/0x7FFFFFFF;
+    quat2 = (double)quat[TWO]/0x7FFFFFFF;
+    quat3 = (double)quat[THREE]/0x7FFFFFFF;
+    quat4 = (double)quat[FOUR]/0x7FFFFFFF;
     
     
     
@@ -166,7 +166,7 @@ void eMPL_send_quat(long *quat)
     //angle2 = 4000*asin(2*(double)quat2*(double)quat4);
     
     
-    angle =  4.0*4096.0*asin(-2.0*((double)quat2*(double)quat4 - (double)quat1*(double)quat3));
+    angle =  4000*asin(-2.0*((double)quat2*(double)quat4 - (double)quat1*(double)quat3));
     out[0] = angle>>24;
     out[1] = angle>>16;
     out[2] = angle>>8;

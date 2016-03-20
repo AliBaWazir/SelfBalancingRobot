@@ -1,6 +1,7 @@
 #include "application_main.h"
 #include "tm_stm32_usart.h"
 #include "tm_stm32_button.h"
+#include "arm_math.h"
 
 #define ANGLE_CURRENT		temps[1]	/* ANGLE we actually have */
 #define ANGLE_WANT			temps[0]	/* ANGLE we want to have */
@@ -12,10 +13,9 @@
 #define PID_PARAM_KD		0.9			/* Derivative */
 #define MINANGLE 10000
 float temps[2];
-float pid_error;
+
 double output;
-int32_t force;
-arm_pid_instance_f32 PID;
+
 real_T  controllerAngleP, 
         controllerAngleI, 
         controllerAngleD, 
@@ -29,7 +29,7 @@ double acceleration = 0;
 double newSpeed = 0;
 double oldSpeed = -0.1;
 real_T angleSetpoint = 0;
-real_T angle1, angle2, angle3, angle4, angle5, angle6;
+//real_T angle1, angle2, angle3, angle4, angle5, angle6;
 real_T ac1, ac2, ac3, ac4;
 uint32_t counter = 0;
 
@@ -41,6 +41,8 @@ uint8_t state = 0;
 // This is where it happens
 static void leftButton_Callback(TM_BUTTON_t* ButtonPtr, TM_BUTTON_PressType_t PressType);
 static void rightButton_Callback(TM_BUTTON_t* ButtonPtr, TM_BUTTON_PressType_t PressType);
+extern void init_pid(void);
+extern  void application_pid(int32_t);
 void setup(){
     initLED();
     //TM_GPIO_TogglePinValue(LEDPORT, LEDALL);
@@ -63,7 +65,7 @@ void setup(){
 	/* Put test string */
 	TM_USART_Puts(USART3, "FOXTROT\n");
     
-    setStepperAccel(1);
+    
     ANGLE_WANT = 0;
     output = 0;
     
@@ -79,11 +81,12 @@ void setup(){
     controllerAngleD = 12*scaleFactor;//0.15;//.5*scaleFactor;//.5;
     
     
-    
+    stepperEnable();
     
     /* Initialize PID system, float32_t format */
 	//arm_pid_init_f32(&PID, 1);
-    discrete_PID_initialize();
+   // discrete_PID_initialize();
+    init_pid();
 }
 //This function gets called by the MPU with angle Data
 
@@ -95,8 +98,13 @@ void userLoop(){
     }
 }
 
-void application_main(int32_t angle){
-    TM_BUTTON_Update();
+void noMatlab(int32_t angle){
+    
+    application_pid(angle);
+    
+}
+void matlab(int32_t angle){
+    
     
     
     //angle = angle*abs(angle)/80;
@@ -114,22 +122,7 @@ void application_main(int32_t angle){
     angle = ((angle1*0.3)+(angle2*0.2)+(angle3*0.2)+(angle4*0.2)+(angle5*0.1)+(angle6*0.1));
     */
     
-    int aInt = angle;
-    char str[5];
     
-    sprintf(str, "%d", aInt);
-    //TM_USART_Puts(USART3, "Angle: ");
-    TM_USART_Puts(USART3, str);
-    
-    if(HAL_GetTick()<10000 )
-    {
-        
-        
-        dWrite(PORTD+12, HIGH);
-        TM_USART_Puts(USART3,"\n");
-        
-        return;
-    }
     
     if(abs(angle) > MINANGLE || state){
         angle = 0;
@@ -211,6 +204,29 @@ void application_main(int32_t angle){
     
    */
     
+}
+
+void application_main(int32_t angle){
+    TM_BUTTON_Update();
+    int aInt = angle;
+    char str[5];
+    
+    sprintf(str, "%d", aInt);
+    //TM_USART_Puts(USART3, "Angle: ");
+    TM_USART_Puts(USART3, str);
+    
+    if(HAL_GetTick()<10000 )
+    {
+        
+        
+        dWrite(PORTD+12, HIGH);
+        TM_USART_Puts(USART3,"\n");
+        
+        return;
+    }
+    
+    
+    noMatlab(angle);
 }
 void TM_DELAY_1msHandler(){
    //runSpeed(); 

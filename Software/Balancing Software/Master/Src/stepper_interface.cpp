@@ -53,8 +53,8 @@ void stepperEnable(void){
     digitalWrite(STEPPER_LEFT_SLP, HIGH);
 }
 void stepperRun(void){
-    stepperR.run();
-    stepperL.run();
+    stepperR.runSpeed();
+    stepperL.runSpeed();
 }
 int32_t stepperCurrentPosition(void){
     return stepperL.currentPosition();
@@ -68,7 +68,7 @@ void setStepperMaxSpeed(float maxSpeed){
         stepperR.setMaxSpeed(maxSpeed);
         stepperL.setMaxSpeed(maxSpeed);
 }
-void setStepperCurrentPosition(uint32_t position){
+void setStepperCurrentPosition(int32_t position){
         stepperR.setCurrentPosition(position);
         stepperL.setCurrentPosition(position);
 }
