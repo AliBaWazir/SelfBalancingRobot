@@ -2,6 +2,7 @@
  * This is the master main of the teensy based code. 
  */
 #include "line_following_mode.h"
+#include "manual_mode.h"
 
 
 /****************************************************************************************
@@ -19,7 +20,9 @@
  * SATIC VARIABLES
  ****************************************************************************************/
 static state_e robot_state;
-static bool line_following_mode_drivers_initialized = false;
+static bool line_following_mode_drivers_initialized  = false;
+static bool manual_mode_drivers_initialized          = false;
+
 
 
 
@@ -39,6 +42,12 @@ void setup() {
       Serial.println("ERROR>> setup: line_following_mode_drivers_init failed");
   }
 
+  if (manual_mode_drivers_init()){
+      manual_mode_drivers_initialized = true;
+  } else{
+      Serial.println("ERROR>> setup: manual_mode_drivers_init failed");
+  }
+
 
   Serial.println("INFO>> master: Setup is complete!");
 }
@@ -56,7 +65,30 @@ void loop() {
       break;
       
       case manual_mode:
-      ;
+      if (manual_mode_drivers_initialized){
+          manual_mode_error_e manual_mode_error = MANUAL_MODE_OK;
+
+          manual_mode_error = manual_mode_run();
+          if (manual_mode_error!= MANUAL_MODE_OK){
+
+              if (manual_mode_error==MANUAL_MODE_ERROR_COMMAND_UNKNOWN){
+                  Serial.println("ERROR>> loop: manual mode command from app is not recognized");
+                  //TODO: play audio track once you get this error
+              }
+              else if(manual_mode_error==MANUAL_MODE_ERROR_OBSTACLE){
+                  Serial.println("ERROR>> loop: an obstacle is detected in front or back of robot");
+                  //TODO: play audio track once you get this error
+              } else if(manual_mode_error==MANUAL_MODE_ERROR_MOTOR_FAILED){
+                  Serial.println("ERROR>> loop: manual mode motor failure");
+                  //TODO: play audio track once you get this error
+              }
+              
+          }
+      } else{
+          Serial.println("ERROR>> master: one required driver for line manual mode is not initialized yet");
+
+      }
+      
       break;
 
       case line_following_mode:
@@ -76,7 +108,7 @@ void loop() {
               
           }
       } else{
-          Serial.println("ERROR>> master: one required drivers is not initialized yet");
+          Serial.println("ERROR>> master: one required driver for line following mode is not initialized yet");
       }
       break;
 

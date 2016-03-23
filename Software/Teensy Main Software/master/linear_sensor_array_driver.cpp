@@ -256,6 +256,9 @@ bool linear_sensor_array_driver_init() {
   return true;
 }
 
+
+//This function is commented out as it is replaced by the new one
+/*
 black_lines_info_t* linear_sensor_array_driver_get_data() {
   
   //Serial.print("INFO>> linear_sensor_array_driver_get_data: called");
@@ -321,9 +324,69 @@ black_lines_info_t* linear_sensor_array_driver_get_data() {
   return  &current_black_lines_info;
 }
 
+*/
 
 int* linear_sensor_array_driver_get_current_frame(){
     return frame_buffer;
+}
+
+
+black_lines_info_t* linear_sensor_array_driver_get_data() {
+  
+  //Serial.print("INFO>> linear_sensor_array_driver_get_data: called");
+  if (driver_in_testing_mode){
+    create_test_frame(frame_buffer);
+        
+  } else{
+      memset(frame_buffer, 0, 128);
+  
+      // set the clk LOW
+      digitalWrite(clkPin, LOW);
+      delayMicroseconds(50);
+
+      // set the exposurePin HIGH
+      digitalWrite(exposurePin, HIGH);
+      
+      // set the clk HIGH
+      digitalWrite(clkPin, HIGH);
+      delayMicroseconds(50);
+      
+      // set the exposurePin LOW
+      digitalWrite(exposurePin, LOW);
+
+      digitalWrite(clkPin, LOW);
+      delayMicroseconds(50);
+
+      // do the cloking 128times to sample the values of the 128 array of pixels
+      for (int i=0; i<128; i++){
+        // set the clk HIGH with a half period of 50 micro seconds
+        digitalWrite(clkPin, HIGH);
+        delayMicroseconds(50);
+    
+        // read the analogInputPin value:
+        sensor_value = analogRead(analogInputPin);
+
+        // sotore the analogInputPin value into the array:
+        frame_buffer[i]= sensor_value;
+
+        // set the clk LOW
+        digitalWrite(clkPin, LOW);
+        delayMicroseconds(50);
+      }
+
+  }
+
+  // print the frame_buffer to the serial monitor:
+  debug_print_array(frame_buffer, FRAME_BUFFER_LENGTH, FRAME_BUFFER_MARGIN_LENGHT);
+  
+  // decode the frame buffer. Results will be stored in the global variable current_black_lines_info
+  decode_frame_buffer(frame_buffer, FRAME_BUFFER_LENGTH);
+
+  //delay 10 m seconds
+  delay(10);
+  
+
+  return  &current_black_lines_info;
 }
 
 

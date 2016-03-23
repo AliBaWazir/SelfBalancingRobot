@@ -1,27 +1,30 @@
-#ifndef LINE_FOLLOWING_MODE_h
-#define LINE_FOLLOWING_MODE_h
+#ifndef MANUAL_MODE_h
+#define MANUAL_MODE_h
+
 
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
  ****************************************************************************************/
  
 typedef enum{
-  LINE_FOLLOWING_OK,
-  LINE_FOLLOWING_PROCESSING,
-  LINE_FOLLOWING_ERROR_OBSTACLE,
-  LINE_FOLLOWING_ERROR_LINE_DECTETION
-}line_following_error_e;
+  MANUAL_MODE_OK,
+  MANUAL_MODE_ERROR_COMMAND_UNKNOWN,
+  MANUAL_MODE_ERROR_OBSTACLE,
+  MANUAL_MODE_ERROR_MOTOR_FAILED
+}manual_mode_error_e;
 
 typedef enum{
-  TURN_RIGHT,
-  TURN_LEFT
-}turning_direction_e;
+  MANUAL_FORWARD,
+  MANUAL_RIGHT,
+  MANUAL_BACKWARD,
+  MANUAL_LEFT
+}manual_command_e;
 
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
-bool line_following_mode_drivers_init();
-line_following_error_e line_following_mode_run();
+bool manual_mode_drivers_init();
+manual_mode_error_e manual_mode_run();
 
 
 

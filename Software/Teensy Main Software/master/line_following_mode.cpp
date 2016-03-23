@@ -1,5 +1,6 @@
 #include "line_following_mode.h"
 #include "ultrasonic_sensor_driver.h"
+#include "linear_sensor_array_driver.h"
 #include "display_driver.h"
 #include "motor_driver.h"
 

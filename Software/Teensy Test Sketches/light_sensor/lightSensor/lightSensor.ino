@@ -89,57 +89,47 @@ void setup() {
 
 void loop() {
  
-  digitalWrite(togglePin,LOW); 
+    memset(frame_buffer, 0, 128);
   
-  // set the clk LOW
-  digitalWrite(clkPin, LOW);
-  delayMicroseconds(50);
-  
-  // set the exposurePin HIGH
-  digitalWrite(exposurePin, HIGH);
-  delayMicroseconds(50);
-
-  // set the clkPin HIGH
-  digitalWrite(clkPin, HIGH);
-  delayMicroseconds(1);
-  
-  // set the exposurePin HIGH to start magnetizing the pixels in the sensor.
-  // the expusure should last ~1 micro seconds
-  digitalWrite(exposurePin, HIGH);
-  delayMicroseconds(1);
-
-  // set the exposurePin LOW
-  digitalWrite(exposurePin, LOW);
-
-  // do the cloking 128times to sample the values of the 128 array of pixels
-  for (int i=0; i<128; i++){
-    // set the clk HIGH with a half period of 50 micro seconds
-    digitalWrite(clkPin, HIGH);
-    delayMicroseconds(50);
-    
-    // read the analogInputPin value:
-    sensorValue = analogRead(analogInputPin);
-    if (decoded_frame_buffer[i].edge_pixel){
-      digitalWrite(togglePin,HIGH); 
-    }
-
-    // sotore the analogInputPin value into the array:
-    frame_buffer[i]= sensorValue;
-
     // set the clk LOW
     digitalWrite(clkPin, LOW);
     delayMicroseconds(50);
-  }
 
-  // print the frame_buffer to the serial monitor:
-  debug_print_array(frame_buffer, FRAME_BUFFER_LENGTH, FRAME_BUFFER_MARGIN_LENGHT); //will ignore the first 16 bits
+    // set the exposurePin HIGH
+    digitalWrite(exposurePin, HIGH);
+      
+    // set the clk HIGH
+    digitalWrite(clkPin, HIGH);
+    delayMicroseconds(50);
+      
+    // set the exposurePin LOW
+    digitalWrite(exposurePin, LOW);
+
+    digitalWrite(clkPin, LOW);
+    delayMicroseconds(50);
+
+    // do the cloking 128times to sample the values of the 128 array of pixels
+    for (int i=0; i<128; i++){
+        // set the clk HIGH with a half period of 50 micro seconds
+        digitalWrite(clkPin, HIGH);
+        delayMicroseconds(50);
+    
+        // read the analogInputPin value and sotore it into the array:
+        frame_buffer[i] = analogRead(analogInputPin);
+
+        // set the clk LOW
+        digitalWrite(clkPin, LOW);
+        delayMicroseconds(50);
+    }
+
+    // print the frame_buffer to the serial monitor:
+    debug_print_array(frame_buffer, FRAME_BUFFER_LENGTH, FRAME_BUFFER_MARGIN_LENGHT); //will ignore the first 16 bits
   
-  //decode the frame buffer
-  decode_frame_buffer(frame_buffer, FRAME_BUFFER_LENGTH);
+    //decode the frame buffer
+    decode_frame_buffer(frame_buffer, FRAME_BUFFER_LENGTH);
 
-  //delay 10 m seconds
- 
-  delay(10);
+    //delay 10 m seconds
+    delay(10);
 }
 
 

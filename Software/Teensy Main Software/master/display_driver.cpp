@@ -16,7 +16,8 @@ BSD license, check license.txt for more information
 All text above, and the splash screen must be included in any redistribution
 *********************************************************************/
 #include <SPI.h>
-#include <Wire.h>
+//#include <Wire.h>
+//#include <i2c_t3.h>
 #include "display_driver.h"
 
  /****************************************************************************************
@@ -50,7 +51,6 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define LOGO16_GLCD_HEIGHT 16 
 #define LOGO16_GLCD_WIDTH  16 
 
- 
 /****************************************************************************************
  * STATIC VARIABLES
  ****************************************************************************************/
@@ -470,6 +470,19 @@ bool display_driver_init(){
     bool ret = true;
 
     if(!display_driver_initialized){
+
+        //// test
+        //CORE_PIN29_CONFIG = PORT_PCR_MUX(2);
+        //CORE_PIN30_CONFIG = PORT_PCR_MUX(2);
+        //Wire1.begin();
+        //Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_INT, I2C_RATE_100);
+        //i2c_t3.begin(Wire.i2c, 1 , I2C_MASTER, Wire.i2c->currentMode, Wire.i2c->A1, Wire.i2c->A2,I2C_PINS_29_30, Wire.i2c->currentPullUp, Wire.i2c->currentRate, Wire.i2c->opMode);
+        
+       // static void begin_(struct i2cStruct* i2c, uint8_t bus, i2c_mode mode, uint8_t address1, uint8_t address2,
+                       //i2c_pins pins, i2c_pullup pullup, i2c_rate rate, i2c_op_mode opMode)
+
+        ///////end of test
+        
         // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
         display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
         // init done

@@ -6,6 +6,7 @@
  ****************************************************************************************/
 #define STEPPER_CONSTANT          10           //this constant is determined from the testing results
 #define DEFAULT_STEPPER_VELOCITY  10
+#define DEFAULT_STEPPER_DISTANCE  100
 
 typedef enum{
     SELECTED_MOTOR_BOTH  = 0,
