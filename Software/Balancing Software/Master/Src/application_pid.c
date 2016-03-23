@@ -5,14 +5,14 @@
 
 
 
-#define PID_PARAM_KP		20  	/* Proportional */
-#define PID_PARAM_KI		15		/* Integral */
-#define PID_PARAM_KD		2		/* Derivative */
+#define PID_PARAM_KP		2.5  	/* Proportional */
+#define PID_PARAM_KI		1.2		/* Integral */
+#define PID_PARAM_KD		.8		/* Derivative */
 
 
-#define PID_PARAM_KP2		0.1  	/* Proportional */
-#define PID_PARAM_KI2		0		/* Integral */
-#define PID_PARAM_KD2		0		/* Derivative */
+#define PID_PARAM_KP2		0.5  	/* Proportional */
+#define PID_PARAM_KI2		0.0		/* Integral */
+#define PID_PARAM_KD2		0.2	/* Derivative */
 
 #define MINANGLE 10000
 float pid_error2;
