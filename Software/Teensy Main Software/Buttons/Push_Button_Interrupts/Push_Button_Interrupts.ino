@@ -1,3 +1,5 @@
+#include <digitalWriteFast.h>
+
 /* Interrupt Example code for two-buttons */
 // from: https://forum.pjrc.com/threads/31259-Teensy-3-2-pin-interupts
   /* no debouncing 
@@ -15,10 +17,10 @@ unsigned long loop_num = 0;    // loop counter
 const int ledPin = 13;  // the number of the pin for activity-indicator
 
 //Setup the Buttons
-const int pushUp = 3;  
-const int pushDown = 4;  
-const int pushRight = 28; 
-const int pushLeft = 27;  
+const int pushUp = 33;  //pushUp is button 1 (B1)
+const int pushDown = 32;  //pushDown is button 2 (B2)
+const int pushRight = 28; //pushRight is button 3 (B3)
+const int pushLeft = 27;  //pushLeft is button 4 (B4)
  
 
 // Variables will change:
@@ -54,7 +56,7 @@ void setup ()
   // INPUT_PULLUP is a Teensy extension. On regular Arduino boards, digitalWrite the only way to access the pullup resistor.
 
   //pinMode(BUTTON1, INPUT); // button 1 with external pull-up resistor 10Kohms connected to 3.3V
-  pinMode(pushUp, INPUT);
+  pinMode(pushUp, INPUT); //Or INPUT_PULLUP
   pinMode(pushDown, INPUT);
   pinMode(pushRight, INPUT);
   pinMode(pushLeft, INPUT);
@@ -139,19 +141,19 @@ if (flagB3 == true)
 // *
 // ***********************************************************************************************************
 // BUTTON 1 interrupt handler
-void isrButton1 ()
+void isrpushUp ()
 {
   flagB1 = true;
 }  // ******** end of isr Button 1 ********
 
 // BUTTON 2 interrupt handler
-void isrButton2 ()
+void isrpushDown ()
 {
   flagB2 = true;
 }  // ******* end of isr Button 2  ********
 
 // BUTTON 3 interrupt handler
-void ispushRight ()
+void isrpushRight ()
 {
   flagB3 = true;
 }  // ******** end of isr Button 3 ********
