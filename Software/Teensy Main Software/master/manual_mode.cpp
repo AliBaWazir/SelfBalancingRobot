@@ -90,7 +90,7 @@ bool manual_mode_drivers_init(){
   //PLEASE INITIALIZE ALL OTHER DRIVERS HERE:
 
   //initialize serial port
-  Serial1.begin(9600);
+  Serial3.begin(9600);
 
 
   return true;
@@ -98,12 +98,12 @@ bool manual_mode_drivers_init(){
 
 
 manual_mode_error_e manual_mode_run(){
-  
+    Serial.println("INFO>> manual_mode_run: called>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     manual_mode_error_e manual_mode_error = MANUAL_MODE_OK;
 
     //get command from bluetooth module via serial1 port
-    if (Serial1.available()) {
-        char inByte = Serial1.read();
+    if (Serial3.available()) {
+        char inByte = Serial3.read();
 
         switch(inByte){
             case 'F':
@@ -136,6 +136,8 @@ manual_mode_error_e manual_mode_run(){
                 
         }
   
+    } else{
+            Serial.println("ERROR>> manual_mode_run: serial1 is not available>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
     
     return manual_mode_error;

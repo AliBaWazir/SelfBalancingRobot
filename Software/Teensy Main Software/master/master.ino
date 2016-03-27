@@ -13,22 +13,33 @@
     manual_mode,
     line_following_mode,
     debug_mode
- }state_e;
+ }mode_e;
 
 
 /****************************************************************************************
  * SATIC VARIABLES
  ****************************************************************************************/
-static state_e robot_state;
+static mode_e robot_mode;
 static bool line_following_mode_drivers_initialized  = false;
 static bool manual_mode_drivers_initialized          = false;
 
 
 
+/****************************************************************************************
+ * STATIC FUNCTIONS
+ ****************************************************************************************/
+static bool get_current_robot_mode(){
+    bool ret = true;
 
+    
+
+
+    return ret;
+}
+ 
 
 /****************************************************************************************
- * GLOBAL VARIABLES
+ * MAIN FUNCTIONS
  ****************************************************************************************/
 void setup() {
 
@@ -53,13 +64,14 @@ void setup() {
 }
 
 void loop() {
-  //Serial.println("master: loop is called!");
+  //Serial.println("INFO>> master: loop is called!");
 
   //check the current robot mode
-  // set the robot mode
-  robot_state= line_following_mode;
   
-  switch (robot_state){
+  // set the robot mode
+  robot_mode= manual_mode;
+  
+  switch (robot_mode){
       case startup_mode:
       ;
       break;
@@ -118,7 +130,7 @@ void loop() {
       break;
 
       default:
-      robot_state = startup_mode;
+      robot_mode = startup_mode;
       break;
     }
 }

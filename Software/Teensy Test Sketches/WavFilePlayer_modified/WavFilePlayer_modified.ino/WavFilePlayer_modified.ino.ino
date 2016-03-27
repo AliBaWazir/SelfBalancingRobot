@@ -1,5 +1,6 @@
-#include <Audio.h>
-#include <DAC.h>
+
+//#include <Audio.h>
+//#include <DAC.h>
 
 
 #include <Audio.h>
@@ -29,8 +30,9 @@ AudioControlSGTL5000     sgtl5000_1;
 
   
 void setup() {
+  Serial.println("setup: called");
   Serial.begin(9600);
-  
+
   // Audio connections require memory to work.  For more
   // detailed information, see the MemoryAndCpuUsage example
   AudioMemory(8);
@@ -78,7 +80,8 @@ void playFile(const char *filename)
 
 
 void loop() {
-  //playFile("1.WAV");  // filenames are always uppercase 8.3 format
+  Serial.println("loop: called");
+  playFile("1.WAV");  // filenames are always uppercase 8.3 format
   
   //delay(500);
   //playFile("2.WAV");
