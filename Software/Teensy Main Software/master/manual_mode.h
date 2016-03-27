@@ -24,7 +24,7 @@ typedef enum{
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
 bool manual_mode_drivers_init();
-manual_mode_error_e manual_mode_run();
+manual_mode_error_e manual_mode_run(manual_command_e control_command);
 
 
 

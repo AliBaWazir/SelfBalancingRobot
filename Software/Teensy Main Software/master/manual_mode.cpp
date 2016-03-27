@@ -89,56 +89,17 @@ bool manual_mode_drivers_init(){
   }  
   //PLEASE INITIALIZE ALL OTHER DRIVERS HERE:
 
-  //initialize serial port
-  Serial3.begin(9600);
-
 
   return true;
 }
 
 
-manual_mode_error_e manual_mode_run(){
-    Serial.println("INFO>> manual_mode_run: called>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+manual_mode_error_e manual_mode_run(manual_command_e control_command){
     manual_mode_error_e manual_mode_error = MANUAL_MODE_OK;
+    
+    Serial.println("INFO>> manual_mode_run: called");
 
-    //get command from bluetooth module via serial1 port
-    if (Serial3.available()) {
-        char inByte = Serial3.read();
-
-        switch(inByte){
-            case 'F':
-                Serial.println("INFO>> manual_mode_run: command= FORWARD");
-                manual_mode_error= direct_robot_given_manual_command(MANUAL_FORWARD);
-            break;
-
-            case 'L':
-                Serial.println("INFO>> manual_mode_run: command= LEFT");
-                manual_mode_error= direct_robot_given_manual_command(MANUAL_LEFT);
-
-            break;
-
-            case 'R':
-                Serial.println("INFO>> manual_mode_run: command= RIGHT");
-                manual_mode_error= direct_robot_given_manual_command(MANUAL_RIGHT);
-
-            break;
-
-            case 'B':
-                Serial.println("INFO>> manual_mode_run: command= BACKWARD");
-                manual_mode_error= direct_robot_given_manual_command(MANUAL_BACKWARD);
-
-            break;
-
-            default:
-                Serial.println("ERROR>> manual_mode_run: command= UNKNOWN");
-                manual_mode_error= MANUAL_MODE_ERROR_COMMAND_UNKNOWN;
-            break;
-                
-        }
-  
-    } else{
-            Serial.println("ERROR>> manual_mode_run: serial1 is not available>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-    }
+    manual_mode_error = direct_robot_given_manual_command(control_command);
     
     return manual_mode_error;
 }
