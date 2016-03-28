@@ -173,7 +173,7 @@ line_following_error_e line_following_mode_run(){
         }
         
         //play sound saying I am stopping!
-        if(!speaker_driver_play_file(OBSTACLE_STOP){
+        if(!speaker_driver_play_file(OBSTACLE_STOP)){
             Serial.println("ERROR>> line_following_mode_run: failed to call speaker_driver_play_file");
         }
         
