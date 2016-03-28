@@ -2,6 +2,7 @@
 #include "ultrasonic_sensor_driver.h"
 #include "linear_sensor_array_driver.h"
 #include "display_driver.h"
+#include "speaker_driver.h"
 #include "motor_driver.h"
 
 //#include <PID_v1.h>
@@ -146,7 +147,11 @@ bool line_following_mode_drivers_init(){
   if (!display_driver_init()){
       Serial.println("ERROR>> line_following_mode_drivers_init: display_driver_init failed");
       return false;
-  }  
+  }
+  if (!speaker_driver_init()){
+      Serial.println("ERROR>> line_following_mode_drivers_init: speaker_driver_init failed");
+      return false;
+  }
   //PLEASE INITIALIZE ALL OTHER DRIVERS HERE:
 
   return true;
@@ -161,11 +166,23 @@ line_following_error_e line_following_mode_run(){
 
     //check for any obstcales in front ultrasonic sensor
     if(!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
+        
+        //display close eyes
+        if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, CLOSE_EYE)){
+            Serial.println("ERROR>> line_following_mode_run: failed to call display_driver_display_object");
+        }
+        
+        //play sound saying I am stopping!
+        if(!speaker_driver_play_file(OBSTACLE_STOP){
+            Serial.println("ERROR>> line_following_mode_run: failed to call speaker_driver_play_file");
+        }
+        
         //stop both stepper motors
         if (!motor_driver_move_stepper(SELECTED_MOTOR_BOTH, 0, 0)){
-            Serial.println("ERROR>> process_direct_robot_command: failed to call motor_driver_move_stepper");
+            Serial.println("ERROR>> line_following_mode_run: failed to call motor_driver_move_stepper");
         }
         line_following_error = LINE_FOLLOWING_ERROR_OBSTACLE;
+        
     }
     
     current_black_lines_info = linear_sensor_array_driver_get_data();
@@ -183,11 +200,15 @@ line_following_error_e line_following_mode_run(){
             //discard the initial two frames
             if(initial_frame_discarded_count <2){
                 initial_frame_discarded_count++;
+                //TODO: play a sound saying trying to detect black lines 
+                //TODO: display something to indicate trying to detect black lines 
                 return LINE_FOLLOWING_PROCESSING;
             }
 
             if (current_black_lines_info->black_lines_count <= 0){
                 Serial.println("ERROR>> line_following_mode_run: no black lines are detected in the initial frame");
+                //TODO: play a sound saying no black lines are detected. I don't know where to go!
+                //TODO: display something to indicate no black lines are detected in the initial frame
                 line_following_error = LINE_FOLLOWING_ERROR_LINE_DECTETION;
             } else if (current_black_lines_info->black_lines_count > 0 && current_black_lines_info->black_lines_count < MAX_BLACK_LINES_PER_FRAME){
                 

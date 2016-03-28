@@ -1,6 +1,7 @@
 #include "manual_mode.h"
 #include "ultrasonic_sensor_driver.h"
 #include "display_driver.h"
+#include "speaker_driver.h"
 #include "motor_driver.h"
 
 
@@ -86,7 +87,11 @@ bool manual_mode_drivers_init(){
   if (!display_driver_init()){
       Serial.println("ERROR>> manual_mode_drivers_init: display_driver_init failed");
       return false;
-  }  
+  }
+  if (!speaker_driver_init()){
+      Serial.println("ERROR>> manual_mode_drivers_init: speaker_driver_init failed");
+      return false;
+  }
   //PLEASE INITIALIZE ALL OTHER DRIVERS HERE:
 
 

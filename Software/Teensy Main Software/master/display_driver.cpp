@@ -569,3 +569,9 @@ void display_driver_display_frame(const int* frame_data){
     
 }
 
+bool display_driver_display_object(display_identifier_e display_identifier, char* bitmap_identifier){
+    bool ret = true;
+
+    return ret;
+}
+
