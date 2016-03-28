@@ -5,10 +5,10 @@
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
  ****************************************************************************************/
-#define BLACK_POINT_THRESHOLD 500
+#define BLACK_POINT_THRESHOLD 300
 #define WHITE_POINT_THRESHOLD 1000
 #define FRAME_BUFFER_LENGTH 128
-#define FRAME_BUFFER_MARGIN_LENGHT 0//10
+#define FRAME_BUFFER_MARGIN_LENGHT 10
 #define CONTRAST_MARGIN 8
 #define MAX_BLACK_LINES_PER_FRAME 3
 
