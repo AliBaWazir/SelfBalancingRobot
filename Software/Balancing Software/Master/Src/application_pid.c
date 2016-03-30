@@ -10,9 +10,10 @@
 #define PID_PARAM_KD		.8		/* Derivative */
 
 
-#define PID_PARAM_KP2		0.5  	/* Proportional */
-#define PID_PARAM_KI2		0.0		/* Integral */
-#define PID_PARAM_KD2		0.2	/* Derivative */
+#define PID_PARAM_KP2		0.1  	/* Proportional */
+#define PID_PARAM_KI2		0		/* Integral */
+#define PID_PARAM_KD2		0.005
+	/* Derivative */
 
 #define MINANGLE 10000
 float pid_error2;
@@ -21,7 +22,7 @@ double setpoints = 0;
 int32_t force, force1, force2;
 arm_pid_instance_f32 PID;
 arm_pid_instance_f32 PID2;
-
+double scaleFactor = 1;
 float pid_error;
 
 int32_t angleAdjust;
@@ -37,7 +38,18 @@ void application_pid(int32_t angle){
     angle1 = angle;
     angle = (angle1+angle2)/2;
     
-    pid_error = angle + setpoints;
+    
+     if((force>0 && stepperCurrentPosition() <0)||(force<0 && stepperCurrentPosition() >0)){
+               pid_error = angle + (setpoints*scaleFactor);
+              TM_USART_Puts(USART3,"YES");
+            } 
+            else{
+              pid_error = angle+ setpoints;
+              TM_USART_Puts(USART3,"NO");
+            }
+    
+    
+   
     
     pid_error2 = stepperCurrentPosition();
     
@@ -54,10 +66,20 @@ void application_pid(int32_t angle){
     force2=force1;
     force1=force;
     force = (force2+force1)/2;
+    
+    
+    scaleFactor = ((1000-abs(force))/1000.0);
+    
+   
     setStepperSpeed((float)force);
+    
+    
+    
+    
+    
     TM_USART_Puts(USART3,"^");
     char str2[5];
-    sprintf(str2, "%d", (int)setpoints);
+    sprintf(str2, "%d", (int)pid_error);
     
     //setStepperCurrentPosition(0);
     
