@@ -25,7 +25,7 @@ static bool                 initial_frame_decoded            = false;         //
 static black_lines_info_t   initial_frame_black_lines_info;
 static bool                 busy_processing_moving_command   = false;         // this boolean is set to true while the robot is moving to the right or left
 static bool                 robot_is_centred                 = false;         // this boolean is set to true once the robot is centred at the default centre
-static int                  initial_frame_discarded_count    =0;              // this boolean determines the count of discarded initial frames
+static int                  initial_frame_discarded_count    = 0;             // this boolean determines the count of discarded initial frames
 
 /****************************************************************************************
  * STATIC FUNCTIONS
@@ -70,6 +70,35 @@ static void direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
     }else if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==2){
         // follow two lines and keep the white space at the center
         Serial.println("INFO>> direct_robot_given_black_lines_info: will follow TWO lines");
+        
+        // follow two lines and keep the both black lines at the center
+        centre_line_position = (black_lines_info->black_lines_positions[0]+black_lines_info->black_lines_positions[1])/2;
+
+        // calculate the differrence from the mid point between the two black lines and the center (i.e. pixel 64)
+        centre_line_offset = centre_line_position - DEFAULT_CENTRE_LINE;  // if offset is positive ==> line to the right ==> move robot to the right
+
+        if (centre_line_offset == 0){
+            // mid point between the two black lines is centered
+            robot_is_centred = true;
+            // robot is not processing any command
+            busy_processing_moving_command = false;
+            //TODO: pass a stop command to the ARM processor to stop turning the motor
+            
+            return;
+        } else if (centre_line_offset > 0){
+            robot_is_centred = false;
+            // mid point between the two black lines is in the right side of the default centre ==> move robot to the right
+            Serial.print("INFO>> direct_robot_given_black_lines_info: will follow TWO lines and will center the robot at index ");
+            Serial.println(centre_line_position);
+            process_direct_robot_command(TURN_RIGHT, abs(centre_line_offset));
+        } else if (centre_line_offset < 0){
+            robot_is_centred = false;
+            // mid point between the two black lines is in the left side of the default centre ==> move robot to the left
+            process_direct_robot_command(TURN_LEFT, abs(centre_line_offset));
+        } else{
+            Serial.print("ERROR>> direct_robot_given_black_lines_info: centre_line_offset is invaild ");
+        }
+        
 
     } else if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==3){
         // follow one line and keep the black line at the center
