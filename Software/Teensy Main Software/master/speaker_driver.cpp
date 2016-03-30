@@ -57,7 +57,9 @@ bool speaker_driver_init(){
         SPI.setSCK(SDCARD_SCK_PIN);
         if (!(SD.begin(SDCARD_CS_PIN))) {
             Serial.println("ERROR>> speaker_driver_init: unable to access the SD card");
-            ret= false;
+            if(!driver_in_testing_mode){
+                ret= false;
+            } 
         }
         
         speaker_driver_initialized = true;

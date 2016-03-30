@@ -14,6 +14,7 @@
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
 bool led_driver_init();
+bool led_driver_continue_talking();
 
 
 #endif

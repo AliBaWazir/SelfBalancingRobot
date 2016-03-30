@@ -100,22 +100,58 @@ bool led_driver_continue_talking(){
         if (led_lighting_array[current_led_frame][0]==1){
             //turn on the corresponding LED
             digitalWrite(LED0_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][1]==1){
+        } else{
+            digitalWrite(LED0_pin, LOW);
+        }
+
+        if (led_lighting_array[current_led_frame][1]==1){
             digitalWrite(LED1_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][2]==1){
+        } else{
+            digitalWrite(LED1_pin, LOW);
+        }
+        
+        if (led_lighting_array[current_led_frame][2]==1){
             digitalWrite(LED2_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][3]==1){
+        } else{
+            digitalWrite(LED2_pin, LOW);
+        }
+        
+        if (led_lighting_array[current_led_frame][3]==1){
             digitalWrite(LED3_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][4]==1){
+        } else {
+            digitalWrite(LED3_pin, LOW);
+
+        } 
+        
+        if (led_lighting_array[current_led_frame][4]==1){
             digitalWrite(LED4_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][5]==1){
+        } else {
+            digitalWrite(LED4_pin, LOW);
+        } 
+        
+        if (led_lighting_array[current_led_frame][5]==1){
             digitalWrite(LED5_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][6]==1){
+        } else {
+            digitalWrite(LED5_pin, LOW);
+          
+        } 
+        
+        if (led_lighting_array[current_led_frame][6]==1){
             digitalWrite(LED6_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][7]==1){
+        } else {
+            digitalWrite(LED6_pin, LOW);
+        } 
+        
+        if (led_lighting_array[current_led_frame][7]==1){
             digitalWrite(LED7_pin, HIGH);
-        } else if (led_lighting_array[current_led_frame][8]==1){
+        } else {
+            digitalWrite(LED7_pin, LOW);
+        } 
+        
+        if (led_lighting_array[current_led_frame][8]==1){
             digitalWrite(LED8_pin, HIGH);
+        } else{
+            digitalWrite(LED8_pin, LOW);
         }
 
         //move the the next frame

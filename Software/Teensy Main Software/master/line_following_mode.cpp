@@ -194,6 +194,9 @@ line_following_error_e line_following_mode_run(){
     black_lines_info_t       *current_black_lines_info   = NULL;
     const int                *current_frame              = NULL;
 
+    //TODO: call this function only when there is sound playing
+    led_driver_continue_talking();
+
     //check for any obstcales in front ultrasonic sensor
     if(!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
         

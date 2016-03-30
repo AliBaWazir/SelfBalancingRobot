@@ -59,7 +59,7 @@ bluetooth_module_data_e bluetooth_driver_get_data(bluetooth_driver_data_type_e d
         inByte = Serial3.read();
   
     } else{
-            Serial.println("ERROR>> bluetooth_driver_get_data: serial1 is not available>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            Serial.println("ERROR>> bluetooth_driver_get_data: serial1 is not available. Will put the robot in line following mode");
             if (driver_in_testing_mode){
                 ret_code= BLUETOOTH_MODULE_DATA_MODE_LINE_FOLLOWING;
             } else{
