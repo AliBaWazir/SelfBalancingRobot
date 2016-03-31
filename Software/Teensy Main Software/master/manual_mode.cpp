@@ -93,6 +93,10 @@ bool manual_mode_drivers_init(){
       Serial.println("ERROR>> manual_mode_drivers_init: speaker_driver_init failed");
       return false;
   }
+  if (!motor_driver_init()){
+      Serial.println("ERROR>> line_following_mode_drivers_init: motor_driver_init failed");
+      return false; 
+  }
   //PLEASE INITIALIZE ALL OTHER DRIVERS HERE:
 
 

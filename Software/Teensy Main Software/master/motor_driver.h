@@ -14,6 +14,12 @@ typedef enum{
     SELECTED_MOTOR_LEFT  = 2
 }motor_driver_selected_motor_e;
 
+typedef struct{
+    int16_t packet_id;
+    int16_t left_motor_steps;
+    int16_t right_motor_steps;
+} motor_driver_control_packet_t;
+
 /****************************************************************************************
  * GLOBAL VARIABLES
  ****************************************************************************************/
@@ -22,6 +28,7 @@ typedef enum{
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
-bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int steps_count, int stepper_speed);
+ bool motor_driver_init();
+ bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int steps_count, int stepper_speed);
 
 
