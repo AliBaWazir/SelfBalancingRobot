@@ -18,6 +18,7 @@ typedef struct{
     int16_t packet_id;
     int16_t left_motor_steps;
     int16_t right_motor_steps;
+    int16_t user_data;
 } motor_driver_control_packet_t;
 
 /****************************************************************************************

@@ -82,10 +82,10 @@ bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int
 
     if (ret){
         //send the control packet
-        //if (Serial1.write(control_packet, sizeof(motor_driver_control_packet_t))!= sizeof(motor_driver_control_packet_t)){
+        if (Serial1.write((uint8_t*)(&control_packet), sizeof(motor_driver_control_packet_t))!= sizeof(motor_driver_control_packet_t)){
             //Serial.println("ERROR>> motor_driver_move_stepper: failed to write control_packet to the serial port");
             //ret=false;
-        //}
+        }
     }
     
 
