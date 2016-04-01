@@ -14,7 +14,8 @@
 /****************************************************************************************
  * STATIC VARIABLES
  ****************************************************************************************/
- bool motor_driver_initialized = false;
+ static bool motor_driver_initialized                = false;
+ static bool driver_in_testing_mode                  = true;
 
 
 /****************************************************************************************
@@ -83,8 +84,12 @@ bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int
     if (ret){
         //send the control packet
         if (Serial1.write((uint8_t*)(&control_packet), sizeof(motor_driver_control_packet_t))!= sizeof(motor_driver_control_packet_t)){
-            //Serial.println("ERROR>> motor_driver_move_stepper: failed to write control_packet to the serial port");
-            //ret=false;
+            
+            Serial.println("ERROR>> motor_driver_move_stepper: failed to write control_packet to the serial port");
+            if (!driver_in_testing_mode){
+                ret=false;
+            }
+            
         }
     }
     
