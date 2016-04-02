@@ -164,8 +164,8 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
 
 bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e active_direction){
     bool ret = true;
-    unsigned long echo       = 0;
-    unsigned long distance   = 0;
+    unsigned long echo;
+    unsigned long distance;
 
     Serial.println("INFO>> ultrasonic_sensor_check_clear_path: is called");
     if(driver_in_testing_mode){

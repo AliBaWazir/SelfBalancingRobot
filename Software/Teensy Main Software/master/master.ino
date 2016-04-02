@@ -29,7 +29,6 @@ static bool bluetooth_driver_initialized             = false;
 
 
 
-
 /****************************************************************************************
  * STATIC FUNCTIONS
  ****************************************************************************************/
@@ -146,20 +145,15 @@ void loop() {
 
       case LINE_FOLLOWING_MODE:
           if (line_following_mode_drivers_initialized){
+              
               line_following_error_e line_following_error = LINE_FOLLOWING_OK;
     
               line_following_error = line_following_mode_run();
               if (line_following_error!= LINE_FOLLOWING_OK){
-    
-                  if(line_following_error==LINE_FOLLOWING_ERROR_OBSTACLE){
-                      Serial.println("ERROR>> loop: an obstacle is detected in front of robot");
-                      //TODO: play audio track once you get this error
-                  } else if(line_following_error==LINE_FOLLOWING_ERROR_LINE_DECTETION){
-                      Serial.println("ERROR>> loop: black line detection failure");
-                      //TODO: play audio track once you get this error
-                  }
-                  
+                  Serial.print("ERROR>> loop: line_following_mode_run failed with error= ");
+                  Serial.println(line_following_error);
               }
+              
           } else{
               Serial.println("ERROR>> master: one required driver for line following mode is not initialized yet");
           }
@@ -174,4 +168,7 @@ void loop() {
           current_robot_mode= MANUAL_MODE;
       break;
     }
+
+    //delay (1000);
+
 }
