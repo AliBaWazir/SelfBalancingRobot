@@ -5,14 +5,14 @@
 
 
 
-#define PID_PARAM_KP		2.5  	/* Proportional */
-#define PID_PARAM_KI		1.2		/* Integral */
-#define PID_PARAM_KD		.8		/* Derivative */
+#define PID_PARAM_KP		10//2.5/2  	/* Proportional */
+#define PID_PARAM_KI		0;//1.2/2		/* Integral */
+#define PID_PARAM_KD		.8/2		/* Derivative */
 
 
-#define PID_PARAM_KP2		0.1  	/* Proportional */
+#define PID_PARAM_KP2		0.5  	/* Proportional */
 #define PID_PARAM_KI2		0		/* Integral */
-#define PID_PARAM_KD2		0.005
+#define PID_PARAM_KD2		0.00
 	/* Derivative */
 
 #define MINANGLE 10000
@@ -24,6 +24,7 @@ arm_pid_instance_f32 PID;
 arm_pid_instance_f32 PID2;
 double scaleFactor = 1;
 float pid_error;
+uint16_t positionCounter = 0;
 
 int32_t angleAdjust;
 arm_pid_instance_f32 PID2;
@@ -34,6 +35,7 @@ void application_pid(int32_t angle){
     //angle = angle;
     //angle = angle;
     //angle3 = angle2;
+    angle = angle+100;
     angle2 = angle1;
     angle1 = angle;
     angle = (angle1+angle2)/2;
@@ -48,16 +50,43 @@ void application_pid(int32_t angle){
               TM_USART_Puts(USART3,"NO");
             }
     
+     
+            
+            
+    TM_USART_Puts(USART3,"^");
+    char str3[5];
+    sprintf(str3, "%d", (int)setpoints);
     
+    TM_USART_Puts(USART3, str3);
+    
+    //TM_USART_Puts(USART3,"\n");
    
     
+    TM_USART_Puts(USART3,"^");
+    char str2[5];
+    sprintf(str2, "%d", (int)pid_error);
+    
+    TM_USART_Puts(USART3, str2);
+    
+    TM_USART_Puts(USART3,"\n");
+            
+            
     pid_error2 = stepperCurrentPosition();
     
     
     force = arm_pid_f32(&PID, pid_error);
-    setpoints = arm_pid_f32(&PID2, pid_error2);
-    if(setpoints>150)arm_pid_reset_f32(&PID2);
-    if(setpoints<-150)arm_pid_reset_f32(&PID2);
+    if(positionCounter >= 5){
+        setpoints = arm_pid_f32(&PID2, pid_error2);
+        positionCounter=0;
+    }
+    positionCounter++;
+    if(setpoints>600 || setpoints<-600){
+        
+        arm_pid_reset_f32(&PID2);
+        setpoints = 0;
+        setStepperCurrentPosition(0);
+    }
+
     if(force > 10000||force <-10000)arm_pid_reset_f32(&PID);
     
     //if(force >0)stepperMove(-500);
@@ -68,7 +97,7 @@ void application_pid(int32_t angle){
     force = (force2+force1)/2;
     
     
-    scaleFactor = ((1000-abs(force))/1000.0);
+    scaleFactor = 1;//((1000-abs(force))/1000.0);
     
    
     setStepperSpeed((float)force);
@@ -77,15 +106,7 @@ void application_pid(int32_t angle){
     
     
     
-    TM_USART_Puts(USART3,"^");
-    char str2[5];
-    sprintf(str2, "%d", (int)pid_error);
-    
-    //setStepperCurrentPosition(0);
-    
-    TM_USART_Puts(USART3, str2);
-    
-    TM_USART_Puts(USART3,"\n");
+
     
 }
 
