@@ -113,6 +113,9 @@
 
 //#define DEBUGFIFO
 
+#define UARTTEENSY      UART4
+#define UARTFTDI        USART3
+
 #define MICROSTEPS_1    (0x01)
 #define MICROSTEPS_2    (0x02)
 #define MICROSTEPS_4    (0x04)

@@ -6290,10 +6290,10 @@ Source: http://www.osram.convergy.de/</description>
 <instance part="GND4" gate="1" x="-76.2" y="-22.86" rot="R270"/>
 <instance part="SUPPLY4" gate="G$1" x="-73.66" y="-17.78" rot="R90"/>
 <instance part="U$2" gate="G$1" x="-27.94" y="66.04"/>
-<instance part="SUPPLY5" gate="G$1" x="-2.54" y="73.66" rot="R270"/>
-<instance part="GND5" gate="1" x="0" y="66.04" rot="R90"/>
+<instance part="SUPPLY5" gate="G$1" x="2.54" y="81.28" rot="R270"/>
+<instance part="GND5" gate="1" x="2.54" y="63.5" rot="R90"/>
 <instance part="U$3" gate="G$1" x="17.78" y="66.04"/>
-<instance part="SUPPLY6" gate="G$1" x="43.18" y="73.66" rot="R270"/>
+<instance part="SUPPLY6" gate="G$1" x="45.72" y="73.66" rot="R270"/>
 <instance part="GND6" gate="1" x="45.72" y="66.04" rot="R90"/>
 <instance part="GND9" gate="1" x="144.78" y="-25.4"/>
 <instance part="C1" gate="G$1" x="139.7" y="-15.24" rot="MR0"/>
@@ -6399,7 +6399,7 @@ Source: http://www.osram.convergy.de/</description>
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="GND"/>
-<wire x1="-2.54" y1="66.04" x2="-6.4" y2="66.136" width="0.1524" layer="91"/>
+<wire x1="0" y1="63.5" x2="-6.4" y2="66.136" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
 </segment>
 <segment>
@@ -6591,12 +6591,12 @@ Source: http://www.osram.convergy.de/</description>
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="VCC"/>
-<wire x1="-2.54" y1="73.66" x2="-6.4" y2="73.818" width="0.1524" layer="91"/>
+<wire x1="2.54" y1="81.28" x2="-6.4" y2="73.818" width="0.1524" layer="91"/>
 <pinref part="SUPPLY5" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
 <pinref part="U$3" gate="G$1" pin="VCC"/>
-<wire x1="43.18" y1="73.66" x2="39.32" y2="73.818" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="73.66" x2="39.32" y2="73.818" width="0.1524" layer="91"/>
 <pinref part="SUPPLY6" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>

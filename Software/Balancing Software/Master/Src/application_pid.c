@@ -31,7 +31,22 @@ arm_pid_instance_f32 PID2;
 
 real_T angle1, angle2, angle3, angle4, angle5, angle6;
 
+struct teensyData{
+    int16_t packetId;
+    int16_t leftMotorSteps;
+    int16_t rightMotorSteps;
+    int16_t userData;
+    
+};
+
 void application_pid(int32_t angle){
+    
+    
+    uint8_t data = TM_USART_Getc(UARTTEENSY);
+    if(data){
+      TM_USART_Putc(UARTFTDI,data); 
+    }
+    
     //angle = angle;
     //angle = angle;
     //angle3 = angle2;

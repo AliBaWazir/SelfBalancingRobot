@@ -60,10 +60,11 @@ void setup(){
     TM_DELAY_Init();
     initSteppers();
     initTimerInterrupt();
-    TM_USART_Init(USART3, TM_USART_PinsPack_2, 115200);
+    TM_USART_Init(UART4, TM_USART_PinsPack_2, 9600);
+    TM_USART_Init(USART3, TM_USART_PinsPack_1, 9600);
 	
 	/* Put test string */
-	TM_USART_Puts(USART3, "FOXTROT\n");
+	TM_USART_Puts(UARTTEENSY, "FOXTROT\n");
     
     
     ANGLE_WANT = 0;
@@ -129,7 +130,7 @@ void matlab(int32_t angle){
         discrete_PID_terminate(); //kill PID since robot is lying down
         setStepperCurrentPosition(0);
         stepperDisable();
-        TM_USART_Puts(USART3,"^F!\n");
+        TM_USART_Puts(UARTTEENSY,"^F!\n");
   
         return;
     }
@@ -161,9 +162,9 @@ void matlab(int32_t angle){
     
     
     
-    TM_USART_Puts(USART3, str2);
+    TM_USART_Puts(UARTTEENSY, str2);
     
-    TM_USART_Puts(USART3,"\n");
+    TM_USART_Puts(UARTTEENSY,"\n");
     
     
     
@@ -213,14 +214,14 @@ void application_main(int32_t angle){
     
     sprintf(str, "%d", aInt);
     //TM_USART_Puts(USART3, "Angle: ");
-    TM_USART_Puts(USART3, str);
+    TM_USART_Puts(UARTTEENSY, str);
     
     if(HAL_GetTick()<10000 )
     {
         
         
         dWrite(PORTD+12, HIGH);
-        TM_USART_Puts(USART3,"\n");
+        TM_USART_Puts(UARTTEENSY,"\n");
         
         return;
     }
