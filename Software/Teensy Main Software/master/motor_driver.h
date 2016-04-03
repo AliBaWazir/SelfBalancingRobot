@@ -15,10 +15,11 @@ typedef enum{
 }motor_driver_selected_motor_e;
 
 typedef struct{
-    int16_t packet_id;
-    int16_t left_motor_steps;
-    int16_t right_motor_steps;
-    int16_t user_data;
+    int8_t packet_id_first_byte;
+    int8_t packet_id_second_byte;
+    int8_t left_motor_steps;
+    int8_t right_motor_steps;
+    
 } motor_driver_control_packet_t;
 
 /****************************************************************************************

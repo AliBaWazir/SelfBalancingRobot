@@ -53,7 +53,7 @@ static bool                 driver_in_testing_mode                 = false;     
  *                       This value should be 0 if all entries of the array are to be displayed
  */
 static void debug_print_array (int *input_array, int length, int margin_offset){
-    Serial.print("read frame from sensor = ");
+    Serial.print("INFO>> debug_print_array: frame data from Linear Array Sensor: ");
     for (int i=(margin_offset); i<(length-margin_offset); i++){
        Serial.print(input_array[i]);
        Serial.print(",");
@@ -77,14 +77,14 @@ static void debug_print_decoded_frame_buffer_full_data (pixel_data_t* full_decod
 }
 
 static void debug_print_decoded_frame_buffer_edge_pixel_indexes (pixel_data_t* full_decoded_frame_buffer, uint8_t frame_length){
-    Serial.print("Edge pixels are: ");
+    Serial.print("INFO>> debug_print_decoded_frame_buffer_edge_pixel_indexes: edge pixel indices: ");
     for (int i=0; i< frame_length; i++){
       if (full_decoded_frame_buffer[i].edge_pixel){
         Serial.print(i);
         if (full_decoded_frame_buffer[i].edge_pixel_pair==EDGE_PIXEL_FIRST_PAIR){
-          Serial.print(":first pair");
+          Serial.print("(first pair)");
         } else if(full_decoded_frame_buffer[i].edge_pixel_pair==EDGE_PIXEL_SECOND_PAIR){
-          Serial.print(":second pair");
+          Serial.print("(second pair)");
         } else{
           Serial.print(":? pair");
         }
@@ -96,9 +96,9 @@ static void debug_print_decoded_frame_buffer_edge_pixel_indexes (pixel_data_t* f
 
 static void debug_print_balck_lines_info(){
     if (current_black_lines_info.black_lines_count>0){
-    Serial.print("Number of black lines = ");
+    Serial.print("INFO>> debug_print_balck_lines_info: black lines count: ");
     Serial.println(current_black_lines_info.black_lines_count);
-    Serial.print("Black lines positions = ");
+    Serial.print("INFO>> debug_print_balck_lines_info: black lines indices: ");
     for (int i=0; i< current_black_lines_info.black_lines_count; i++){
       Serial.print(current_black_lines_info.black_lines_positions[i]);
       Serial.print(", ");
@@ -110,8 +110,10 @@ static void debug_print_balck_lines_info(){
 
 static void create_test_frame(int *dest_frame){
     //int   testing_frame [128] = {1021,1021,1021,1020,1021,1021,1022,1019,1021,10,20,10,30,1020,1021,1022,1021,1021,1021,1021,1021,1021,1022,1021,700,600,500,400,20,150,100,100,100,100,20,100,100,100,50,70,200,300,400,500,600,700,1021,1021,1021,1021,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1022,1021,1020,1020,1021,1021,1021,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1020,1019,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1020,1021,1021,1022,1019,1021};
-    //peak in 51-54
-    int   testing_frame [128] = {10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,40,20,10,30,10,20,10,30,10,20,10,51,52,53,10,30,10,20,10,30,10,20,10,1010,1020,65,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10};
+    //peak in 63-64
+    //int   testing_frame [128] = {10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,40,20,10,30,10,20,10,30,10,20,10,51,52,53,10,30,10,20,10,30,10,20,10,1010,1020,65,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10};
+    //peak in 50-54
+    int   testing_frame [128] = {10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,40,20,10,30,10,20,10,30,10,20,1020,1020,1020,1020,1020,30,10,20,10,30,10,20,10,40,30,65,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10,20,10,30,10};
     //valley in 10-15 
     //int   testing_frame [128] = {1021,1021,1021,1020,1021,1021,1022,1019,1021,1021,10,11,12,13,14,15,1022,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1022,1021,1020,1020,1021,1021,1021,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1020,1019,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1020,1021,1021,1022,1019,1021};
     //vally in 1-5 int   testing_frame [128] = {10,11,12,13,14,15,1022,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1022,1021,1020,1020,1021,1021,1021,1021,1021,1019,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1021,1022,1021,1021,1021,1021,1020,1019,1021,1021,1020,1021,1021,1019,1021,1021,1021,1021,1020,1021,1021,1022,1019,1021,1021,1021,1021,1021,1020,1021,1021,1022,1019,1021,1021,1021,1021,1021,1020,1021,1021,1019,1020,1021,1022,1023,1024,1025,1026,1027, 1028};

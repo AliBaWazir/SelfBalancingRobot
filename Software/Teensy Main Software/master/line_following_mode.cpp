@@ -315,7 +315,7 @@ line_following_error_e line_following_mode_run(){
                 
                 // clone the values of the current frame to the initial frame. Up to three black lines will be considered
                 initial_frame_black_lines_info.black_lines_count = current_black_lines_info->black_lines_count;
-                Serial.println("INFO>> line_following_mode_run: initial_frame_black_lines_info.black_lines_count= ");
+                Serial.print("INFO>> line_following_mode_run: initial_frame_black_lines_info.black_lines_count= ");
                 int tmp= initial_frame_black_lines_info.black_lines_count;
                 Serial.println(tmp);
 

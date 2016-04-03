@@ -18,7 +18,9 @@ typedef enum {
     BLUETOOTH_MODULE_DATA_DIRECTION_FORWARD=10,
     BLUETOOTH_MODULE_DATA_DIRECTION_RIGHT,
     BLUETOOTH_MODULE_DATA_DIRECTION_BACKWARD,
-    BLUETOOTH_MODULE_DATA_DIRECTION_LEFT
+    BLUETOOTH_MODULE_DATA_DIRECTION_LEFT,
+    BLUETOOTH_MODULE_DATA_DIRECTION_UNKNOWN
+    
 } bluetooth_module_data_e;
 
 /****************************************************************************************

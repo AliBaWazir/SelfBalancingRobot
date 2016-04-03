@@ -117,6 +117,11 @@ void loop() {
                       case BLUETOOTH_MODULE_DATA_DIRECTION_LEFT:
                           tmp_command= MANUAL_LEFT;
                       break;
+
+                      case BLUETOOTH_MODULE_DATA_DIRECTION_UNKNOWN:
+                          //if the direction command is known as a result of not having any command from the bluetooth, go forward
+                          tmp_command= MANUAL_FORWARD;
+                      break;
                   }
                   
                   manual_mode_error = manual_mode_run(tmp_command);
