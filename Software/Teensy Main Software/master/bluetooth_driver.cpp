@@ -65,8 +65,8 @@ bluetooth_module_data_e bluetooth_driver_get_data(bluetooth_driver_data_type_e d
         if (driver_in_testing_mode){
                 
             if (data_type==BLUETOOTH_DRIVER_DATA_TYPE_MODE){
-                //ret_code= BLUETOOTH_MODULE_DATA_MODE_LINE_FOLLOWING;
-                ret_code= BLUETOOTH_MODULE_DATA_MODE_MANUAL; 
+                ret_code= BLUETOOTH_MODULE_DATA_MODE_LINE_FOLLOWING;
+                //ret_code= BLUETOOTH_MODULE_DATA_MODE_MANUAL; 
             } else{
                 ret_code= BLUETOOTH_MODULE_DATA_DIRECTION_UNKNOWN;
             }

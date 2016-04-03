@@ -20,14 +20,14 @@
  }display_identifier_e;
 
  #define CLOSE_EYE "CLOSE_EYE"
+ #define LINEAR_SENSOR_ARRAY_FRAME "LINEAR_SENSOR_ARRAY_FRAME"
 
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
 bool display_driver_init();
-bool display_driver_display_bitmap(uint8_t *bitmap);
-void display_driver_display_frame(const int* frame_data);
 bool display_driver_display_object(display_identifier_e display_identifier, char* bitmap_identifier);
+bool display_driver_construct_bitmap_from_frame_and_display(display_identifier_e display_identifier, const int* frame_data);
 
 
 #endif

@@ -413,6 +413,43 @@ static void testscrolltext(void) {
   display.stopscroll();
 }
 
+
+static void display_driver_test(){
+    
+    for (int i=0; i<100; i++){
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_1,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_2,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_3,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_4,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_5,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+        display.clearDisplay();
+        display.drawBitmap(0, 0, Bowser_6,  BOWSERW,  BOWSERH, WHITE);
+        display.display();
+        delay(100);
+            
+    }
+              
+}
  
 /****************************************************************************************
  * STATIC FUNCTIONS
@@ -461,42 +498,46 @@ static bool display_driver_construct_bitmap_from_frame(const int* source_frame){
     return ret;
 }
 
-static void display_driver_test(){
-    
-    for (int i=0; i<100; i++){
-        display.clearDisplay();
-        display.drawBitmap(0, 0, Bowser_1,  BOWSERW,  BOWSERH, WHITE);
-        display.display();
-        delay(100);
+
+static uint8_t* map_object_identifier_to_bitmap(char* object_identifier){
+    uint8_t* retcode = NULL;
+
+    if (object_identifier == NULL){
+          Serial.println("ERROR>> map_object_identifier_to_bitmap: object_identifier is NULL");
+          return NULL;
+    } else{
+          
+          //TODO: change the equality to strcmp in case you use programmer defined strings
+          if(object_identifier == LINEAR_SENSOR_ARRAY_FRAME){
+              retcode= frame_bitmap;
+          } else if(object_identifier == CLOSE_EYE){
+                ;
+          } else{
             
-        display.clearDisplay();
-        display.drawBitmap(0, 0, Bowser_2,  BOWSERW,  BOWSERH, WHITE);
-        display.display();
-        delay(100);
-            
-        display.clearDisplay();
-        display.drawBitmap(0, 0, Bowser_3,  BOWSERW,  BOWSERH, WHITE);
-        display.display();
-        delay(100);
-            
-        display.clearDisplay();
-        display.drawBitmap(0, 0, Bowser_4,  BOWSERW,  BOWSERH, WHITE);
-        display.display();
-        delay(100);
-            
-        display.clearDisplay();
-        display.drawBitmap(0, 0, Bowser_5,  BOWSERW,  BOWSERH, WHITE);
-        display.display();
-        delay(100);
-            
-        display.clearDisplay();
-        display.drawBitmap(0, 0, Bowser_6,  BOWSERW,  BOWSERH, WHITE);
-        display.display();
-        delay(100);
-            
+          }
     }
-              
+
+    return retcode;
+  
 }
+
+/*
+static bool display_driver_display_bitmap(uint8_t *bitmap){
+    bool ret = true;
+
+    if (!driver_in_testing_mode && bitmap == NULL){
+        Serial.println("ERROR>> display_driver_display_bitmap: bitmap is NULL");
+        return false;
+    }
+    
+    display.clearDisplay();
+    display.drawBitmap(0, 0, bitmap,  128,  64, WHITE);
+    display.display();
+
+    return ret;
+}
+*/
+
 /****************************************************************************************
  * PUBLIC FUNCTIONS
  ***************************************************************************************/
@@ -533,22 +574,8 @@ bool display_driver_init(){
     return ret;
 }
 
-
-bool display_driver_display_bitmap(uint8_t *bitmap){
-    bool ret = true;
-
-    if (!driver_in_testing_mode && bitmap == NULL){
-        Serial.println("ERROR>> display_driver_display_bitmap: bitmap is NULL");
-        return false;
-    }
-    
-    display.clearDisplay();
-    display.drawBitmap(0, 0, bitmap,  128,  64, WHITE);
-    display.display();
-
-    return ret;
-}
-
+/*
+//TODO: do the conversion of frame to bitmap from the driver and then display the bit frame bitmap using its identifier
 void display_driver_display_frame(const int* frame_data){
     
     if (frame_data == NULL){
@@ -568,9 +595,71 @@ void display_driver_display_frame(const int* frame_data){
     }
     
 }
+*/
 
-bool display_driver_display_object(display_identifier_e display_identifier, char* bitmap_identifier){
+bool display_driver_display_object(display_identifier_e display_identifier, char* object_identifier){
+    bool      ret               = true;
+    uint8_t*  bitmap_to_display = NULL;
+
+    if (object_identifier == NULL){
+        Serial.println("ERROR>> display_driver_display_object: bitmap_identifier is NULL");
+        return false;
+    }
+
+    //map the object identifier to its correponding bitmap stored as static array in this file
+    bitmap_to_display= map_object_identifier_to_bitmap(object_identifier);
+    if (bitmap_to_display ==NULL){
+        Serial.println("ERROR>> display_driver_display_object: failed to map the object identifier to its correponding bitmap");
+        return false;
+    }
+
+    switch (display_identifier){
+        case DISPLAY_IDENTIFIER_RIGHT:
+            display.clearDisplay();
+            display.drawBitmap(0, 0, bitmap_to_display,  128,  64, WHITE);
+            display.display();
+        break;
+
+        case DISPLAY_IDENTIFIER_LEFT:
+            ;
+        break;
+
+        case DISPLAY_IDENTIFIER_BOTH:
+            //TODO: display the same thing on both displays
+        break;
+
+        default:
+            Serial.println("ERROR>> display_driver_display_object: display_identifier has UNKNOWN value");
+            ret= false;
+        break;
+      
+    }
+
+    return ret;
+}
+
+bool display_driver_construct_bitmap_from_frame_and_display(display_identifier_e display_identifier, const int* frame_data){
     bool ret = true;
+
+    if(frame_data == NULL){
+        Serial.println("ERROR>> construct_bitmap_from_frame_and_display: frame_data is NULL");
+        return false;
+    }
+
+    // clear any existing data in the frame_bitmap
+    memset(frame_bitmap, 0, 128);
+
+    // construct bitmap from the provided frame data
+    if (display_driver_construct_bitmap_from_frame(frame_data)){
+        //display the custructed bit map
+        if (!display_driver_display_object(DISPLAY_IDENTIFIER_RIGHT, LINEAR_SENSOR_ARRAY_FRAME)){
+            Serial.println("ERROR>> construct_bitmap_from_frame_and_display: display_driver_display_object failed");
+            ret= false;
+        }
+    } else{
+        Serial.println("ERROR>> construct_bitmap_from_frame_and_display: display_driver_construct_bitmap_from_frame failed");
+        ret= false;
+    }
 
     return ret;
 }

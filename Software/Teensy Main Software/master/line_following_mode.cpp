@@ -292,7 +292,7 @@ line_following_error_e line_following_mode_run(){
         // display the current frame data in the LCD diplays
         current_frame = linear_sensor_array_driver_get_current_frame();
         if(current_frame != NULL){
-            display_driver_display_frame(current_frame);
+            display_driver_construct_bitmap_from_frame_and_display(DISPLAY_IDENTIFIER_RIGHT, current_frame);
         }
         
         // check if the initial THIRD frame has black lines detected successfully. (i.e. ignore the first and second frames as they are not properly read)
