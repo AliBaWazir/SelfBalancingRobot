@@ -60,8 +60,8 @@ void setup(){
     TM_DELAY_Init();
     initSteppers();
     initTimerInterrupt();
-    TM_USART_Init(UART4, TM_USART_PinsPack_2, 9600);
-    TM_USART_Init(USART3, TM_USART_PinsPack_1, 9600);
+    TM_USART_Init(UARTTEENSY, TM_USART_PinsPack_2, 115200);
+    TM_USART_Init(UARTFTDI, TM_USART_PinsPack_1, 115200);
 	
 	/* Put test string */
 	TM_USART_Puts(UARTTEENSY, "FOXTROT\n");
@@ -156,7 +156,7 @@ void matlab(int32_t angle){
     acceleration = output;
     
     
-    TM_USART_Puts(USART3,"^");
+    TM_USART_Puts(UARTTEENSY,"^");
     char str2[5];
     sprintf(str2, "%d", (int)acceleration);
     
@@ -216,7 +216,7 @@ void application_main(int32_t angle){
     //TM_USART_Puts(USART3, "Angle: ");
     TM_USART_Puts(UARTTEENSY, str);
     
-    if(HAL_GetTick()<10000 )
+    if(HAL_GetTick()<1000 )
     {
         
         
@@ -277,7 +277,7 @@ static void rightButton_Callback(TM_BUTTON_t* ButtonPtr, TM_BUTTON_PressType_t P
     /* Normal press detected */
     if (PressType == TM_BUTTON_PressType_Normal) {
         /* Set LEDS ON */
-        TM_GPIO_SetPinLow(LEDPORT, LEDALL);
+        TM_GPIO_SetPinLow(LEDPORT, LED1);
         state = 1;
         
     } else if (PressType == TM_BUTTON_PressType_Long) {

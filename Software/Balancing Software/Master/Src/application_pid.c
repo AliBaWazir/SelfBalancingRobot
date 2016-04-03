@@ -40,11 +40,13 @@ struct teensyData{
 };
 
 void application_pid(int32_t angle){
-    
-    
-    uint8_t data = TM_USART_Getc(UARTTEENSY);
-    if(data){
+    //TM_USART_Putc(UARTFTDI,'F'); 
+    TM_GPIO_TogglePinValue(LEDPORT, LED4);
+    int8_t data = TM_USART_Getc(UARTTEENSY);
+    data = data;
+    while(data){
       TM_USART_Putc(UARTFTDI,data); 
+      data = TM_USART_Getc(UARTTEENSY);
     }
     
     //angle = angle;
@@ -58,32 +60,31 @@ void application_pid(int32_t angle){
     
      if((force>0 && stepperCurrentPosition() <0)||(force<0 && stepperCurrentPosition() >0)){
                pid_error = angle + (setpoints*scaleFactor);
-              TM_USART_Puts(USART3,"YES");
+              TM_USART_Puts(UARTTEENSY,"YES");
             } 
             else{
               pid_error = angle+ setpoints;
-              TM_USART_Puts(USART3,"NO");
+              TM_USART_Puts(UARTTEENSY,"NO");
             }
     
      
             
             
-    TM_USART_Puts(USART3,"^");
+    TM_USART_Puts(UARTTEENSY,"^");
     char str3[5];
     sprintf(str3, "%d", (int)setpoints);
     
-    TM_USART_Puts(USART3, str3);
-    
-    //TM_USART_Puts(USART3,"\n");
+    TM_USART_Puts(UARTTEENSY, str3);
+
    
     
-    TM_USART_Puts(USART3,"^");
+    TM_USART_Puts(UARTTEENSY,"^");
     char str2[5];
     sprintf(str2, "%d", (int)pid_error);
     
-    TM_USART_Puts(USART3, str2);
+    TM_USART_Puts(UARTTEENSY, str2);
     
-    TM_USART_Puts(USART3,"\n");
+    TM_USART_Puts(UARTTEENSY,"\n");
             
             
     pid_error2 = stepperCurrentPosition();
