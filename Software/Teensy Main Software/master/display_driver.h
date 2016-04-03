@@ -3,7 +3,7 @@
 
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-//#include <Adafruit_SSD1306T.h>
+#include <Adafruit_SSD1306T.h> //include this for the second display
 
 
 #if (SSD1306_LCDHEIGHT != 64)
