@@ -3,13 +3,9 @@
 #include "buttons.h"
 #include "arm_math.h"
 
-#define ANGLE_CURRENT		temps[1]	/* ANGLE we actually have */
-#define ANGLE_WANT			temps[0]	/* ANGLE we want to have */
 
 
-#define PID_PARAM_KP		10.0     	/* Proportional */
-#define PID_PARAM_KI		0.05		/* Integral */
-#define PID_PARAM_KD		0.9			/* Derivative */
+
 #define MINANGLE 10000
 float temps[2];
 
@@ -34,8 +30,6 @@ void setup(){
     initSteppers();
     initTimerInterrupt();
     setupLog();
-    ANGLE_WANT = 0;
-    output = 0;
     stepperEnable();
     init_pid();
 }
@@ -62,8 +56,9 @@ void application_main(int32_t angle){
     sprintf(str, "%d", aInt);
     TM_USART_Puts(UARTTEENSY, str);
     
-    if(HAL_GetTick()<1000 )
+    if(HAL_GetTick()<10000 )
     {
+        TM_GPIO_TogglePinValue(LEDPORT, LED3);
         dWrite(PORTD+12, HIGH);
         TM_USART_Puts(UARTTEENSY,"\n");
         return;
@@ -81,7 +76,7 @@ void initTimerInterrupt(void)
     __TIM4_CLK_ENABLE();
     TIM_Handle.Init.Prescaler = 0;
     TIM_Handle.Init.CounterMode = TIM_COUNTERMODE_UP;
-    TIM_Handle.Init.Period = 13439;
+    TIM_Handle.Init.Period = 8399; //50us//13439;
     TIM_Handle.Instance = TIM4;   //Same timer whose clocks we enabled
     HAL_TIM_Base_Init(&TIM_Handle);     // Init timer
     HAL_TIM_Base_Start_IT(&TIM_Handle); // start timer interrupts

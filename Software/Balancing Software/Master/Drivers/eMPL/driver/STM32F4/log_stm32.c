@@ -159,32 +159,14 @@ void eMPL_send_quat(long *quat)
     
     
     
-    
-    double angle2;
-    //angle2 =  4.0*4096.0*atan2((2*(quat2*quat4)+quat2*quat3),
-                         // (1-2*(pow(quat2,2)+pow(quat1,2))));
-    //angle2 = 4000*asin(2*(double)quat2*(double)quat4);
-    
+ 
     
     angle =  4000*asin(-2.0*((double)quat2*(double)quat4 - (double)quat1*(double)quat3));
     out[0] = angle>>24;
     out[1] = angle>>16;
     out[2] = angle>>8;
     out[3] = angle;
-    /*
-    
-    //TM_USART_Puts(USART3,"^");
-    char str[5];
-    //sprintf(str, "%lf", angle2);
-    //TM_USART_Puts(USART3, str);
-   
-    //TM_USART_Puts(USART3,"^");
-    TM_USART_Puts(USART3,"^");
-    sprintf(str, "%lf", (double)angle);
-    TM_USART_Puts(USART3, str);
-     
-    TM_USART_Puts(USART3,"\n");
-    */
+
    
 	application_main(angle);
 #ifdef USB_VCP
