@@ -1,7 +1,7 @@
 #include "stm32f4xx_hal.h"
 #include "stepper_interface.h"
 #include "arm_math.h"
-#include "discrete_PID.h"
+
 #include "tm_stm32_delay.h"
 #include "stm32fxxx_hal.h"
 #ifndef PCBVERSION
@@ -18,3 +18,5 @@
 #include "packet.h"
 #include "defines.h"
 void application_pid(int32_t);
+extern void writeLog(char* name,double num);
+extern void logNewLine(void);
