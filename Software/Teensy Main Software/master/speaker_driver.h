@@ -3,7 +3,9 @@
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
  ****************************************************************************************/
-#define OBSTACLE_STOP "OBSTACLE_STOP"
+#define OBSTACLE_STOP   "OBSTACLE_STOP"
+#define DETECTING_WAIT  "DETECTING_WAIT"
+#define FAILURE_SOUND   "FAILURE_SOUND"
 
 /****************************************************************************************
  * GLOBAL VARIABLES

@@ -115,8 +115,6 @@ bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int
             control_packet.right_motor_steps= steps_count;
         }
 
-        //control_packet.left_motor_steps= -(steps_count);
-        //control_packet.right_motor_steps= steps_count;
         LED_index= 8;
         
     } else if(selected_motor==SELECTED_MOTOR_LEFT){
@@ -131,8 +129,7 @@ bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int
             control_packet.left_motor_steps= steps_count;
             control_packet.right_motor_steps= -steps_count;
         }
-        //control_packet.left_motor_steps= steps_count;
-        //control_packet.right_motor_steps= -(steps_count);
+
         LED_index= 0;
         
     } else{

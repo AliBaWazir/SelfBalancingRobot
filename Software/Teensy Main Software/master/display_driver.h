@@ -20,7 +20,13 @@
  }display_identifier_e;
 
  #define CLOSE_EYE "CLOSE_EYE"
+ #define OPEN_EYE "OPEN_EYE"
+ #define PROSESSING "PROSESSING"
+ #define FAILURE_DISPLAY "FAILURE_DISPLAY"
+ 
+ 
  #define LINEAR_SENSOR_ARRAY_FRAME "LINEAR_SENSOR_ARRAY_FRAME"
+ 
 
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES

@@ -512,7 +512,10 @@ static uint8_t* map_object_identifier_to_bitmap(char* object_identifier){
               retcode= frame_bitmap;
           } else if(object_identifier == CLOSE_EYE){
                 ;
-          } else{
+          
+          } else if(object_identifier == OPEN_EYE){
+                retcode= (uint8_t*)EYE2;
+          }else{
             
           }
     }

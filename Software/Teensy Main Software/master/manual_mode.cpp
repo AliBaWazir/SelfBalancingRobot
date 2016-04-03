@@ -1,7 +1,6 @@
 #include "manual_mode.h"
 #include "ultrasonic_sensor_driver.h"
-#include "display_driver.h"
-#include "speaker_driver.h"
+#include "event_handlers.h"
 #include "motor_driver.h"
 #include "led_driver.h"
 
@@ -30,9 +29,22 @@ static manual_mode_error_e direct_robot_given_manual_command(manual_command_e co
     switch (command_type){
         case MANUAL_FORWARD:
             //check for any obtsacale in the front
-            if (!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
+            //if (!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
+            if (!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_BACK)){
+
+                // fire event
+                if (!fire_event(EVENT_OBSTACLE_DETECTED)){
+                    Serial.println("ERROR>> direct_robot_given_manual_command: failed to call fire_event");
+                }
+        
+                //stop both stepper motors
+                if (!motor_driver_move_stepper(SELECTED_MOTOR_BOTH, 0, 0)){
+                    Serial.println("ERROR>> direct_robot_given_manual_command: failed to call motor_driver_move_stepper");
+                }        
+                
                 //an obstacle is detected in the front
                 retcode = MANUAL_MODE_ERROR_OBSTACLE;
+                
             } else{
                 if (!motor_driver_move_stepper(SELECTED_MOTOR_BOTH, DEFAULT_STEPPER_DISTANCE, DEFAULT_STEPPER_VELOCITY)){
                     retcode = MANUAL_MODE_ERROR_MOTOR_FAILED;
@@ -109,6 +121,7 @@ manual_mode_error_e manual_mode_run(manual_command_e control_command){
     
     Serial.println("INFO>> manual_mode_run: called");
 
+    display_driver_display_object(DISPLAY_IDENTIFIER_RIGHT, OPEN_EYE);
     manual_mode_error = direct_robot_given_manual_command(control_command);
     
     return manual_mode_error;

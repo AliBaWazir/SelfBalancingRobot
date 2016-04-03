@@ -1,8 +1,7 @@
 #include "line_following_mode.h"
 #include "ultrasonic_sensor_driver.h"
 #include "linear_sensor_array_driver.h"
-#include "display_driver.h"
-#include "speaker_driver.h"
+#include "event_handlers.h"
 #include "motor_driver.h"
 #include "led_driver.h"
 
@@ -267,15 +266,11 @@ line_following_error_e line_following_mode_run(){
     
     //check for any obstcales in front ultrasonic sensor
     if(!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
+    //if(!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_BACK)){
         
-        //display close eyes
-        if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, CLOSE_EYE)){
-            Serial.println("ERROR>> line_following_mode_run: failed to call display_driver_display_object");
-        }
-        
-        //play sound saying I am stopping!
-        if(!speaker_driver_play_file(OBSTACLE_STOP)){
-            Serial.println("ERROR>> line_following_mode_run: failed to call speaker_driver_play_file");
+        // fire event
+        if (!fire_event(EVENT_OBSTACLE_DETECTED)){
+            Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_OBSTACLE_DETECTED");
         }
         
         //stop both stepper motors
@@ -300,16 +295,22 @@ line_following_error_e line_following_mode_run(){
 
             //discard the initial 5 frames
             if(initial_frame_discarded_count <=5){
+                
                 initial_frame_discarded_count++;
-                //TODO: play a sound saying trying to detect black lines 
-                //TODO: display something to indicate trying to detect black lines 
+                // fire event
+                if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_PROCESSING)){
+                    Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_PROCESSING_BLACK_LINES_DETECTION");
+                }
                 return LINE_FOLLOWING_PROCESSING;
+                
             }
 
             if (current_black_lines_info->black_lines_count <= 0){
                 Serial.println("ERROR>> line_following_mode_run: no black lines are detected in the initial frame");
-                //TODO: play a sound saying no black lines are detected. I don't know where to go!
-                //TODO: display something to indicate no black lines are detected in the initial frame
+                // fire event
+                if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_FAILURE)){
+                    Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_INITIAL_BLACK_LINES_DETECTION_FAILURE");
+                }
                 line_following_error = LINE_FOLLOWING_ERROR_LINE_DECTETION;
             } else if (current_black_lines_info->black_lines_count > 0){
                 
@@ -324,6 +325,11 @@ line_following_error_e line_following_mode_run(){
                 }
                 
                 initial_frame_decoded = true;
+
+                // fire event
+                if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_SUCCESS)){
+                    Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_INITIAL_BLACK_LINES_DETECTION_SUCCESS");
+                }
                 
             }
         }
