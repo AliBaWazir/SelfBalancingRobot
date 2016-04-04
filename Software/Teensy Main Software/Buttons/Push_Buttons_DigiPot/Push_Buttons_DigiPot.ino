@@ -1,4 +1,5 @@
-#include <digitalWriteFast.h>
+//#include <digitalWriteFast.h>
+#include <i2c_t3.h>
 
 /* Interrupt Example code for two-buttons */
 // from: https://forum.pjrc.com/threads/31259-Teensy-3-2-pin-interupts
@@ -32,6 +33,8 @@ volatile boolean flagB2;
 volatile boolean flagB3;
 volatile boolean flagB4;
 
+byte val = 128; // start digipot at midvalue.
+
 // ***********************************************************************************************************
 // *
 // *                            Power Up
@@ -41,14 +44,21 @@ volatile boolean flagB4;
 void setup ()
 {
   Serial.begin(9600);
+  Wire.begin(); // join i2c bus (address optional for master)
+  Wire.beginTransmission(44); // transmit to device #44 (0x2c) - device address is specified in datasheet.
+  Wire.write(byte(0x00));            // sends instruction byte
+  Wire.write(val);             // sends potentiometer value byte
+  Wire.endTransmission();     // stop transmitting
 
-  pinMode(ledPin, OUTPUT); // Set pin to OUTPUT for activity-indicator.
+
+  //pinMode(ledPin, OUTPUT); // Set pin to OUTPUT for activity-indicator.
 
   //TEST LED on Power Up
-  digitalWrite(ledPin, HIGH);
+  /*digitalWrite(ledPin, HIGH);
   delay(1000);
   digitalWriteFast(ledPin, LOW);
   delay(1000);
+  */
 
   // initialize pins for interrupts.
   // On Teensy3.x, the digital pins default to disable, not inputs.
@@ -81,6 +91,7 @@ void setup ()
 // ***********************************************************************************************************
 void loop ()
 {
+  //DigiPot Code
   if (flagB1 == true)
   {
     Serial.println("pushUp button interrupt has occurred");
@@ -88,18 +99,37 @@ void loop ()
     time = millis();
     //prints time since program started
     Serial.println(time);
+
+    val++;        // increment value
+      if (val >= 256) { // if reached 256th position (max)
+      Serial.println("Reached maximum (256th) position");
+      val = 256;    // Don't increase past 256
+      }
+    delay(500);
+    
     ResetBUTTONFlag(); //If BUTTON interrupt has occurred, reset flag.
-  }
-  if (flagB2 == true)
-  {
+  } 
+  
+  if (flagB2 == true){
+  
     Serial.println("pushDown interrupt has occurred");
     Serial.print("Time: ");
     time = millis();
     //prints time since program started
     Serial.println(time);
+
+     val--;        // increment value
+      if (val <= 256) { // if reached 0 position (min)
+      Serial.println("Reached minimum (0) position");
+      val = 0;    // Don't decrease past 0
+      }
+     delay(500);
+    
     ResetBUTTONFlag(); //If BUTTON interrupt has occurred, reset flag.
   }
-  
+
+//Code for other push buttons:
+  /*
 if (flagB3 == true)
   {
     Serial.println("pushRight button interrupt has occurred");
@@ -118,9 +148,15 @@ if (flagB3 == true)
     Serial.println(time);
     ResetBUTTONFlag(); //If BUTTON interrupt has occurred, reset flag.
   }
+*/
+  //send value to digitpot
+  Wire.beginTransmission(44); // transmit to device #44 (0x2c) - device address is specified in datasheet.
+  Wire.write(byte(0x00));            // sends instruction byte
+  Wire.write(val);             // sends potentiometer value byte
+  Wire.endTransmission();     // stop transmitting
 
   // Print without using the delay() function
-  unsigned long currentMillis = millis();
+  /*unsigned long currentMillis = millis();
   if (currentMillis - previousMillis > interval) {
     // save the last time you print loop counter
     previousMillis = currentMillis;
@@ -129,10 +165,12 @@ if (flagB3 == true)
     Serial.println(loop_num);
     loop_num++;
   }
-  // put your main code here, to run repeatedly:
-
-  
+  */
+ 
 }
+
+
+
 
 // ***********************************************************************************************************
 // *
@@ -172,36 +210,41 @@ void isrpushLeft ()
 // ***********************************************************************************************************
 void ResetBUTTONFlag()
 {
-  if (flagB1 == true)//reset BUTTON 1 flag + show led activity-indicator
-  {
+  if (flagB1 == true) {//reset BUTTON 1 flag
     // BUTTON 1 interrupt has occurred
-    digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
+    /*digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
     delay(10); //delay to see the led blink
     digitalWriteFast(ledPin, LOW); //led off
+    */
     flagB1 = false; //reset flag
   }
-  if (flagB2 == true)//reset BUTTON 2 flag + show led activity-indicator
+  
+  if (flagB2 == true)//reset BUTTON 2 flag
   {
     // BUTTON 2 interrupt has occurred
-    digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
+    /*digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
     delay(10); //delay to see the led blink
     digitalWriteFast(ledPin, LOW); //led off
+    */
     flagB2 = false; //reset flag
   }
-   if (flagB3 == true)//reset BUTTON 1 flag + show led activity-indicator
-  {
+  
+   if (flagB3 == true) { //reset BUTTON 1 flag
     // BUTTON 3 interrupt has occurred
-    digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
+    /*digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
     delay(10); //delay to see the led blink
     digitalWriteFast(ledPin, LOW); //led off
+    */
     flagB3 = false; //reset flag
   }
-  if (flagB4 == true)//reset BUTTON 2 flag + show led activity-indicator
+  
+  if (flagB4 == true)  //reset BUTTON 2 flag
   {
     // BUTTON 4 interrupt has occurred
-    digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
+    /*digitalWriteFast(ledPin, HIGH); //led on / activity-indicator
     delay(10); //delay to see the led blink
     digitalWriteFast(ledPin, LOW); //led off
+    */
     flagB4 = false; //reset flag
   }
 }
