@@ -5,9 +5,9 @@
 
 
 
-#define PID_PARAM_KP		7.1*1000//10//2.5/2  	/* Proportional */
-#define PID_PARAM_KI		4.5*1000//1.2/2		/* Integral */
-#define PID_PARAM_KD		25*1000	/* Derivative */
+#define PID_PARAM_KP		6.8*1000//10//2.5/2  	/* Proportional */
+#define PID_PARAM_KI		4.7*1000//1.2/2		/* Integral */
+#define PID_PARAM_KD		23*1000	/* Derivative */
 
 
 #define PID_PARAM_KP2		0.04*1000  	/* Proportional */
