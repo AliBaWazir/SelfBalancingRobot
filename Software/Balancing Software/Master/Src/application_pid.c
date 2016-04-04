@@ -18,19 +18,24 @@
 #define MINANGLE 10000
 double positionError, angleError;
 double positionOutput, position1, position2, position3;
-int32_t force, force1, force2, force3, force4;
+int32_t force, forceL1, forceL2, forceL3, forceL4, forceR, forceL;
+int32_t force, forceR1, forceR2, forceR3, forceR4;
 arm_pid_instance_f32 anglePID;
 arm_pid_instance_f32 positionPID;
 double scaleFactor, scaleFactor2, scaleFactor3;
 uint16_t positionCounter = 0;
 int32_t angleAdjust;
+double averagePosition = 0;
 double angle1, angle2, angle3, angle4, angle5, angle6, setpointAngle;
 void application_pid(int32_t angle){
    
+    
+    
+    
     angle2 = angle1;
     angle1 = angle;
     angle = (angle1+angle2)/2;
-    angle-=72;
+    angle-=getZeroAngle();
     setpointAngle = angle - (positionOutput*scaleFactor/100);
 
     
@@ -39,28 +44,26 @@ void application_pid(int32_t angle){
             
     //positionError = stepperCurrentPosition();
     
-    
+    averagePosition = (stepperCurrentPositionR()+stepperCurrentPositionL())/2;
     force = -arm_pid_f32(&anglePID, angleError);
     if(positionCounter >= 4){
         position3 = position2;
         position2 = position1;
-        position1 = stepperCurrentPosition();
+        position1 = averagePosition;
         positionError = (position1+position2+position3)/3;
         positionOutput = (-arm_pid_f32(&positionPID, positionError)/1000);
         positionCounter=0;
+        setStepperCurrentPositionR(stepperCurrentPositionR()+10);
+        setStepperCurrentPositionL(stepperCurrentPositionR()-10);
     }
     positionCounter++;
     
     if((positionOutput>200 || positionOutput<-200)||(force > 10000||force <-10000))resetPID();
-    force4=force3;
-    force3=force2;
-    force2=force1;
-    force1=force;
-    force = (force2+force1+force3)/3;
+    
     
     scaleFactor = 1;
-    if(stepperCurrentPosition()>0) scaleFactor = (abs(200 + force)/2);
-    if(stepperCurrentPosition()<0) scaleFactor = (abs(200 - force)/2);
+    if(averagePosition>0) scaleFactor = (abs(200 + force)/2);
+    if(averagePosition<0) scaleFactor = (abs(200 - force)/2);
     if(scaleFactor>150)scaleFactor = 150;
     scaleFactor3 = scaleFactor2;
     scaleFactor2 = scaleFactor;
@@ -69,7 +72,26 @@ void application_pid(int32_t angle){
     
 
     //motor output
-    setStepperSpeed((float)force);
+    forceL = 0;
+    forceR = 0;
+    if(stepperCurrentPositionR()<stepperCurrentPositionL())forceR=500;
+    if(stepperCurrentPositionR()>stepperCurrentPositionL())forceL=500;
+    
+    
+    forceR4=forceR3;
+    forceR3=forceR2;
+    forceR2=forceR1;
+    forceR1=force+forceR;
+    forceL4=forceL3;
+    forceL3=forceL2;
+    forceL2=forceL1;
+    forceL1=force+forceL;
+    forceR = (forceR2+forceR1+forceR3)/3;
+    forceL = (forceL2+forceL1+forceL3)/3;
+    
+    
+    setStepperSpeedR((float)(forceR));
+    setStepperSpeedL((float)(forceL));
     
     writeLog("setpointAngle", setpointAngle);
     writeLog("Angle:",          angle);

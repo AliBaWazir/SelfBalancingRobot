@@ -9,9 +9,11 @@
 #define MINANGLE 10000
 float temps[2];
 
-double output;
 
-
+int32_t zeroAngle = 72;
+uint8_t calibrateFlag = 0;
+uint8_t state = 3;
+uint32_t calibrateCounter = 200;
 double acceleration = 0;
 double newSpeed = 0;
 double oldSpeed = -0.1;
@@ -19,7 +21,7 @@ double angleSetpoint = 0;
 double ac1, ac2, ac3, ac4;
 uint32_t counter = 0;
 
-
+uint8_t ledCounter = 0;
 
 
 
@@ -44,30 +46,52 @@ void userLoop(){
 }
 
 void noMatlab(int32_t angle){
-    
     application_pid(angle);
-    
 }
 
 void application_main(int32_t angle){
-    updateButtons();
-    int aInt = angle;
-    char str[5];
-    sprintf(str, "%d", aInt);
-    TM_USART_Puts(UARTTEENSY, str);
-    
-    if(HAL_GetTick()<10000 )
-    {
-        TM_GPIO_TogglePinValue(LEDPORT, LED3);
-        dWrite(PORTD+12, HIGH);
-        TM_USART_Puts(UARTTEENSY,"\n");
-        return;
+    updateButtons();    
+    switch (state){
+        case 0:
+            stepperDisable();
+            TM_GPIO_SetPinLow(LEDPORT, LEDALL);
+        break;
+        case 1:
+            stepperEnable();
+            switch(ledCounter){
+                case 0:
+                    TM_GPIO_TogglePinValue(LEDPORT, LED1);
+                break;
+                case 32:
+                    TM_GPIO_TogglePinValue(LEDPORT, LED2);
+                break;
+                case 64:
+                    TM_GPIO_TogglePinValue(LEDPORT, LED3);
+                break;
+                case 96:
+                    TM_GPIO_TogglePinValue(LEDPORT, LED4);
+                break;
+                default:
+                    //ledCounter = 0;          
+            }
+            ledCounter +=16;
+            parseCommands();
+            noMatlab(angle);
+            logNewLine();
+        break;
+        case 2:
+            stepperDisable();
+            calibrateZero(angle);
+        break;
+        case 3:
+            if(HAL_GetTick()<10000)TM_GPIO_TogglePinValue(LEDPORT, LED3);
+        break;
+        default:
+        break;                
     }
-    TM_GPIO_TogglePinValue(LEDPORT, LED4);
-    parseCommands();
-    noMatlab(angle);
-    
-    logNewLine();
+}
+void setCalibrateFlag(uint8_t flag){
+    calibrateFlag = flag;
 }
 
 TIM_HandleTypeDef TIM_Handle;
@@ -83,6 +107,28 @@ void initTimerInterrupt(void)
     HAL_NVIC_SetPriority(TIM4_IRQn, 5, 15);
     HAL_NVIC_EnableIRQ(TIM4_IRQn);
 
+}
+
+void calibrateZero(int32_t angle){
+    
+    
+    if(!calibrateCounter){
+        calibrateCounter = 200;
+        zeroAngle = angle;
+        TM_GPIO_SetPinLow(LEDPORT, LED2);
+        setState(1);
+    }
+    else{
+        calibrateCounter--;
+        TM_GPIO_TogglePinValue(LEDPORT, LED2);
+    }
+  
+}
+void setState(uint8_t newState){
+    state = newState;
+}
+int32_t getZeroAngle(void){
+    return zeroAngle;
 }
 void TIM4_IRQHandler(void)
 {

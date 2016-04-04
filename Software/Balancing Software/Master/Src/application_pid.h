@@ -21,3 +21,4 @@ void application_pid(int32_t);
 extern void writeLog(char* name,double num);
 extern void logNewLine(void);
 void resetPID(void);
+extern int32_t getZeroAngle(void);

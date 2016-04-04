@@ -44,6 +44,15 @@ void stepperMove(int32_t offset){
     stepperL.move(offset);
     
 }
+void stepperMoveR(int32_t offset){
+    stepperR.move(offset);
+    
+    
+}
+void stepperMoveL(int32_t offset){
+    stepperL.move(offset);
+    
+}
 void stepperDisable(void){
     digitalWrite(STEPPER_RIGHT_SLP, LOW);
     digitalWrite(STEPPER_LEFT_SLP, LOW);
@@ -60,6 +69,14 @@ int32_t stepperCurrentPosition(void){
     return stepperL.currentPosition();
     
 }
+int32_t stepperCurrentPositionR(void){
+    return stepperR.currentPosition();
+    
+}
+int32_t stepperCurrentPositionL(void){
+    return stepperL.currentPosition();
+    
+}
 void stepperMoveTo(int32_t position){
         stepperR.moveTo(position);
         stepperL.moveTo(position);
@@ -72,6 +89,12 @@ void setStepperCurrentPosition(int32_t position){
         stepperR.setCurrentPosition(position);
         stepperL.setCurrentPosition(position);
 }
+void setStepperCurrentPositionR(int32_t position){
+        stepperR.setCurrentPosition(position);
+}
+void setStepperCurrentPositionL(int32_t position){
+        stepperL.setCurrentPosition(position);
+}
 
 void setStepperAccel(float accel){
         stepperR.setAcceleration(accel);
@@ -79,6 +102,13 @@ void setStepperAccel(float accel){
 }
 void setStepperSpeed(float speed){
         stepperR.setSpeed(speed);
+        stepperL.setSpeed(speed);
+}
+
+void setStepperSpeedR(float speed){
+        stepperR.setSpeed(speed);
+}
+void setStepperSpeedL(float speed){
         stepperL.setSpeed(speed);
 }
 void dWrite(uint8_t pin, uint8_t mode){
