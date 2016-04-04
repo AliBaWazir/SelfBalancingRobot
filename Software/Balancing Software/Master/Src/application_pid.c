@@ -5,15 +5,15 @@
 
 
 
-#define PID_PARAM_KP		6.8*1000//10//2.5/2  	/* Proportional */
-#define PID_PARAM_KI		4.7*1000//1.2/2		/* Integral */
-#define PID_PARAM_KD		23*1000	/* Derivative */
+#define PID_PARAM_KP		6.0*1000
+#define PID_PARAM_KI		4*1000
+#define PID_PARAM_KD		18*1000	
 
 
-#define PID_PARAM_KP2		0.04*1000  	/* Proportional */
-#define PID_PARAM_KI2		0.001*1000//.004*1000		/* Integral */
-#define PID_PARAM_KD2		1*1000//1.2*1000
-	/* Derivative */
+#define PID_PARAM_KP2		0.04*1000 
+#define PID_PARAM_KI2		0.003*1000
+#define PID_PARAM_KD2		1.4*1000
+
 
 #define MINANGLE 10000
 double positionOutput1, positionOutput2, positionOutput3;
@@ -23,7 +23,7 @@ int32_t force, forceL1, forceL2, forceL3, forceL4, forceR, forceL;
 int32_t force, forceR1, forceR2, forceR3, forceR4;
 arm_pid_instance_f32 anglePID;
 arm_pid_instance_f32 positionPID;
-double scaleFactor, scaleFactor2, scaleFactor3, scaleFactor4;
+double scaleFactor, scaleFactor2, scaleFactor3, scaleFactor4, scaleFactor5, scaleFactor6;
 uint16_t positionCounter = 0;
 int32_t angleAdjust;
 double averagePosition = 0;
@@ -32,10 +32,10 @@ void application_pid(int32_t angle){
    
     
     
-    angle2 = angle1;
-    angle2 = angle1;
-    angle1 = angle;
-    angle = (angle1+angle2)/2;
+    
+    //angle2 = angle1;
+    //angle1 = angle;
+    //angle = (angle1+angle2)/2;
     angle-=getZeroAngle();
     setpointAngle = angle - (positionOutput*scaleFactor/100);
 
@@ -53,7 +53,7 @@ void application_pid(int32_t angle){
         position1 = averagePosition;
         positionError = (position1+position2+position3)/3;
         positionOutput = (-arm_pid_f32(&positionPID, positionError)/1000);
-        positionCounter=0;
+        positionCounter=0; 
         setStepperCurrentPositionR(stepperCurrentPositionR()+0);
         setStepperCurrentPositionL(stepperCurrentPositionR()-0);
         
@@ -76,11 +76,13 @@ void application_pid(int32_t angle){
     if(averagePosition<0) scaleFactor = (abs(1000 - force)/10);
     
     if(scaleFactor>200)scaleFactor = 200;
+    scaleFactor6 = scaleFactor5;
+    scaleFactor5 = scaleFactor4;
     scaleFactor4 = scaleFactor3;
     scaleFactor3 = scaleFactor2;
     scaleFactor2 = scaleFactor;
     
-    scaleFactor = (scaleFactor2+scaleFactor3+scaleFactor4)/3;
+    scaleFactor = (scaleFactor2+scaleFactor3+scaleFactor4+scaleFactor5+scaleFactor6)/5;
     
 
     //motor output

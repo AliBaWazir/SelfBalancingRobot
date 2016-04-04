@@ -760,11 +760,11 @@ int mpu_init(struct int_param_s *int_param)
 
     if (mpu_set_gyro_fsr(500))//was 2000
         return -1;
-    if (mpu_set_accel_fsr(2))
+    if (mpu_set_accel_fsr(4))
         return -1;
-    if (mpu_set_lpf(42))
+    if (mpu_set_lpf(15))//was42
         return -1;
-    if (mpu_set_sample_rate(50))
+    if (mpu_set_sample_rate(35))//was 50
         return -1;
     if (mpu_configure_fifo(0))
         return -1;
