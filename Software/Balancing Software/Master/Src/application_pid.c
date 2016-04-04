@@ -10,15 +10,15 @@
 #define PID_PARAM_KD		0.8	/* Derivative */
 
 
-#define PID_PARAM_KP2		0.07  	/* Proportional */
-#define PID_PARAM_KI2		0		/* Integral */
-#define PID_PARAM_KD2		0.8
+#define PID_PARAM_KP2		0.08*1000  	/* Proportional */
+#define PID_PARAM_KI2		0.000015*1000		/* Integral */
+#define PID_PARAM_KD2		1.22*1000
 	/* Derivative */
 
 #define MINANGLE 10000
 double positionError, angleError;
-double positionOutput = 0;
-int32_t force, force1, force2;
+double positionOutput, position1, position2, position3;
+int32_t force, force1, force2, force3, force4;
 arm_pid_instance_f32 anglePID;
 arm_pid_instance_f32 positionPID;
 double scaleFactor, scaleFactor2, scaleFactor3;
@@ -32,37 +32,31 @@ void application_pid(int32_t angle){
     angle = (angle1+angle2)/2;
     angle-=72;
     setpointAngle = angle - (positionOutput*scaleFactor/100);
-    /*
-     if((force>0 && stepperCurrentPosition() <0)||(force<0 && stepperCurrentPosition() >0)){
-               angleError = angle - (setpoints*scaleFactor);
-              TM_USART_Puts(UARTTEENSY,"YES");
-            } 
-            else{
-              angleError = angle- positionOutput;
-              TM_USART_Puts(UARTTEENSY,"NO");
-            }
-    */
-    //find Current deviation from setpoint
-    
+
     
     
     angleError = -setpointAngle;// + positionOutput;    
             
-    positionError = stepperCurrentPosition();
+    //positionError = stepperCurrentPosition();
     
     
     force = -arm_pid_f32(&anglePID, angleError);
-    if(positionCounter >= 5){
-        positionOutput = -arm_pid_f32(&positionPID, positionError);
+    if(positionCounter >= 4){
+        position3 = position2;
+        position2 = position1;
+        position1 = stepperCurrentPosition();
+        positionError = (position1+position2+position3)/3;
+        positionOutput = (-arm_pid_f32(&positionPID, positionError)/1000);
         positionCounter=0;
     }
     positionCounter++;
     
     if((positionOutput>200 || positionOutput<-200)||(force > 10000||force <-10000))resetPID();
-
+    force4=force3;
+    force3=force2;
     force2=force1;
     force1=force;
-    force = (force2+force1)/2;
+    force = (force2+force1+force3)/3;
     
     scaleFactor = 1;
     if(stepperCurrentPosition()>0) scaleFactor = (abs(200 + force)/2);
