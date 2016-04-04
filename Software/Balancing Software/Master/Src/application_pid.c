@@ -7,15 +7,16 @@
 
 #define PID_PARAM_KP		6.0*1000
 #define PID_PARAM_KI		4*1000
-#define PID_PARAM_KD		21*1000	
+#define PID_PARAM_KD		20*1000	
 
 
 #define PID_PARAM_KP2		0.06*1000 
 #define PID_PARAM_KI2		0.001*1000
-#define PID_PARAM_KD2		1.2*1000
+#define PID_PARAM_KD2		1.25*1000
 
 
 #define MINANGLE 10000
+#define MAXANGLE 1000
 double positionOutput1, positionOutput2, positionOutput3;
 double positionError, angleError;
 double positionOutput, position1, position2, position3;
@@ -37,6 +38,12 @@ void application_pid(int32_t angle){
     //angle1 = angle;
     //angle = (angle1+angle2)/2;
     angle-=getZeroAngle();
+    
+    
+    if(MAXANGLE<abs(angle))setState(0);
+    else setState(1);
+    
+    
     setpointAngle = angle - (positionOutput*scaleFactor/100);
 
     
@@ -62,27 +69,34 @@ void application_pid(int32_t angle){
         positionOutput1 = positionOutput;
     
         positionOutput = (positionOutput1+positionOutput2+positionOutput3)/3;
+        
+        if((positionOutput>200 || positionOutput<-200)||(force > 10000||force <-10000))resetPID();
+        if(positionOutput>150)positionOutput = 150;
+        if(positionOutput<-150)positionOutput = -150;
+    
+        scaleFactor = 1;
+        if(averagePosition>0) scaleFactor = (abs(1000 + force)/10);
+        if(averagePosition<0) scaleFactor = (abs(1000 - force)/10);
+        
+        if(scaleFactor>200)scaleFactor = 200;
+        scaleFactor6 = scaleFactor5;
+        scaleFactor5 = scaleFactor4;
+        scaleFactor4 = scaleFactor3;
+        scaleFactor3 = scaleFactor2;
+        scaleFactor2 = scaleFactor;
+    
+        scaleFactor = (scaleFactor2+scaleFactor3+scaleFactor4+scaleFactor5+scaleFactor6)/5;
+        
+        
+        
     }
     positionCounter++;
     
     
     
-    if((positionOutput>200 || positionOutput<-200)||(force > 10000||force <-10000))resetPID();
-    if(positionOutput>150)positionOutput = 150;
-    if(positionOutput<-150)positionOutput = -150;
     
-    scaleFactor = 1;
-    if(averagePosition>0) scaleFactor = (abs(1000 + force)/10);
-    if(averagePosition<0) scaleFactor = (abs(1000 - force)/10);
     
-    if(scaleFactor>200)scaleFactor = 200;
-    scaleFactor6 = scaleFactor5;
-    scaleFactor5 = scaleFactor4;
-    scaleFactor4 = scaleFactor3;
-    scaleFactor3 = scaleFactor2;
-    scaleFactor2 = scaleFactor;
-    
-    scaleFactor = (scaleFactor2+scaleFactor3+scaleFactor4+scaleFactor5+scaleFactor6)/5;
+
     
 
     //motor output

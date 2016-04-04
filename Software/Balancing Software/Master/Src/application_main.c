@@ -72,7 +72,7 @@ void application_main(int32_t angle){
                     TM_GPIO_TogglePinValue(LEDPORT, LED4);
                 break;
                 default:
-                    //ledCounter = 0;          
+                break;         
             }
             ledCounter +=16;
             parseCommands();
