@@ -5,24 +5,25 @@
 
 
 
-#define PID_PARAM_KP		12//10//2.5/2  	/* Proportional */
-#define PID_PARAM_KI		0.01//1.2/2		/* Integral */
-#define PID_PARAM_KD		0.8	/* Derivative */
+#define PID_PARAM_KP		7.1*1000//10//2.5/2  	/* Proportional */
+#define PID_PARAM_KI		4.5*1000//1.2/2		/* Integral */
+#define PID_PARAM_KD		25*1000	/* Derivative */
 
 
-#define PID_PARAM_KP2		0.08*1000  	/* Proportional */
-#define PID_PARAM_KI2		0.000015*1000		/* Integral */
-#define PID_PARAM_KD2		1.22*1000
+#define PID_PARAM_KP2		0.04*1000  	/* Proportional */
+#define PID_PARAM_KI2		0.001*1000//.004*1000		/* Integral */
+#define PID_PARAM_KD2		1*1000//1.2*1000
 	/* Derivative */
 
 #define MINANGLE 10000
+double positionOutput1, positionOutput2, positionOutput3;
 double positionError, angleError;
 double positionOutput, position1, position2, position3;
 int32_t force, forceL1, forceL2, forceL3, forceL4, forceR, forceL;
 int32_t force, forceR1, forceR2, forceR3, forceR4;
 arm_pid_instance_f32 anglePID;
 arm_pid_instance_f32 positionPID;
-double scaleFactor, scaleFactor2, scaleFactor3;
+double scaleFactor, scaleFactor2, scaleFactor3, scaleFactor4;
 uint16_t positionCounter = 0;
 int32_t angleAdjust;
 double averagePosition = 0;
@@ -31,7 +32,7 @@ void application_pid(int32_t angle){
    
     
     
-    
+    angle2 = angle1;
     angle2 = angle1;
     angle1 = angle;
     angle = (angle1+angle2)/2;
@@ -45,7 +46,7 @@ void application_pid(int32_t angle){
     //positionError = stepperCurrentPosition();
     
     averagePosition = (stepperCurrentPositionR()+stepperCurrentPositionL())/2;
-    force = -arm_pid_f32(&anglePID, angleError);
+    force = -(arm_pid_f32(&anglePID, angleError))/1000;
     if(positionCounter >= 4){
         position3 = position2;
         position2 = position1;
@@ -53,22 +54,33 @@ void application_pid(int32_t angle){
         positionError = (position1+position2+position3)/3;
         positionOutput = (-arm_pid_f32(&positionPID, positionError)/1000);
         positionCounter=0;
-        setStepperCurrentPositionR(stepperCurrentPositionR()+10);
-        setStepperCurrentPositionL(stepperCurrentPositionR()-10);
+        setStepperCurrentPositionR(stepperCurrentPositionR()+0);
+        setStepperCurrentPositionL(stepperCurrentPositionR()-0);
+        
+        positionOutput3 = positionOutput2;
+        positionOutput2 = positionOutput1;
+        positionOutput1 = positionOutput;
+    
+        positionOutput = (positionOutput1+positionOutput2+positionOutput3)/3;
     }
     positionCounter++;
     
-    if((positionOutput>200 || positionOutput<-200)||(force > 10000||force <-10000))resetPID();
     
+    
+    if((positionOutput>200 || positionOutput<-200)||(force > 10000||force <-10000))resetPID();
+    if(positionOutput>150)positionOutput = 150;
+    if(positionOutput<-150)positionOutput = -150;
     
     scaleFactor = 1;
-    if(averagePosition>0) scaleFactor = (abs(200 + force)/2);
-    if(averagePosition<0) scaleFactor = (abs(200 - force)/2);
-    if(scaleFactor>150)scaleFactor = 150;
+    if(averagePosition>0) scaleFactor = (abs(1000 + force)/10);
+    if(averagePosition<0) scaleFactor = (abs(1000 - force)/10);
+    
+    if(scaleFactor>200)scaleFactor = 200;
+    scaleFactor4 = scaleFactor3;
     scaleFactor3 = scaleFactor2;
     scaleFactor2 = scaleFactor;
     
-    scaleFactor = (scaleFactor2+scaleFactor3)/2;
+    scaleFactor = (scaleFactor2+scaleFactor3+scaleFactor4)/3;
     
 
     //motor output

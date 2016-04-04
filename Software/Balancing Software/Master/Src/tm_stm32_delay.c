@@ -198,7 +198,7 @@ extern void rt_OneStep(void);
 /* Called from Systick handler */
 void HAL_IncTick(void) {
   //  runSpeed(); 
-	TM_uTime+=100;
+	TM_uTime+=50;
     
     //dWrite(PORTE+9, HIGH);
     //dWrite(PORTE+9, LOW);
@@ -210,7 +210,7 @@ void HAL_IncTick(void) {
         runSpeed();
     }
     */
-	if(TM_Counter <10){
+	if(TM_Counter <20){
 		
 		TM_Counter++;
         
@@ -297,7 +297,7 @@ uint32_t HAL_GetTick(void) {
 }
 
 uint32_t HAL_GetuTick(void) {
-	/* Return current time in milliseconds */
+	
 	return TM_uTime;
 }
 
