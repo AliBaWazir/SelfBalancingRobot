@@ -7,12 +7,12 @@
 
 #define PID_PARAM_KP		6.0*1000
 #define PID_PARAM_KI		4*1000
-#define PID_PARAM_KD		18*1000	
+#define PID_PARAM_KD		21*1000	
 
 
-#define PID_PARAM_KP2		0.04*1000 
-#define PID_PARAM_KI2		0.003*1000
-#define PID_PARAM_KD2		1.4*1000
+#define PID_PARAM_KP2		0.06*1000 
+#define PID_PARAM_KI2		0.001*1000
+#define PID_PARAM_KD2		1.2*1000
 
 
 #define MINANGLE 10000
@@ -47,7 +47,7 @@ void application_pid(int32_t angle){
     
     averagePosition = (stepperCurrentPositionR()+stepperCurrentPositionL())/2;
     force = -(arm_pid_f32(&anglePID, angleError))/1000;
-    if(positionCounter >= 4){
+    if(positionCounter >= 3){
         position3 = position2;
         position2 = position1;
         position1 = averagePosition;
@@ -88,8 +88,8 @@ void application_pid(int32_t angle){
     //motor output
     forceL = 0;
     forceR = 0;
-    if(stepperCurrentPositionR()<stepperCurrentPositionL())forceR=500;
-    if(stepperCurrentPositionR()>stepperCurrentPositionL())forceL=500;
+    if(stepperCurrentPositionR()<stepperCurrentPositionL())forceR=100;
+    if(stepperCurrentPositionR()>stepperCurrentPositionL())forceL=100;
     
     
     forceR4=forceR3;
