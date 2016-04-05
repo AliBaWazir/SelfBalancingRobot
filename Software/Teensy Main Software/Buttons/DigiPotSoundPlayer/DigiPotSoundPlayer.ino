@@ -1,5 +1,8 @@
 //#include <digitalWriteFast.h>
 #include <i2c_t3.h>
+#include <Audio.h>
+#include <SPI.h>
+#include <SD.h>
 
 /* Interrupt Example code for two-buttons */
 // from: https://forum.pjrc.com/threads/31259-Teensy-3-2-pin-interupts
@@ -13,6 +16,19 @@ unsigned long time;
 unsigned long loop_num = 0;    // loop counter
 
 
+AudioPlaySdWav           playWav1;
+// Use one of these 3 output types: Digital I2S, Digital S/PDIF, or Analog DAC
+//AudioOutputI2S           audioOutput;
+//AudioOutputSPDIF       audioOutput;
+AudioOutputAnalog      audioOutput;
+AudioConnection          patchCord1(playWav1, 0, audioOutput, 0);
+AudioConnection          patchCord2(playWav1, 1, audioOutput, 1);
+AudioControlSGTL5000     sgtl5000_1;
+
+// Use these with the audio adaptor board
+#define SDCARD_CS_PIN    10
+#define SDCARD_MOSI_PIN  11
+#define SDCARD_SCK_PIN   13
 
 // Pin 13: Teensy 3.x has the LED on pin 13
 const int ledPin = 13;  // the number of the pin for activity-indicator
@@ -43,12 +59,34 @@ byte val = 128; // start digipot at midvalue.
 // ***********************************************************************************************************
 void setup ()
 {
+  AudioMemory(8);
+  
+   SPI.setMOSI(SDCARD_MOSI_PIN);
+  SPI.setSCK(SDCARD_SCK_PIN);
+  if (!(SD.begin(SDCARD_CS_PIN))) {
+    // stop here, but print a message repetitively
+    while (1) {
+      Serial.println("Unable to access the SD card");
+      delay(500);
+
+      
+    }
+  }
+
+  Serial.println("audio init");
+
+  
+  
   Serial.begin(9600);
   Wire.begin(); // join i2c bus (address optional for master)
   Wire.beginTransmission(0x2C); // transmit to device #44 (0x2c) - device address is specified in datasheet.
   Wire.write(byte(0x00));            // sends instruction byte
   Wire.write(val);             // sends potentiometer value byte
   Wire.endTransmission();     // stop transmitting
+  Serial.println("pot init");
+  // Audio connections require memory to work.  For more
+  // detailed information, see the MemoryAndCpuUsage example
+  
 
 
   //pinMode(ledPin, OUTPUT); // Set pin to OUTPUT for activity-indicator.
@@ -79,6 +117,7 @@ void setup ()
   //RISING/HIGH/CHANGE/LOW/FALLING
   attachInterrupt (pushUp, isrpushUp, RISING);  // attach BUTTON 1 interrupt handler 
   attachInterrupt (pushDown, isrpushDown, RISING);  // attach BUTTON 2 interrupt handler
+ 
   attachInterrupt (pushRight, isrpushLeft, RISING);  // attach BUTTON 3 interrupt handler 
   attachInterrupt (pushLeft, isrpushRight, RISING);  // attach BUTTON 4 interrupt handler
 }
@@ -89,8 +128,38 @@ void setup ()
 // *
 // *
 // ***********************************************************************************************************
+
+void playFile(const char *filename)
+{
+  Serial.print("Playing file: ");
+  Serial.println(filename);
+
+  // Start playing the file.  This sketch continues to
+  // run while the file plays.
+  playWav1.play(filename);
+
+  // A brief delay for the library read WAV info
+  delay(5);
+
+  // Simply wait for the file to finish playing.
+
+}
+
 void loop ()
 {
+  if(!playWav1.isPlaying()){
+    Serial.println("loop: called");
+    playFile("1.WAV");  // filenames are always uppercase 8.3 format
+  }
+  //delay(500);
+  //playFile("2.WAV");
+  //delay(500);
+  //playFile("STABLE.WAV");
+  //delay(500);
+  //playFile("REWARD.WAV");
+  
+ // delay(1500);
+
   //DigiPot Code
   if (flagB1 == true)
   {
@@ -100,12 +169,12 @@ void loop ()
     //prints time since program started
     Serial.println(time);
 
-    val++;        // increment value
+    val+=8;        // increment value
       if (val >= 256) { // if reached 256th position (max)
       Serial.println("Reached maximum (256th) position");
       val = 256;    // Don't increase past 256
       }
-    delay(500);
+    //delay(500);
     
     ResetBUTTONFlag(); //If BUTTON interrupt has occurred, reset flag.
   } 
@@ -118,12 +187,12 @@ void loop ()
     //prints time since program started
     Serial.println(time);
 
-     val--;        // increment value
-      if (val <= 256) { // if reached 0 position (min)
+     val-=8;        // increment value
+      if (val <= 0) { // if reached 0 position (min)
       Serial.println("Reached minimum (0) position");
       val = 0;    // Don't decrease past 0
       }
-     delay(500);
+     //delay(500);
     
     ResetBUTTONFlag(); //If BUTTON interrupt has occurred, reset flag.
   }
@@ -248,3 +317,6 @@ void ResetBUTTONFlag()
     flagB4 = false; //reset flag
   }
 }
+
+
+

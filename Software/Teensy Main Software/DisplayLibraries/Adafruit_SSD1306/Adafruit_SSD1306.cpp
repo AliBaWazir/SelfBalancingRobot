@@ -203,7 +203,7 @@ void Adafruit_SSD1306::begin(uint8_t vccstate, uint8_t i2caddr, bool reset) {
   else
   {
     // I2C Init
-    Wire.begin();
+    Wire.begin(I2C_MASTER,0x3C,I2C_PINS_18_19,I2C_PULLUP_INT,I2C_RATE_400);
 #ifdef __SAM3X8E__
     // Force 400 KHz I2C, rawr! (Uses pins 20, 21 for SDA, SCL)
     TWI1->TWI_CWGR = 0;
