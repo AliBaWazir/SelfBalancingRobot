@@ -49,7 +49,9 @@ volatile boolean flagB2;
 volatile boolean flagB3;
 volatile boolean flagB4;
 
-byte val = 128; // start digipot at midvalue.
+uint8_t audioCounter = 0;
+
+byte val = 48; // start digipot at midvalue.
 
 // ***********************************************************************************************************
 // *
@@ -149,7 +151,96 @@ void loop ()
 {
   if(!playWav1.isPlaying()){
     Serial.println("loop: called");
-    playFile("1.WAV");  // filenames are always uppercase 8.3 format
+
+    switch(audioCounter){
+      case 0:
+        playFile("DRAMA.WAV");
+      break;
+
+      case 1:
+         playFile("CELLPHONE.WAV");
+      break;
+
+      case 2:
+          playFile("APPL1.WAV");
+      break;
+
+      case 3:
+         playFile("DROID4.WAV");
+      break;
+
+      case 4:
+         playFile("DROID3.WAV");
+      break;
+
+      case 5:
+         playFile("DROID2.WAV");
+      break;
+
+      case 6:
+         playFile("DROID1.WAV");
+      break;
+
+      case 7:
+         playFile("LAUGH1.WAV");
+      break;
+
+      case 8:
+         playFile("LAUGH2.WAV");
+      break;
+
+      case 9:
+         playFile("CHICKEN.WAV");
+      break;
+
+      case 10:
+         playFile("CHIRP.WAV");
+      break;
+
+      case 11:
+         playFile("LION.WAV");
+      break;
+
+      case 12:
+         playFile("AM.WAV");
+      break;
+
+      case 13:
+         playFile("FM.WAV");
+      break;
+
+       case 14:
+         playFile("DOG.WAV");
+       break;
+
+       case 15:
+         playFile("HORN.WAV");
+       break;
+
+       case 16:
+         playFile("RICKROLL.WAV");
+       break;
+
+     
+
+      default:
+      break;
+
+    }
+      if (audioCounter > 15){
+        audioCounter = 0; 
+      }
+      else{
+        audioCounter++;
+      }
+    
+    
+     // filenames are always uppercase 8.3 format
+      
+  
+
+    
+    
   }
   //delay(500);
   //playFile("2.WAV");
