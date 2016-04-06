@@ -1,5 +1,7 @@
 
 #include "ultrasonic_sensor_driver.h"
+#include <NewPing.h>
+//#include <NewPingT.h>
 
 /****************************************************************************************
  * HARDWARE PORTS ASSIGNMENTS
@@ -12,10 +14,12 @@
  trigPin_front_sensor to Arduino pin 21
  trigPin_back_sensor to Arduino pin 23
  */
-const int echoPin_back_sensor   = 22; //  Echo Pin for the back sensor
-const int echoPin_front_sensor  = 20; // Echo Pin for the front sensor
-const int trigPin_back_sensor   = 23; // Trigger Pin for the back sensor 
-const int trigPin_front_sensor  = 21; // Trigger Pin for the front sensor 
+const int trigPin_back_sensor   = 21;//23; // Trigger Pin for the back sensor 
+const int echoPin_back_sensor   = 20;//22; //  Echo Pin for the back sensor
+
+const int trigPin_front_sensor  =23; //21; // Trigger Pin for the front sensor 
+const int echoPin_front_sensor  =22; //20; // Echo Pin for the front sensor 
+
 const int LEDPin                = 13; // Onboard LED
 
 
@@ -23,13 +27,15 @@ const int LEDPin                = 13; // Onboard LED
  * GLOBAL VARIABLES
  ***************************************************************************************/
 
- 
+#define MAX_DISTANCE 200
+NewPing sonar_front(trigPin_front_sensor, echoPin_front_sensor, MAX_DISTANCE);
+NewPing sonar_back(trigPin_back_sensor, echoPin_back_sensor, MAX_DISTANCE);
 /****************************************************************************************
  * STATIC VARIABLES
  ****************************************************************************************/
 static int maximumRange  = 30; // Maximum range needed
 static int minimumRange  = 0; // Minimum range needed
-static long duration, distance; // Duration used to calculate distance
+//static long duration, distance; // Duration used to calculate distance
 
 static bool ultrasonic_sensor_driver_initialized   = false;
 static bool driver_in_testing_mode                 = false;
@@ -46,7 +52,73 @@ static bool driver_in_testing_mode                 = false;
 /****************************************************************************************
  * STATIC FUNCTIONS
  ***************************************************************************************/
+////////////////////////////////////////////////////////new code ///////////////////////////////////
 
+ 
+
+volatile int pingVal_front = 0;
+volatile int pingVal_back = 0;
+
+volatile boolean front_sensor_changed = true;
+volatile boolean back_sensor_changed = true;
+
+
+// Echo pin falling edge interrupt
+void sonarEchoISR_front()
+{
+    pingVal_front = sonar_front.ping_2();
+    front_sensor_changed = true;
+}
+
+void sonarEchoISR_back()
+{
+    pingVal_back = sonar_back.ping_2();
+    back_sensor_changed = true;
+}
+
+
+
+bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e active_direction){
+  int uS        = 0;
+  int distance  = 0;
+  
+  Serial.println(active_direction);
+  switch (active_direction){
+    case ULTRASONIC_SENSOR_ACTIVE_FRONT:
+        
+        if (front_sensor_changed){
+            uS = pingVal_front;
+            sonar_front.ping_trigger_2();
+            front_sensor_changed = false;
+        }
+    break;
+  
+    case ULTRASONIC_SENSOR_ACTIVE_BACK:
+         if (back_sensor_changed){
+            uS = pingVal_back;
+            sonar_back.ping_trigger_2();
+            back_sensor_changed = false;
+        }
+    break;
+  }
+
+  distance= uS / US_ROUNDTRIP_CM;
+  Serial.print(distance);
+  Serial.println("cm");
+  if (distance < maximumRange && distance > minimumRange){
+      return false;
+  }
+  
+  return true;
+  
+}
+  
+
+void ultrasonic_sensor_send_ping()
+{
+  sonar_front.ping_trigger_2();
+  sonar_back.ping_trigger_2();
+}
 
 
 /****************************************************************************************
@@ -56,16 +128,12 @@ bool ultrasonic_sensor_driver_init(){
     bool ret = true;
 
     if(!ultrasonic_sensor_driver_initialized){
-        pinMode(trigPin_front_sensor, OUTPUT);
-        pinMode(echoPin_front_sensor, INPUT);
-        pinMode(trigPin_back_sensor, OUTPUT);
-        pinMode(echoPin_back_sensor, INPUT);
         pinMode(LEDPin, OUTPUT); // Use LED indicator (if required)
-        //pinMode(BrakeA, OUTPUT);
-        //pinMode(DIRA, OUTPUT);
-  
-        //pinMode(BrakeB, OUTPUT);
-        //pinMode (DIRB, OUTPUT);
+        attachInterrupt(echoPin_front_sensor, sonarEchoISR_front, FALLING); 
+        attachInterrupt(echoPin_back_sensor, sonarEchoISR_back, FALLING); 
+        //sonar_front.ping_trigger_2();
+        //sonar_back.ping_trigger_2();
+        ultrasonic_sensor_send_ping();
 
         ultrasonic_sensor_driver_initialized = true;
     }
@@ -156,7 +224,7 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
 
 */
 
-
+/*
 //recently added by Ali
 
 bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e active_direction){
@@ -229,4 +297,10 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
 
     return ret;
 }
+
+*/
+
+
+
+
 

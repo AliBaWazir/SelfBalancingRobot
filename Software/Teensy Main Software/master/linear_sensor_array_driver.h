@@ -5,12 +5,13 @@
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
  ****************************************************************************************/
-#define BLACK_POINT_THRESHOLD 700 //300
+#define BLACK_POINT_THRESHOLD 900 //300
 #define WHITE_POINT_THRESHOLD 1000
-#define FRAME_BUFFER_LENGTH 128
-#define FRAME_BUFFER_MARGIN_LENGHT 10
-#define CONTRAST_MARGIN 8
+#define FRAME_BUFFER_MARGIN_LENGHT 15
+#define CONTRAST_MARGIN 5
+
 #define MAX_BLACK_LINES_PER_FRAME 3
+#define FRAME_BUFFER_LENGTH 128
 
 
 typedef enum {

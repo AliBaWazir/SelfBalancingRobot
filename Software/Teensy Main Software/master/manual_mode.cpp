@@ -29,9 +29,7 @@ static manual_mode_error_e direct_robot_given_manual_command(manual_command_e co
     switch (command_type){
         case MANUAL_FORWARD:
             //check for any obtsacale in the front
-            //if (!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
-            if (!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_BACK)){
-
+            if (!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
                 // fire event
                 if (!fire_event(EVENT_OBSTACLE_DETECTED)){
                     Serial.println("ERROR>> direct_robot_given_manual_command: failed to call fire_event");
@@ -118,10 +116,16 @@ bool manual_mode_drivers_init(){
 
 manual_mode_error_e manual_mode_run(manual_command_e control_command){
     manual_mode_error_e manual_mode_error = MANUAL_MODE_OK;
-    
-    Serial.println("INFO>> manual_mode_run: called");
 
-    display_driver_display_object(DISPLAY_IDENTIFIER_RIGHT, OPEN_EYE);
+    //Serial.println("INFO>> manual_mode_run: called");
+    
+    // fire event
+    if (!fire_event(EVENT_MANUAL_MODE_RUN)){
+        Serial.println("ERROR>> manual_mode_run: failed to call fire_event");
+    }
+    
+    
+
     manual_mode_error = direct_robot_given_manual_command(control_command);
     
     return manual_mode_error;

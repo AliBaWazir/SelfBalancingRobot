@@ -49,11 +49,11 @@ static bool direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
     }
 
     //The robot has to detect the correct number of lines in the begging and the number of lines has to remain the same
-    if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==1 && black_lines_info->black_lines_count==1){
-        Serial.print("INFO>> direct_robot_given_black_lines_info: robot is following one black line ");
+    //if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==1 && black_lines_info->black_lines_count==1){
+    if (initial_frame_decoded && black_lines_info->black_lines_count==1){
+        Serial.println("INFO>> direct_robot_given_black_lines_info: robot is following one black line >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         // follow one line and keep the black line at the center
         centre_line_position = black_lines_info->black_lines_positions[0];
-
         // calculate the differrence from the black line posistion to the center 64
         centre_line_offset = centre_line_position - DEFAULT_CENTRE_LINE;  // if offset is positive ==> line to the right ==> move robot to the right
         if (abs(centre_line_offset) == 0 || abs(centre_line_offset)<=2){ //allow 2 point to componsate for rounding off
@@ -85,7 +85,8 @@ static bool direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
         }
         
       
-    }else if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==2 && black_lines_info->black_lines_count==2){
+    //}else if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==2 && black_lines_info->black_lines_count==2){
+    }else if (initial_frame_decoded && black_lines_info->black_lines_count==2){
         // follow two lines and keep the white space at the center
         Serial.println("INFO>> direct_robot_given_black_lines_info: will follow TWO lines");
         
@@ -176,11 +177,9 @@ static bool process_direct_robot_command(turning_direction_e turning_direction, 
   if (busy_processing_moving_command){
       // the robot is still processing previous movement command ==> bale;
       Serial.println("INFO>> process_direct_robot_command: previous command is still prcessing");
-      return true;
+      //return true;
   }
 
-  // set the busy_processing_moving_command to true
-  busy_processing_moving_command = true;
   
   //determine the desired movement distance and velocity
   movement_distance = movement_magnitude*STEPPER_CONSTANT;
@@ -297,8 +296,8 @@ line_following_error_e line_following_mode_run(){
             if(initial_frame_discarded_count <=5){
                 
                 initial_frame_discarded_count++;
-                // fire event
-                if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_PROCESSING)){
+                // fire event at the beggninning of detection
+                if (initial_frame_discarded_count==1 && !fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_PROCESSING)){
                     Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_PROCESSING_BLACK_LINES_DETECTION");
                 }
                 return LINE_FOLLOWING_PROCESSING;

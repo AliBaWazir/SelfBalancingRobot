@@ -4,6 +4,7 @@
 #include "line_following_mode.h"
 #include "manual_mode.h"
 #include "bluetooth_driver.h"
+#include "buttons_driver.h"
 
 
 
@@ -34,8 +35,10 @@ static bool bluetooth_driver_initialized             = false;
  ****************************************************************************************/
 static bool get_current_robot_mode(){
     bool ret = true;
-    bluetooth_module_data_e bluetooth_module_data= bluetooth_driver_get_data(BLUETOOTH_DRIVER_DATA_TYPE_MODE);
-
+    //bluetooth_module_data_e bluetooth_module_data= bluetooth_driver_get_data(BLUETOOTH_DRIVER_DATA_TYPE_MODE);
+    //for demo
+    bluetooth_module_data_e bluetooth_module_data=BLUETOOTH_MODULE_DATA_MODE_MANUAL;
+    
     if(bluetooth_module_data==BLUETOOTH_MODULE_DATA_ERROR){
         Serial.println("ERROR>> get_current_robot_mode: could not get the current robot mode from bluetooth module");
         ret = false;
@@ -53,6 +56,8 @@ static bool get_current_robot_mode(){
  * MAIN FUNCTIONS
  ****************************************************************************************/
 void setup() {
+
+  
 
   // initialize serial communications at 9600 bps
   Serial.begin(9600);
@@ -82,10 +87,16 @@ void setup() {
 void loop() {
   //Serial.println("INFO>> master: loop is called!");
 
+  
   //check the current robot mode
+  //if (get_current_robot_mode_using_buttons()){
+      //Serial.println("ERROR>> loop: failed to get the current robot mode");
+  //}
+ 
   if(!get_current_robot_mode()){
       Serial.println("ERROR>> loop: failed to get the current robot mode");
   }
+  
   
   switch (current_robot_mode){
       case STARTUP_MODE:
@@ -125,6 +136,8 @@ void loop() {
                   }
                   
                   manual_mode_error = manual_mode_run(tmp_command);
+              } else{
+                  Serial.println("ERROR>> loop: bluetooth_driver_get_data(BLUETOOTH_DRIVER_DATA_TYPE_DIRECTION) returned BLUETOOTH_MODULE_DATA_ERROR");
               }
 
               if (manual_mode_error!= MANUAL_MODE_OK){
@@ -177,3 +190,5 @@ void loop() {
     //delay (1000);
 
 }
+
+

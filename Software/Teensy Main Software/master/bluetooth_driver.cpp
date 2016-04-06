@@ -56,26 +56,19 @@ bluetooth_module_data_e bluetooth_driver_get_data(bluetooth_driver_data_type_e d
     
     //get command from bluetooth module via serial1 port
     if (Serial3.available()) {
-        inByte = Serial3.read();
-        Serial.print("INFO>> bluetooth_driver_get_data: ??????????????????????????????????????????????????????????????byte read from bluetooth: ");
-        Serial.println(inByte);
-  
+        inByte = Serial3.read();  
     } else{
-        Serial.println("ERROR>> bluetooth_driver_get_data: serial3 is not available. Will put the robot in line following mode or direction will be unknown");
-        if (driver_in_testing_mode){
+        Serial.println("INFO>> bluetooth_driver_get_data: serial3 is not available. Will put the robot in previous mode or direction will be FORWARD");
                 
-            if (data_type==BLUETOOTH_DRIVER_DATA_TYPE_MODE){
-                //ret_code= BLUETOOTH_MODULE_DATA_MODE_LINE_FOLLOWING;
-                ret_code= BLUETOOTH_MODULE_DATA_MODE_MANUAL; 
-            } else{
-                ret_code= BLUETOOTH_MODULE_DATA_DIRECTION_UNKNOWN;
-            }
-
-            return ret_code;
-
+        if (data_type==BLUETOOTH_DRIVER_DATA_TYPE_MODE){
+            ret_code= BLUETOOTH_MODULE_DATA_MODE_LINE_FOLLOWING;
+            //ret_code= BLUETOOTH_MODULE_DATA_MODE_MANUAL; 
         } else{
-                return ret_code;
+            ret_code= BLUETOOTH_MODULE_DATA_DIRECTION_UNKNOWN;
         }
+
+        return ret_code;
+
     }
     
     if(data_type==BLUETOOTH_DRIVER_DATA_TYPE_MODE){

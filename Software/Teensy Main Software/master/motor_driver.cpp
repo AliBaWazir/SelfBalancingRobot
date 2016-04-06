@@ -140,33 +140,17 @@ bool motor_driver_move_stepper(motor_driver_selected_motor_e selected_motor, int
     if (ret){
 
         //turn the corresponding LED on to indicate turning, the middle LED to indicate straight movement, or none to indicate stopping
-        if (driver_in_testing_mode){
-            ret= led_driver_turn_led_on_others_off(LED_index);
-        } else{
-
-            //test
-            //Serial1.write(0xAA);
-            //Serial.println("INFO>> motor_driver_move_stepper: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> sent 0xAA>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            //Serial1.write(0xEF);
-            //Serial1.write(0xFE);
-            //Serial1.write(0xFF);
-            //Serial1.write(0xFF);
-            //Serial1.write(0xFF);
-            //Serial1.write(0xC3);
-            //Serial1.write(0x4C);
-            //end of test
+        ret= led_driver_turn_led_on_others_off(LED_index);
             
        
-            //send the control packet
-            if (Serial1.write((uint8_t*)(&control_packet), sizeof(motor_driver_control_packet_t))!= sizeof(int32_t)){           
-                Serial.println("ERROR>> motor_driver_move_stepper: failed to write control_packet to the serial port");
-                if (!driver_in_testing_mode){
-                    ret=false;
-               }
+        //send the control packet
+        if (Serial1.write((uint8_t*)(&control_packet), sizeof(motor_driver_control_packet_t))!= sizeof(int32_t)){           
+            Serial.println("ERROR>> motor_driver_move_stepper: failed to write control_packet to the serial port");
+            if (!driver_in_testing_mode){
+                ret=false;
             }
-          
         }
-        
+          
         debug_print_control_backet_data(&control_packet);
     }
     

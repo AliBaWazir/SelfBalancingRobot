@@ -45,14 +45,14 @@ Written by Ali Ba Wazir  for ELEC3907 W2016 "Self Balancing Robot".
 static bool obstacle_detected_event_handler(){
     bool ret = true;
     
-    //display close eyes
-    if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, CLOSE_EYE)){
+    //display X sign to indicate obstacle
+    if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, X_SIGN)){
         Serial.println("ERROR>> obstacle_detected_event_handler: failed to call display_driver_display_object");
         ret= false;
     }
     
     //play sound saying I am stopping!
-    if(ret&&!speaker_driver_play_file(OBSTACLE_STOP)){
+    if(ret&&!speaker_driver_play_file(" ")){
         Serial.println("ERROR>> obstacle_detected_event_handler: failed to call speaker_driver_play_file");
         ret= false;
     }
@@ -63,17 +63,20 @@ static bool obstacle_detected_event_handler(){
 static bool initial_black_lines_detection_processing_event_handler(){
     bool ret = true;
 
-    //display quotation mark to indicate processing
-    if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, PROSESSING)){
-        Serial.println("ERROR>> initial_black_lines_detection_processing_event_handler: failed to call display_driver_display_object");
-        ret= false;
-    }
-    
-    //play sound saying I am stopping!
-    if((ret)&&(!speaker_driver_play_file(DETECTING_WAIT))){
+    //play sound saying I am detecting lines!
+    if((ret)&&(!speaker_driver_play_file(MINION_cstr))){
         Serial.println("ERROR>> initial_black_lines_detection_processing_event_handler: failed to call speaker_driver_play_file");
         ret= false;
     }
+    
+    //display quotation mark to indicate processing
+    //if((ret)&& (!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, PROSESSING))){
+        //Serial.println("ERROR>> initial_black_lines_detection_processing_event_handler: failed to call display_driver_display_object");
+        //ret= false;
+    //}
+    
+
+
 
     return ret;
 }
@@ -81,13 +84,13 @@ static bool initial_black_lines_detection_failure_event_handler(){
     bool ret = true;
     
     //display sad faces to indicate failure
-    if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, FAILURE_DISPLAY)){
-        Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call display_driver_display_object");
-        ret= false;
-    }
+    //if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, FAILURE_DISPLAY)){
+        //Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call display_driver_display_object");
+        //ret= false;
+    //}
     
     //play sound saying I am stopping!
-    if((ret)&&(!speaker_driver_play_file(FAILURE_SOUND))){
+    if((ret)&&(!speaker_driver_play_file(" "))){
         Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call speaker_driver_play_file");
         ret= false;
     }
@@ -116,12 +119,26 @@ static bool moving_forward_event_handler(){
 
     return ret;  
 }
+
 static bool moving_backward_event_handler(){
     bool ret = true;
 
     return ret;  
 }
 
+
+static bool manual_mode_run_event_handler(){
+    bool ret = true;
+
+    //display animating eyes in both displays
+    if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, WOMAN_EYES_ANIMATION)){
+        Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call display_driver_display_object");
+        ret= false;
+    }
+    
+
+    return ret;  
+}
 
 
 
@@ -130,9 +147,12 @@ static bool moving_backward_event_handler(){
  ***************************************************************************************/
 bool fire_event(event_e event){
     bool    ret = true;
+    //test
+    //speaker_driver_test();
+    //end of test
+
     switch (event){
 
-    
         case EVENT_OBSTACLE_DETECTED:
             ret= obstacle_detected_event_handler();
         break;
@@ -165,6 +185,10 @@ bool fire_event(event_e event){
             ret= moving_backward_event_handler();
         break;
 
+        case EVENT_MANUAL_MODE_RUN:
+            ret= manual_mode_run_event_handler();
+        break;
+        
         default:
             Serial.println("ERROR>> fire_event: event has UNKOWN value");
             ret= false;

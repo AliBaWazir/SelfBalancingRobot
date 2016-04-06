@@ -29,7 +29,7 @@ const int LED_left_pin              = 4;
  * STATIC VARIABLES
  ****************************************************************************************/
 static bool led_driver_initialized                   = false;
-static bool driver_in_testing_mode                   = true;
+static bool driver_in_testing_mode                   = false;
 
 static int led_lighting_array [LED_FRAME_COUNT][9]= {{1, 1, 1, 1, 1, 1, 1, 1, 1},
                                                      {0, 0, 0, 0, 1, 0, 0, 0, 0},
