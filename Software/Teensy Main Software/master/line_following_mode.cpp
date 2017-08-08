@@ -23,7 +23,7 @@ static bool process_direct_robot_command(turning_direction_e turning_direction, 
 /****************************************************************************************
  * STATIC VARIABLES
  ***************************************************************************************/
-static volatile bool        initial_frame_decoded            = false;         // this boolean is set to true after the initial frame is decoded
+static bool                 initial_frame_decoded            = false;         // this boolean is set to true after the initial frame is decoded
 static black_lines_info_t   initial_frame_black_lines_info;
 static bool                 busy_processing_moving_command   = false;         // this boolean is set to true while the robot is moving to the right or left
 static bool                 robot_is_centred                 = false;         // this boolean is set to true once the robot is centred at the default centre
@@ -109,10 +109,11 @@ static bool direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
                 ret= false;
             } else{
                 // fire moving forward event
-                ret= fire_event(EVENT_MOVING_FORWARD);
-                if (!ret){
-                    Serial.print("ERROR>> direct_robot_given_black_lines_info: failed to fire event EVENT_MOVING_FORWARD");
-                }
+                //ret= fire_event(EVENT_MOVING_FORWARD);
+                //if (!ret){
+                    //Serial.print("ERROR>> direct_robot_given_black_lines_info: failed to fire event EVENT_MOVING_FORWARD");
+                //}
+                ;
             }
             
         } else if (centre_line_offset > 0){

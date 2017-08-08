@@ -116,10 +116,10 @@ static bool moving_forward_event_handler(){
     bool ret = true;
 
     //display down arrow sign to indicate moving forward
-    if(!display_driver_display_object(DISPLAY_IDENTIFIER_LEFT, DISPLAY_MOVING_FORWARD)){
-        Serial.println("ERROR>> obstacle_detected_event_handler: failed to call display_driver_display_object");
-        ret= false;
-    }
+    //if(!display_driver_display_object(DISPLAY_IDENTIFIER_LEFT, DISPLAY_MOVING_FORWARD)){
+        //Serial.println("ERROR>> obstacle_detected_event_handler: failed to call display_driver_display_object");
+        //ret= false;
+    //}
 
     return ret;  
 }
@@ -148,10 +148,10 @@ static bool line_follwoing_mode_run_event_handler(){
     bool ret = true;
 
     //display animating eyes in left display
-    if(!display_driver_display_object(DISPLAY_IDENTIFIER_LEFT, MAN_EYES_ANIMATION)){
-        Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call display_driver_display_object");
-        ret= false;
-    }
+    //if(!display_driver_display_object(DISPLAY_IDENTIFIER_LEFT, MAN_EYES_ANIMATION)){
+        //Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call display_driver_display_object");
+        //ret= false;
+    //}
     
     return ret;  
 }
