@@ -27,8 +27,9 @@
     MAN_EYES_ANIMATION,
 
     //still bitmaps has positive values
-    X_SIGN= 1,
-    LINEAR_SENSOR_ARRAY_FRAME
+    OBSTACLE_SIGN= 1,
+    LINEAR_SENSOR_ARRAY_FRAME,
+    DISPLAY_MOVING_FORWARD
  }display_driver_object_identifier_e;
  
 

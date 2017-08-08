@@ -145,7 +145,12 @@ static void locate_black_line_positions(pixel_data_t* full_decoded_frame_buffer,
       for (int j= i+1; j<frame_length; j++){
         if ((full_decoded_frame_buffer[j].edge_pixel) &&(full_decoded_frame_buffer[j].edge_pixel_pair==EDGE_PIXEL_SECOND_PAIR)){
           extracted_black_lines_info->black_lines_positions[extracted_black_lines_info->black_lines_count]= (i + j)/2;
-          extracted_black_lines_info->black_lines_count++;
+          if (extracted_black_lines_info->black_lines_count == 0){
+            extracted_black_lines_info->black_lines_count= 1;
+          } else{
+            extracted_black_lines_info->black_lines_count++;
+          }
+          
 
           //jump forward
           i=j;

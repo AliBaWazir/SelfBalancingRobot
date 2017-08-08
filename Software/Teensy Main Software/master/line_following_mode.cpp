@@ -23,7 +23,7 @@ static bool process_direct_robot_command(turning_direction_e turning_direction, 
 /****************************************************************************************
  * STATIC VARIABLES
  ***************************************************************************************/
-static bool                 initial_frame_decoded            = false;         // this boolean is set to true after the initial frame is decoded
+static volatile bool        initial_frame_decoded            = false;         // this boolean is set to true after the initial frame is decoded
 static black_lines_info_t   initial_frame_black_lines_info;
 static bool                 busy_processing_moving_command   = false;         // this boolean is set to true while the robot is moving to the right or left
 static bool                 robot_is_centred                 = false;         // this boolean is set to true once the robot is centred at the default centre
@@ -107,6 +107,12 @@ static bool direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
             if(!continue_moving_forward()){
                 Serial.print("INFO>> direct_robot_given_black_lines_info: continue_moving_forward failed ");
                 ret= false;
+            } else{
+                // fire moving forward event
+                ret= fire_event(EVENT_MOVING_FORWARD);
+                if (!ret){
+                    Serial.print("ERROR>> direct_robot_given_black_lines_info: failed to fire event EVENT_MOVING_FORWARD");
+                }
             }
             
         } else if (centre_line_offset > 0){
@@ -124,16 +130,16 @@ static bool direct_robot_given_black_lines_info(black_lines_info_t *black_lines_
         }
         
 
-    } else if (initial_frame_decoded && initial_frame_black_lines_info.black_lines_count ==3 && black_lines_info->black_lines_count==3){
+    } else if (initial_frame_decoded && black_lines_info->black_lines_count==3){
         // follow one line and keep the black line at the center
         Serial.println("INFO>> direct_robot_given_black_lines_info: will follow THREE lines");
         //TOD: develop this case
       
     } else {
-        uint8_t tmp =0;
-        Serial.print("ERROR>> direct_robot_given_black_lines_info: Current black line count differs from the initial frame's black line count. Initial= ");
-        tmp= initial_frame_black_lines_info.black_lines_count;
-        Serial.print(tmp);
+        //uint8_t tmp =0;
+        Serial.print("ERROR>> direct_robot_given_black_lines_info: Current black line count is above 3");
+        //tmp= initial_frame_black_lines_info.black_lines_count;
+        //Serial.print(tmp);
         Serial.print(" Current= ");
         Serial.println(black_lines_info->black_lines_count);
     }
@@ -262,6 +268,11 @@ line_following_error_e line_following_mode_run(){
     
     //TODO: call this function only when there is sound playing==> move this call to speaker driver
     //led_driver_continue_talking();
+
+    //TODO: put this on back
+    //if (!fire_event(EVENT_LINE_FOLLWOING_MODE_RUN)){
+        //Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_LINE_FOLLWOING_MODE_RUN");
+    //}
     
     //check for any obstcales in front ultrasonic sensor
     if(!ultrasonic_sensor_check_clear_path(ULTRASONIC_SENSOR_ACTIVE_FRONT)){
@@ -296,10 +307,11 @@ line_following_error_e line_following_mode_run(){
             if(initial_frame_discarded_count <=5){
                 
                 initial_frame_discarded_count++;
+                
                 // fire event at the beggninning of detection
-                if (initial_frame_discarded_count==1 && !fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_PROCESSING)){
-                    Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_PROCESSING_BLACK_LINES_DETECTION");
-                }
+                //if (initial_frame_discarded_count==1 && !fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_PROCESSING)){
+                    //Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_PROCESSING_BLACK_LINES_DETECTION");
+                //}
                 return LINE_FOLLOWING_PROCESSING;
                 
             }
@@ -307,9 +319,9 @@ line_following_error_e line_following_mode_run(){
             if (current_black_lines_info->black_lines_count <= 0){
                 Serial.println("ERROR>> line_following_mode_run: no black lines are detected in the initial frame");
                 // fire event
-                if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_FAILURE)){
-                    Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_INITIAL_BLACK_LINES_DETECTION_FAILURE");
-                }
+                //if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_FAILURE)){
+                    //Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_INITIAL_BLACK_LINES_DETECTION_FAILURE");
+                //}
                 line_following_error = LINE_FOLLOWING_ERROR_LINE_DECTETION;
             } else if (current_black_lines_info->black_lines_count > 0){
                 
@@ -326,9 +338,9 @@ line_following_error_e line_following_mode_run(){
                 initial_frame_decoded = true;
 
                 // fire event
-                if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_SUCCESS)){
-                    Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_INITIAL_BLACK_LINES_DETECTION_SUCCESS");
-                }
+                //if (!fire_event(EVENT_INITIAL_BLACK_LINES_DETECTION_SUCCESS)){
+                    //Serial.println("ERROR>> line_following_mode_run: failed to call fire_event EVENT_INITIAL_BLACK_LINES_DETECTION_SUCCESS");
+                //}
                 
             }
         }

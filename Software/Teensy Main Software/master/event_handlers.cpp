@@ -46,13 +46,13 @@ static bool obstacle_detected_event_handler(){
     bool ret = true;
     
     //display X sign to indicate obstacle
-    if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, X_SIGN)){
+    if(!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, OBSTACLE_SIGN)){
         Serial.println("ERROR>> obstacle_detected_event_handler: failed to call display_driver_display_object");
         ret= false;
     }
     
     //play sound saying I am stopping!
-    if(ret&&!speaker_driver_play_file(" ")){
+    if(ret&&!speaker_driver_play_file(AUDIO_IDENTIFIER_OBSTACLE)){
         Serial.println("ERROR>> obstacle_detected_event_handler: failed to call speaker_driver_play_file");
         ret= false;
     }
@@ -64,18 +64,16 @@ static bool initial_black_lines_detection_processing_event_handler(){
     bool ret = true;
 
     //play sound saying I am detecting lines!
-    if((ret)&&(!speaker_driver_play_file(MINION_cstr))){
-        Serial.println("ERROR>> initial_black_lines_detection_processing_event_handler: failed to call speaker_driver_play_file");
-        ret= false;
-    }
+    //if((ret)&&(!speaker_driver_play_file(MINION_cstr))){
+        //Serial.println("ERROR>> initial_black_lines_detection_processing_event_handler: failed to call speaker_driver_play_file");
+        //ret= false;
+    //}
     
     //display quotation mark to indicate processing
     //if((ret)&& (!display_driver_display_object(DISPLAY_IDENTIFIER_BOTH, PROSESSING))){
         //Serial.println("ERROR>> initial_black_lines_detection_processing_event_handler: failed to call display_driver_display_object");
         //ret= false;
     //}
-    
-
 
 
     return ret;
@@ -90,10 +88,10 @@ static bool initial_black_lines_detection_failure_event_handler(){
     //}
     
     //play sound saying I am stopping!
-    if((ret)&&(!speaker_driver_play_file(" "))){
-        Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call speaker_driver_play_file");
-        ret= false;
-    }
+    //if((ret)&&(!speaker_driver_play_file(" "))){
+        //Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call speaker_driver_play_file");
+        //ret= false;
+    //}
     return ret;
 }
 
@@ -116,6 +114,12 @@ static bool turning_left_event_handler(){
 }
 static bool moving_forward_event_handler(){
     bool ret = true;
+
+    //display down arrow sign to indicate moving forward
+    if(!display_driver_display_object(DISPLAY_IDENTIFIER_LEFT, DISPLAY_MOVING_FORWARD)){
+        Serial.println("ERROR>> obstacle_detected_event_handler: failed to call display_driver_display_object");
+        ret= false;
+    }
 
     return ret;  
 }
@@ -140,6 +144,17 @@ static bool manual_mode_run_event_handler(){
     return ret;  
 }
 
+static bool line_follwoing_mode_run_event_handler(){
+    bool ret = true;
+
+    //display animating eyes in left display
+    if(!display_driver_display_object(DISPLAY_IDENTIFIER_LEFT, MAN_EYES_ANIMATION)){
+        Serial.println("ERROR>> initial_black_lines_detection_failure_event_handler: failed to call display_driver_display_object");
+        ret= false;
+    }
+    
+    return ret;  
+}
 
 
  /****************************************************************************************
@@ -187,6 +202,10 @@ bool fire_event(event_e event){
 
         case EVENT_MANUAL_MODE_RUN:
             ret= manual_mode_run_event_handler();
+        break;
+
+        case EVENT_LINE_FOLLWOING_MODE_RUN:
+            ret= line_follwoing_mode_run_event_handler();
         break;
         
         default:

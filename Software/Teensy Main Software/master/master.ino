@@ -36,8 +36,10 @@ static bool bluetooth_driver_initialized             = false;
 static bool get_current_robot_mode(){
     bool ret = true;
     //bluetooth_module_data_e bluetooth_module_data= bluetooth_driver_get_data(BLUETOOTH_DRIVER_DATA_TYPE_MODE);
-    //for demo
-    bluetooth_module_data_e bluetooth_module_data=BLUETOOTH_MODULE_DATA_MODE_MANUAL;
+    
+    //for demo only
+    //bluetooth_module_data_e bluetooth_module_data=BLUETOOTH_MODULE_DATA_MODE_MANUAL;
+    bluetooth_module_data_e bluetooth_module_data=BLUETOOTH_MODULE_DATA_MODE_LINE_FOLLOWING;
     
     if(bluetooth_module_data==BLUETOOTH_MODULE_DATA_ERROR){
         Serial.println("ERROR>> get_current_robot_mode: could not get the current robot mode from bluetooth module");

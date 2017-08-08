@@ -19,8 +19,12 @@
     EVENT_MOVING_FORWARD,
     EVENT_MOVING_BACKWARD,
 
-    //manual mode event
-    EVENT_MANUAL_MODE_RUN
+    //manual mode events
+    EVENT_MANUAL_MODE_RUN,
+
+    //line following mode events
+    EVENT_LINE_FOLLWOING_MODE_RUN
+    
  }event_e;
  
  

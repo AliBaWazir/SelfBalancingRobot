@@ -6,24 +6,23 @@
 /****************************************************************************************
  * DEFINES AND TYPE DEFINITIONS
  ****************************************************************************************/
-
+typedef enum{
+    AUDIO_IDENTIFIER_OBSTACLE,
+    AUDIO_IDENTIFIER_FOLLOWING_LINE
+  
+}speaker_driver_audio_identifier_e;
 
 
 /****************************************************************************************
  * GLOBAL VARIABLES
  ****************************************************************************************/
-extern char* OBSTACLE_STOP_cstr;
-extern char* DETECTING_WAIT_cstr;
-extern char* FAILURE_SOUND_cstr;
-extern char* GLITTER_cstr;
-extern char* MINION_cstr;
-extern char* MINION_cstr;
+ 
 
 /****************************************************************************************
  * PUBLIC FUNCTIONS PROTOTYPES
  ****************************************************************************************/
 bool speaker_driver_init();
-bool speaker_driver_play_file(char* file_name);
+bool speaker_driver_play_file(speaker_driver_audio_identifier_e audio_identifier);
 bool speaker_driver_test();
 
 

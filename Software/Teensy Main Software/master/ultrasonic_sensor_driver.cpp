@@ -104,7 +104,7 @@ bool ultrasonic_sensor_check_clear_path(ultrasonic_sensor_active_direction_e act
 
   distance= uS / US_ROUNDTRIP_CM;
   Serial.print(distance);
-  Serial.println("cm");
+  Serial.println(" cm");
   if (distance < maximumRange && distance > minimumRange){
       return false;
   }
